@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "saturns_origins",
+  "version": "${version}",
+  "name": "Saturns Origins",
+  "description": "Adds a new origin, the Chorus Fruit Born!",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/saturns_origins/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "rings_of_saturn.github.io.saturns_origins.client.SaturnsOriginsDataGenerator"
+    ],
+    "client": [
+      "rings_of_saturn.github.io.saturns_origins.client.SaturnsOriginsClient"
+    ],
+    "main": [
+      "rings_of_saturn.github.io.saturns_origins.SaturnsOrigins"
+    ]
+  },
+  "mixins": [
+    "saturns_origins.mixins.json",
+    {
+      "config": "saturns_origins.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
