@@ -1,0 +1,12 @@
+{
+  "powers": [
+    "origins:water_vulnerability",
+    "origins:ender_particles"
+
+  ],
+  "icon": "minecraft:chorus_fruit",
+  "order": 7,
+  "impact": 3,
+  "name": "Chorusfruitborn",
+  "description": "A species of end fairing mages, living over thousands of years and taking the End by storm."
+}
