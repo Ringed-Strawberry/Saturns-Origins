@@ -1,0 +1,4 @@
+classTweaker v1 named
+
+accessible class io/github/apace100/origins/origin/OriginLayers
+accessible class io/github/apace100/calio/data/MultiJsonDataLoader

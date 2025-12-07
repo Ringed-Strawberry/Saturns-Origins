@@ -16,8 +16,6 @@ public class PortalBlock extends BlockWithEntity {
         super(settings);
     }
 
-
-
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if(world.getBlockEntity(pos) instanceof PortalBlockEntity blockEntity){
