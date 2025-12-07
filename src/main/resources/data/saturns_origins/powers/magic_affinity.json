@@ -1,0 +1,23 @@
+{
+  "name": "Magic Affinty",
+  "description": "Your species' closeness to magic has caused you to be much more attuned to it, gaining a resistance to it aswell as giving you more experience than other species",
+  "type": "origins:multiple",
+  "xp_boost": {
+    "type": "origins:modify_xp_gain",
+    "modifier": {
+      "operation": "multiply_base",
+      "value": 1
+    }
+  },
+  "magic_resistance": {
+    "type": "origins:modify_damage_taken",
+    "damage_condition": {
+      "type": "origins:in_tag",
+      "tag": "minecraft:witch_resistant_to"
+    },
+    "modifier": {
+      "operation": "multiply_base",
+      "value": -0.5
+    }
+  }
+}

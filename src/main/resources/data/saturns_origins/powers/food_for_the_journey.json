@@ -1,0 +1,13 @@
+{
+  "name": "Food for the journey",
+  "description": "You spawn in with an endstone and a chorus plant from home",
+  "type": "origins:starting_equipment",
+  "stacks": [
+    {
+      "item": "minecraft:chorus_plant"
+    },
+    {
+      "item": "minecraft:end_stone"
+    }
+  ]
+}

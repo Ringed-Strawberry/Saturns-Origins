@@ -10,6 +10,6 @@
   "modifier": {
     "name": "Weak to fire",
     "operation": "multiply_base",
-    "value": 2
+    "value": 1
   }
 }

@@ -8,7 +8,11 @@
     "saturns_origins:health_driven",
     "saturns_origins:no_hunger_bar",
     "saturns_origins:burn_marks",
-    "saturns_origins:controlled_teleportation"
+    "saturns_origins:controlled_teleportation",
+    "saturns_origins:homesick",
+    "saturns_origins:food_for_the_journey",
+    "saturns_origins:liquidophobic",
+    "saturns_origins:magic_affinity"
   ],
   "icon": "minecraft:chorus_fruit",
   "order": 7,

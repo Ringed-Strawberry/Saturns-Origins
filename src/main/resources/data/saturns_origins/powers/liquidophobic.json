@@ -1,0 +1,11 @@
+{
+  "name": "Liquid-o-phobic",
+  "description": "Since water hurts you, you refuse to consume potions, but you are still able to be splashed with them",
+  "type": "origins:prevent_item_use",
+  "item_condition": {
+    "type": "origins:ingredient",
+    "ingredient": {
+      "item": "minecraft:potion"
+    }
+  }
+}
