@@ -1,8 +1,13 @@
 {
   "powers": [
     "origins:water_vulnerability",
-    "origins:ender_particles"
-
+    "origins:ender_particles",
+    "saturns_origins:only_chorus",
+    "saturns_origins:no_exhaustion",
+    "saturns_origins:no_natural_regen",
+    "saturns_origins:health_driven",
+    "saturns_origins:no_hunger_bar",
+    "saturns_origins:burn_marks"
   ],
   "icon": "minecraft:chorus_fruit",
   "order": 7,

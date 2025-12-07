@@ -1,0 +1,18 @@
+{
+  "name": "How do you eat these ?",
+  "description": "The limited pallet of the end has made all foods other than chorus fruit be inedible",
+  "type": "origins:prevent_item_use",
+  "item_condition": {
+    "type": "origins:and",
+      "conditions": [
+        {"type": "origins:food"},
+        {
+          "inverted": true,
+          "type": "origins:ingredient",
+          "ingredient": {
+            "item": "minecraft:chorus_fruit"
+          }
+        }
+      ]
+  }
+}

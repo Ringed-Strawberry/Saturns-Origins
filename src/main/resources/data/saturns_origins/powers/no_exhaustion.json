@@ -1,0 +1,10 @@
+{
+  "hidden": true,
+  "name": "No Hunger",
+  "type": "origins:modify_exhaustion",
+  "modifier": {
+    "name": "No exhaustion",
+    "operation": "multiply_base",
+    "value": -1
+  }
+}

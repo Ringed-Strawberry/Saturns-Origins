@@ -1,0 +1,22 @@
+{
+  "name": "Health driven",
+  "description": "The limited food pallet of the end has evolved the Chorusfruitborn to no longer be hungry but instead can only heal from eating chorus fruit",
+  "type": "origins:modify_food",
+  "item_condition": {
+    "type": "origins:ingredient",
+    "ingredient": {
+      "item": "minecraft:chorus_fruit"
+    }
+  },
+  "entity_action": {
+    "type": "origins:apply_effect",
+    "effect": {
+    "effect": "minecraft:regeneration",
+    "duration": 20,
+    "amplifier": 3,
+    "is_ambient": false,
+    "show_particles": false,
+    "show_icon": false
+  }
+  }
+}

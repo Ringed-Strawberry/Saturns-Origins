@@ -26,6 +26,7 @@ public class PortalBlock extends BlockWithEntity {
         super.onPlaced(world, pos, state, placer, itemStack);
     }
 
+
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PortalBlockEntity(pos, state);

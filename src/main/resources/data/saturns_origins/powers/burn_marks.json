@@ -1,0 +1,15 @@
+{
+  "name": "Burn Marks",
+  "description": "The darkness of the end has made your skin a lot less resistant to fire",
+  "type": "origins:modify_damage_taken",
+  "damage_condition": {
+    "type": "origins:in_tag",
+    "tag": "minecraft:is_fire"
+  },
+
+  "modifier": {
+    "name": "Weak to fire",
+    "operation": "multiply_base",
+    "value": 2
+  }
+}
