@@ -28,7 +28,7 @@ public class ChorusFruitMixin {
 
     @Inject(method = "finishUsing", at=@At("HEAD"),  cancellable = true)
     void eat(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
-        ItemStack itemStack = thisAsItem.finishUsing(stack, world, user);
+        ItemStack itemStack = thisAsItem.isFood() ? user.eatFood(world, stack) : stack;
         if (!world.isClient) {
             double d = user.getX();
             double e = user.getY();
@@ -43,7 +43,20 @@ public class ChorusFruitMixin {
                 }
 
                 Vec3d vec3d = user.getPos();
-                if (OriginUtil.isChorusfruitborn(user) && !user.isSneaking()) {
+                if (OriginUtil.isChorusfruitborn(user) && user.isSneaking()) {
+                    if (user.teleport(g, h, j, true)) {
+                        world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
+                        SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
+                        world.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        user.playSound(soundEvent, 1.0F, 1.0F);
+                        break;
+                    }
+
+                    if (user instanceof PlayerEntity) {
+                        ((PlayerEntity) user).getItemCooldownManager().set(thisAsItem, 20);
+                    }
+                }
+                if(!OriginUtil.isChorusfruitborn(user)){
                     if (user.teleport(g, h, j, true)) {
                         world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
                         SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
