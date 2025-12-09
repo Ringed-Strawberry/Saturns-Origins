@@ -13,7 +13,9 @@
     "saturns_origins:food_for_the_journey",
     "saturns_origins:liquidophobic",
     "saturns_origins:magic_affinity",
-    "saturns_origins:enderic_friendliness"
+    "saturns_origins:enderic_friendliness",
+    "saturns_origins:wall_jump",
+    "saturns_origins:quick_escape"
   ],
   "icon": "minecraft:chorus_fruit",
   "order": 7,

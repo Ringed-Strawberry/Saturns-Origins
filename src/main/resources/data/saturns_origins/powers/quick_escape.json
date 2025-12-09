@@ -1,0 +1,5 @@
+{
+  "name": "Quick Escape",
+  "type": "origins:simple",
+  "description": "You teleport randomly as you get hit when you are below 3 hearts as a defense mechanism"
+}

@@ -1,0 +1,181 @@
+{
+  "type": "origins:multiple",
+
+  "particles": {
+    "type": "origins:resource",
+    "min": 0,
+    "max": 1,
+    "hud_render": {
+      "should_render": false
+    }
+  },
+  "spawnparticles": {
+    "type": "origins:action_over_time",
+    "interval": 1,
+    "entity_action": {
+      "type": "origins:spawn_particles",
+      "particle": "dragon_breath",
+      "count": 20
+    },
+    "condition": {
+      "type": "origins:resource",
+      "resource": "saturns_origins:wall_jump_particles",
+      "comparison": ">=",
+      "compare_to": 1
+    }
+  },
+  "noparticles": {
+    "type": "origins:action_on_land",
+    "entity_action": {
+      "type": "origins:set_resource",
+      "resource": "saturns_origins:wall_jump_particles",
+      "value": 0
+    },
+    "condition": {
+      "type": "origins:resource",
+      "resource": "saturns_origins:wall_jump_particles",
+      "comparison": ">=",
+      "compare_to": 1
+    }
+  },
+  "walljump": {
+    "type": "origins:active_self",
+    "entity_action": {
+      "type": "origins:and",
+      "actions": [
+        {
+          "type": "origins:set_resource",
+          "resource": "saturns_origins:wall_jump_particles",
+          "value": 1
+        },
+        {
+          "type": "origins:add_velocity",
+          "y": 0.3,
+          "space": "world",
+          "set": true
+        },
+        {
+          "type": "origins:add_velocity",
+          "z": 0.6,
+          "space": "local"
+        },
+        {
+          "type": "origins:play_sound",
+          "sound": "block.respawn_anchor.charge",
+          "pitch": 0.4
+        },
+        {
+          "type": "origins:spawn_particles",
+          "particle": "cherry_leaves",
+          "count": 20,
+          "spread": {
+            "x": 2,
+            "y": 1,
+            "z": 1
+          }
+        },
+        {
+          "type": "origins:spawn_particles",
+          "particle": "witch",
+          "count": 20,
+          "spread": {
+            "x": 2,
+            "y": 1,
+            "z": 1
+          }
+        },
+        {
+          "type": "origins:spawn_particles",
+          "particle": "end_rod",
+          "count": 20,
+          "spread": {
+            "x": 2,
+            "y": 1,
+            "z": 1
+          }
+        },
+        {
+          "type": "origins:spawn_particles",
+          "particle": "dragon_breath",
+          "count": 20,
+          "spread": {
+            "x": 2,
+            "y": 1,
+            "z": 1
+          }
+        }
+      ]
+    },
+
+    "key" : {
+      "key": "key.jump"
+    },
+    "condition": {
+      "type": "origins:and",
+      "conditions": [
+        {
+          "type": "origins:or",
+          "conditions": [
+            {
+              "type": "origins:in_block_anywhere",
+              "block_condition": {
+                "type": "origins:offset",
+                "condition": {
+                  "type": "origins:movement_blocking"
+                },
+                "x": 1
+              }
+            },
+            {
+              "type": "origins:in_block_anywhere",
+              "block_condition": {
+                "type": "origins:offset",
+                "condition": {
+                  "type": "origins:movement_blocking"
+                },
+                "x": -1
+              }
+            },
+            {
+              "type": "origins:in_block_anywhere",
+              "block_condition": {
+                "type": "origins:offset",
+                "condition": {
+                  "type": "origins:movement_blocking"
+                },
+                "z": 1
+              }
+            },
+            {
+              "type": "origins:in_block_anywhere",
+              "block_condition": {
+                "type": "origins:offset",
+                "condition": {
+                  "type": "origins:movement_blocking"
+                },
+                "z": -1
+              }
+            }
+          ]
+        },
+        {
+          "type": "origins:on_block",
+          "inverted": true
+        },
+        {
+          "type": "origins:fall_flying",
+          "inverted": true
+        },
+        {
+          "type": "origins:creative_flying",
+          "inverted": true
+        },
+        {
+          "type": "origins:gamemode",
+          "gamemode": "spectator",
+          "inverted": true
+        }
+      ]
+    }
+  }
+}
