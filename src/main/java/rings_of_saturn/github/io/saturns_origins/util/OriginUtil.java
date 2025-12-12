@@ -15,6 +15,8 @@ public class OriginUtil {
 
     public static boolean isChorusfruitborn(Entity entity){
         OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));
-        return Origin.get(entity).get(layers).getName().getString().equals("Chorusfruitborn");
+        if(Origin.get(entity).get(layers) != null)
+            return Origin.get(entity).get(layers).getName().getString().equals("Chorusfruitborn");
+        return false;
     }
 }
