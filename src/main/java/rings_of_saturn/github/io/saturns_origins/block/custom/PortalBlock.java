@@ -4,6 +4,8 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
+import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBlockEntityTicker;
 import rings_of_saturn.github.io.saturns_origins.components.util.PortalPositionUtil;
 
 public class PortalBlock extends BlockWithEntity {
@@ -36,6 +39,11 @@ public class PortalBlock extends BlockWithEntity {
             entity.teleport(TPPos.getX(), TPPos.getY(), TPPos.getZ());
         }
         super.onEntityCollision(state, world, pos, entity);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return new PortalBlockEntityTicker();
     }
 
     @Override
