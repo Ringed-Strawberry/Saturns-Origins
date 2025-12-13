@@ -12,7 +12,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import rings_of_saturn.github.io.saturns_origins.components.util.PortalPositionUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
@@ -45,11 +44,11 @@ public class KeyInputHandler {
                     //Portal Work
                     if (OriginsClient.useSecondaryActivePowerKeybind.isPressed()) {
                         if(player.isSneaking()){
-                            PortalPositionUtil.setPortalPos(player);
-                        } else {
-                            player.sendMessage(Text.of(String.valueOf(PortalPositionUtil.getPortalPos(player))));
                             PacketByteBuf buf = PacketByteBufs.create();
-                            ClientPlayNetworking.send(PacketConstants.PORTAL_PACKET_ID, buf);
+                            ClientPlayNetworking.send(PacketConstants.SET_PORTAL_PACKET_ID, buf);
+                        } else {
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            ClientPlayNetworking.send(PacketConstants.SPAWN_PORTAL_PACKET_ID, buf);
                         }
                     }
                 }
