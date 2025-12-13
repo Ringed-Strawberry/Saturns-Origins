@@ -1,0 +1,16 @@
+{
+  "name": "Backstab",
+  "description": "You use the power of the void to teleport yourself behind your enemy",
+  "type": "origins:active_self",
+  "entity_action": {
+    "type": "origins:play_sound",
+    "sound": "minecraft:item.chorus_fruit.teleport"
+  },
+  "cooldown": 300,
+  "hud_render": {
+    "should_render": false
+  },
+  "key": {
+    "key": "key.origins.primary_active"
+  }
+}

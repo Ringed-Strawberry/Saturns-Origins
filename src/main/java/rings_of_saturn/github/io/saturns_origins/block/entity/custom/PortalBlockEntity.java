@@ -20,24 +20,39 @@ public class PortalBlockEntity extends BlockEntity {
     private String playerName = "";
 
     public String getPlayerName() {
-        return playerName;
+        return this.playerName;
     }
 
     public void setPlayerName(String newName) {
-        playerName = newName;
+        this.playerName = newName;
+        markDirty();
+    }
+
+
+
+    private int timer = 40*20;
+
+    public int getTimer() {
+        return this.timer;
+    }
+
+    public void decrementTimer() {
+        this.timer--;
         markDirty();
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putString("playerName", playerName);
+        nbt.putString("playerName", this.playerName);
+        nbt.putInt("timer", this.timer);
 
         super.writeNbt(nbt);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        playerName = nbt.getString("playerName");
+        this.playerName = nbt.getString("playerName");
+        this.timer = nbt.getInt("timer");
 
         super.readNbt(nbt);
     }
