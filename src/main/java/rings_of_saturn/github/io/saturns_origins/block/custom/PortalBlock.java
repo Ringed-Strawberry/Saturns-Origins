@@ -25,6 +25,7 @@ public class PortalBlock extends BlockWithEntity {
     }
 
 
+
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PortalBlockEntity(pos, state);
