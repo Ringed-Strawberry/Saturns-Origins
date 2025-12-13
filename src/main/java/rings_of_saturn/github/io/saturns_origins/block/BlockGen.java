@@ -39,7 +39,7 @@ public class BlockGen {
 
     public static final Block CHORUSFRUITBORN_PORTAL = createBlock(PortalBlock::new, Identifier.of(MOD_ID, "chorusfruitborn_portal"), AbstractBlock.Settings.copy(Blocks.NETHER_PORTAL));
 
-    public static final Block MAGICPLATFORMBLOCK = createBlock(MagicPlatformBlock::new, Identifier.of(MOD_ID, "magicplatformblock"),AbstractBlock.Settings.create().strength(-1f).nonOpaque());
+    public static final Block MAGICPLATFORMBLOCK = createBlock(MagicPlatformBlock::new, Identifier.of(MOD_ID, "magicplatformblock"),AbstractBlock.Settings.create().strength(-1f).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
 
 
     public static void registerModBlocks(){

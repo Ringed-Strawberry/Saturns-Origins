@@ -1,11 +1,14 @@
 package rings_of_saturn.github.io.saturns_origins.block.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
+import rings_of_saturn.github.io.saturns_origins.block.custom.MagicPlatformBlock;
+import rings_of_saturn.github.io.saturns_origins.block.entity.custom.MagicPlatformEntity;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
@@ -21,6 +24,10 @@ public class ModBlockEntities {
             FabricBlockEntityTypeBuilder.create(PortalBlockEntity::new, BlockGen.CHORUSFRUITBORN_PORTAL).build()
     );
 
+    public static final BlockEntityType<MagicPlatformEntity> PLATFORM = register(
+            "magicplatformblock",
+            FabricBlockEntityTypeBuilder.create(MagicPlatformEntity::new, BlockGen.MAGICPLATFORMBLOCK).build()
+    );
     public static void registerModBlockEntities(){
     }
 }

@@ -15,7 +15,8 @@
     "saturns_origins:magic_affinity",
     "saturns_origins:enderic_friendliness",
     "saturns_origins:wall_jump",
-    "saturns_origins:quick_escape"
+    "saturns_origins:quick_escape",
+    "saturns_origins:magic_platform"
   ],
   "icon": "minecraft:chorus_fruit",
   "order": 7,
