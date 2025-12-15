@@ -10,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import rings_of_saturn.github.io.saturns_origins.block.custom.MagicPlatformBlock;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
@@ -37,6 +38,9 @@ public class BlockGen {
     }
 
     public static final Block CHORUSFRUITBORN_PORTAL = createBlock(PortalBlock::new, Identifier.of(MOD_ID, "chorusfruitborn_portal"), AbstractBlock.Settings.copy(Blocks.NETHER_PORTAL));
+
+    public static final Block MAGICPLATFORMBLOCK = createBlock(MagicPlatformBlock::new, Identifier.of(MOD_ID, "magicplatformblock"),AbstractBlock.Settings.create().strength(-1f).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
+
 
     public static void registerModBlocks(){
 

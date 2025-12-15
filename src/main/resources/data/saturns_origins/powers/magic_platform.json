@@ -1,0 +1,258 @@
+{
+  "type": "origins:multiple",
+  "place_block": {
+    "type": "origins:active_self",
+    "entity_action": {
+      "type": "origins:and",
+      "actions": [
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": 1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": 1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": -1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": -1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "z": -1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "z": -1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "z": 1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "z": 1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": -1,
+              "z": -1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": -1,
+              "z": -1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": -1,
+              "z": 1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": -1,
+              "z": 1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": 1,
+              "z": 1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": 1,
+              "z": 1
+            }
+          }
+        },
+        {
+          "type": "origins:block_action_at",
+          "block_action": {
+            "type": "origins:if_else",
+            "condition": {
+              "type": "origins:offset",
+              "condition": {
+                "type": "origins:block",
+                "block": "minecraft:air"
+              },
+              "y": -1,
+              "x": 1,
+              "z": -1
+            },
+            "if_action": {
+              "type": "origins:offset",
+              "action": {
+                "type": "origins:add_block",
+                "block": "saturns_origins:magicplatformblock"
+              },
+              "y": -2,
+              "x": 1,
+              "z": -1
+            }
+          }
+        }
+      ]
+    },
+    "key": {
+      "key": "key.sneak"
+    },
+    "condition": {
+      "type": "origins:and",
+      "conditions": [
+        {
+          "type": "origins:on_block",
+          "inverted": true
+        },
+        {
+          "type": "origins:fall_flying",
+          "inverted": true
+        },
+        {
+          "type": "origins:creative_flying",
+          "inverted": true
+        },
+        {
+          "type": "origins:gamemode",
+          "gamemode": "spectator",
+          "inverted": true
+        }
+      ]
+    }
+  }
+}
