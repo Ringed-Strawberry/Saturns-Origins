@@ -1,0 +1,16 @@
+{
+  "name": "Void Gateway",
+  "description": "You can channel the power of the void through an eye of ender to create a portal through space to a location you set before(use the keybind while sneaking)",
+  "type": "origins:active_self",
+  "entity_action": {
+    "type": "origins:play_sound",
+    "sound": "minecraft:item.chorus_fruit.teleport"
+  },
+  "cooldown": 1600,
+  "hud_render": {
+    "should_render": true
+  },
+  "key": {
+    "key": "key.origins.secondary_active"
+  }
+}

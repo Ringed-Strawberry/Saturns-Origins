@@ -10,10 +10,14 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlock
 public class PortalBlockEntityTicker implements BlockEntityTicker {
     @Override
     public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        if(blockEntity instanceof PortalBlockEntity portalBlockEntity){
+        if(!world.isClient() && blockEntity instanceof PortalBlockEntity portalBlockEntity){
             if(portalBlockEntity.getTimer()-1 >= 0)
                 portalBlockEntity.decrementTimer();
             else{
+                world.removeBlock(pos, false);
+                world.removeBlockEntity(pos);
+            }
+            if(world.getServer().getPlayerManager().getPlayer(portalBlockEntity.getPlayerName()) == null){
                 world.removeBlock(pos, false);
                 world.removeBlockEntity(pos);
             }

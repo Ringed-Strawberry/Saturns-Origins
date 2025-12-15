@@ -18,6 +18,8 @@ public class PortalBlockEntity extends BlockEntity {
 
 
     private String playerName = "";
+    private int[] pos = new int[3];
+    private int timer = 40*20;
 
     public String getPlayerName() {
         return this.playerName;
@@ -28,9 +30,14 @@ public class PortalBlockEntity extends BlockEntity {
         markDirty();
     }
 
+    public void setPos(int[] newPos) {
+        this.pos = newPos;
+        markDirty();
+    }
 
-
-    private int timer = 40*20;
+    public int[] getTPPos() {
+        return this.pos;
+    }
 
     public int getTimer() {
         return this.timer;
@@ -44,6 +51,7 @@ public class PortalBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt) {
         nbt.putString("playerName", this.playerName);
+        nbt.putIntArray("pos", this.pos);
         nbt.putInt("timer", this.timer);
 
         super.writeNbt(nbt);
@@ -53,6 +61,7 @@ public class PortalBlockEntity extends BlockEntity {
     public void readNbt(NbtCompound nbt) {
         this.playerName = nbt.getString("playerName");
         this.timer = nbt.getInt("timer");
+        this.pos = nbt.getIntArray("pos");
 
         super.readNbt(nbt);
     }
