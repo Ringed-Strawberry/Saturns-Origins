@@ -12,5 +12,27 @@
   },
   "key": {
     "key": "key.origins.secondary_active"
+  },
+  "condition": {
+    "type": "origins:and",
+    "conditions": [
+      {
+        "type": "origins:sneaking",
+        "inverted": true
+
+      },
+      {
+        "type": "origins:inventory",
+        "process_mode": "items",
+        "item_condition": {
+          "type": "origins:ingredient",
+          "ingredient": {
+            "item": "minecraft:ender_eye"
+          }
+        },
+        "comparison": ">=",
+        "compare_to": 1
+      }
+    ]
   }
 }

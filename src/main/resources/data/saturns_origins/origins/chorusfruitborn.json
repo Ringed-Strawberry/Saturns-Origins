@@ -17,7 +17,8 @@
     "saturns_origins:wall_jump",
     "saturns_origins:quick_escape",
     "saturns_origins:backstab",
-    "saturns_origins:void_gateway"
+    "saturns_origins:void_gateway",
+    "saturns_origins:magic_platform"
   ],
   "icon": "minecraft:chorus_fruit",
   "order": 7,
