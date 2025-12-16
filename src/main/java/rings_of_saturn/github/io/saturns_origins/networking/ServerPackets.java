@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
@@ -62,9 +63,10 @@ public class ServerPackets {
                                         blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(serverPlayerEntity));
                                     }
                                     BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(serverPlayerEntity)).add(0, 1, 0);
-                                    serverPlayerEntity.getWorld().setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
-                                    serverPlayerEntity.getWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true)));
-                                    if (serverPlayerEntity.getWorld().getBlockEntity(returnPortalPos) instanceof PortalBlockEntity blockEntity) {
+                                    World TPWorld = PortalPositionUtil.getPortalWorld(serverPlayerEntity);
+                                    TPWorld.setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
+                                    TPWorld.addBlockEntity(ModBlockEntities.PORTAL.instantiate(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true)));
+                                    if (TPWorld.getBlockEntity(returnPortalPos) instanceof PortalBlockEntity blockEntity) {
                                         int[] returnPos = new int[3];
                                         returnPos[0] = serverPlayerEntity.getBlockPos().getX();
                                         returnPos[1] = serverPlayerEntity.getBlockPos().getY();
