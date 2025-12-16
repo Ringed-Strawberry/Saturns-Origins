@@ -30,10 +30,8 @@ public class KeyInputHandler {
                                 player.sendMessage(Text.of("looking at entity"));
                                 EntityHitResult entityHit = (EntityHitResult) hit;
                                 Entity entity = entityHit.getEntity();
-                                Vec3d pos = entity.getPos().add(
-                                        -entity.getHorizontalFacing().getOffsetX(),
-                                        -entity.getHorizontalFacing().getOffsetY(),
-                                        -entity.getHorizontalFacing().getOffsetZ());
+                                Vec3d vec = Vec3d.fromPolar(0,entity.getYaw()).normalize();
+                                Vec3d pos = entity.getPos().subtract(vec.multiply(1.0));
                                 PacketByteBuf buf = PacketByteBufs.create();
                                 buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                                 buf.writeFloat(entity.getYaw());

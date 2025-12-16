@@ -12,5 +12,13 @@
   },
   "key": {
     "key": "key.origins.primary_active"
+  },
+  "condition": {
+    "type": "origins:raycast",
+    "distance": 3,
+    "block": false,
+    "entity": true,
+    "shape_type": "outline"
+
   }
 }

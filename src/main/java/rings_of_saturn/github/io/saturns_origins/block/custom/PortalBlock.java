@@ -9,9 +9,11 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -53,7 +55,15 @@ public class PortalBlock extends BlockWithEntity {
             } else {
                 TPPos = new Vec3d(blockEntity.getTPPos()[0], blockEntity.getTPPos()[1], blockEntity.getTPPos()[2]);
             }
+
+            Vec3d intialVelocity = entity.getVelocity();
             entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch());
+
+            entity.setVelocity(intialVelocity);
+
+            if (entity instanceof ServerPlayerEntity serverPlayer){
+                serverPlayer.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(serverPlayer));
+            }
         }
         super.onEntityCollision(state, world, pos, entity);
     }
