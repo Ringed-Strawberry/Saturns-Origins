@@ -1,11 +1,14 @@
 package rings_of_saturn.github.io.saturns_origins.networking;
 
 import io.github.apace100.origins.Origins;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
@@ -13,23 +16,27 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlock
 import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.components.util.PortalPositionUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
+import rings_of_saturn.github.io.saturns_origins.util.PosUtil;
 
-public class Packets {
+public class ServerPackets {
 
     public static void registerC2SPackets(){
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.BACKSTAB_PACKET_ID,
                 (minecraftServer, serverPlayerEntity,
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> {
-                    BlockPos pos = packetByteBuf.readBlockPos();
+                    Vec3d pos = PosUtil.getVec3dFromString(packetByteBuf.readString());
                     float yaw = packetByteBuf.readFloat();
                     minecraftServer.execute(() -> {
                         if(CooldownUtil.isBackstabCooldownOver(serverPlayerEntity)) {
                             Origins.LOGGER.info(pos);
                             Origins.LOGGER.info(yaw);
-                            serverPlayerEntity.setPosition(pos.toCenterPos());
+                            serverPlayerEntity.setPosition(pos);
                             serverPlayerEntity.setYaw(yaw);
-                            serverPlayerEntity.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), yaw, serverPlayerEntity.getPitch());
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
+                            buf.writeFloat(yaw);
+                            ServerPlayNetworking.send(serverPlayerEntity, PacketConstants.BACKSTAB_UPDATE_POS_ID, buf);
                             CooldownUtil.resetBackstabCooldown(serverPlayerEntity);
                         }
                     });
@@ -44,6 +51,7 @@ public class Packets {
                             for (int i = 0; i < serverPlayerEntity.getInventory().size(); ++i) {
                                 ItemStack stack = serverPlayerEntity.getInventory().getStack(i);
                                 if (stack.getItem() == Items.ENDER_EYE) {
+                                    serverPlayerEntity.setPortalCooldown(10);
                                     stack.decrement(1);
                                     BlockState defaultState = BlockGen.CHORUSFRUITBORN_PORTAL.getDefaultState();
                                     BlockPos pos = serverPlayerEntity.getBlockPos().add(0, 1, 0);
@@ -51,6 +59,7 @@ public class Packets {
                                     serverPlayerEntity.getWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(pos, defaultState));
                                     if (serverPlayerEntity.getWorld().getBlockEntity(pos) instanceof PortalBlockEntity blockEntity) {
                                         blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
+                                        blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(serverPlayerEntity));
                                     }
                                     BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(serverPlayerEntity)).add(0, 1, 0);
                                     serverPlayerEntity.getWorld().setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
@@ -61,6 +70,7 @@ public class Packets {
                                         returnPos[1] = serverPlayerEntity.getBlockPos().getY();
                                         returnPos[2] = serverPlayerEntity.getBlockPos().getZ();
                                         blockEntity.setPos(returnPos);
+                                        blockEntity.setDim(serverPlayerEntity.getWorld().getRegistryKey().getValue().toString());
                                         blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
                                     }
                                     CooldownUtil.resetPortalCooldown(serverPlayerEntity);
@@ -75,6 +85,7 @@ public class Packets {
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> {
                     minecraftServer.execute(() -> {
+                        PortalPositionUtil.setPortalWorld(serverPlayerEntity);
                         PortalPositionUtil.setPortalPos(serverPlayerEntity, serverPlayerEntity.getPos());
                     });
                 });

@@ -8,11 +8,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -38,25 +41,19 @@ public class PortalBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if(world.getBlockEntity(pos) instanceof PortalBlockEntity blockEntity){
-            blockEntity.setPlayerName(placer.getName().getString());
-        }
-        super.onPlaced(world, pos, state, placer, itemStack);
-    }
-
-    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if(!world.isClient() && world.getBlockEntity(pos) instanceof PortalBlockEntity blockEntity && entity.getPortalCooldown() == 0) {
             entity.setPortalCooldown(40);
             Vec3d TPPos;
+
+            ServerWorld TPWorld = world.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(blockEntity.getDim())));
             if (!state.get(RETURN_PORTAL)) {
                 PlayerEntity player = world.getServer().getPlayerManager().getPlayer(blockEntity.getPlayerName());
                 TPPos = PortalPositionUtil.getPortalPos(player);
             } else {
                 TPPos = new Vec3d(blockEntity.getTPPos()[0], blockEntity.getTPPos()[1], blockEntity.getTPPos()[2]);
             }
-            entity.teleport(TPPos.getX(), TPPos.getY(), TPPos.getZ());
+            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch());
         }
         super.onEntityCollision(state, world, pos, entity);
     }

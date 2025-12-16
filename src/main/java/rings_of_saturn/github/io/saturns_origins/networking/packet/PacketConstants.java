@@ -10,4 +10,5 @@ public class PacketConstants {
     public static final Identifier SET_PORTAL_PACKET_ID = Identifier.of(MOD_ID, "chorusfruitborn_set_portal");
 
     public static final Identifier SPAWN_PORTAL_PACKET_ID = Identifier.of(MOD_ID, "chorusfruitborn_spawn_portal");
+    public static final Identifier BACKSTAB_UPDATE_POS_ID = Identifier.of(MOD_ID, "backstab_update_pos");
 }

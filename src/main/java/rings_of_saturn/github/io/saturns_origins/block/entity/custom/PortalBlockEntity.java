@@ -18,6 +18,7 @@ public class PortalBlockEntity extends BlockEntity {
 
 
     private String playerName = "";
+    private String dim = "minecraft:overworld";
     private int[] pos = new int[3];
     private int timer = 40*20;
 
@@ -27,6 +28,11 @@ public class PortalBlockEntity extends BlockEntity {
 
     public void setPlayerName(String newName) {
         this.playerName = newName;
+        markDirty();
+    }
+
+    public void setDim(String newDim) {
+        this.dim = newDim;
         markDirty();
     }
 
@@ -43,6 +49,10 @@ public class PortalBlockEntity extends BlockEntity {
         return this.timer;
     }
 
+    public String getDim() {
+        return this.dim;
+    }
+
     public void decrementTimer() {
         this.timer--;
         markDirty();
@@ -51,6 +61,7 @@ public class PortalBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt) {
         nbt.putString("playerName", this.playerName);
+        nbt.putString("dim", this.dim);
         nbt.putIntArray("pos", this.pos);
         nbt.putInt("timer", this.timer);
 
@@ -60,6 +71,7 @@ public class PortalBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         this.playerName = nbt.getString("playerName");
+        this.dim = nbt.getString("dim");
         this.timer = nbt.getInt("timer");
         this.pos = nbt.getIntArray("pos");
 

@@ -10,7 +10,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
@@ -32,15 +31,13 @@ public class KeyInputHandler {
                                 EntityHitResult entityHit = (EntityHitResult) hit;
                                 Entity entity = entityHit.getEntity();
                                 Vec3d pos = entity.getPos().add(
-                                        -entity.getHorizontalFacing().getOffsetX() * 2,
-                                        -entity.getHorizontalFacing().getOffsetY() * 2,
-                                        -entity.getHorizontalFacing().getOffsetZ() * 2
-                                );
+                                        -entity.getHorizontalFacing().getOffsetX(),
+                                        -entity.getHorizontalFacing().getOffsetY(),
+                                        -entity.getHorizontalFacing().getOffsetZ());
                                 PacketByteBuf buf = PacketByteBufs.create();
-                                buf.writeBlockPos(new BlockPos((int) pos.x, (int) pos.y, (int) pos.z));
+                                buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                                 buf.writeFloat(entity.getYaw());
                                 ClientPlayNetworking.send(PacketConstants.BACKSTAB_PACKET_ID, buf);
-                                player.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), entity.getYaw(), player.getPitch());
                             }
                         }
                     }
