@@ -46,9 +46,11 @@ public class ServerPackets {
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> minecraftServer.execute(() -> {
                      if(CooldownUtil.isPortalCooldownOver(serverPlayerEntity)) {
+                         boolean hasEyes = false;
                          for (int i = 0; i < serverPlayerEntity.getInventory().size(); ++i) {
                              ItemStack stack = serverPlayerEntity.getInventory().getStack(i);
                              if (stack.getItem() == Items.ENDER_EYE) {
+                                 hasEyes = true;
                                  serverPlayerEntity.setPortalCooldown(10);
                                  stack.decrement(1);
                                  BlockState defaultState = BlockGen.CHORUSFRUITBORN_PORTAL.getDefaultState();
@@ -73,9 +75,10 @@ public class ServerPackets {
                                      blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
                                  }
                                  CooldownUtil.resetPortalCooldown(serverPlayerEntity);
-                             } else {
-                                 serverPlayerEntity.sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
                              }
+                         }
+                         if(!hasEyes){
+                             serverPlayerEntity.sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
                          }
                      }
                  }));
