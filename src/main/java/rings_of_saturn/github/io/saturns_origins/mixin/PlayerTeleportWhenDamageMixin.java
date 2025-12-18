@@ -43,7 +43,7 @@ public abstract class PlayerTeleportWhenDamageMixin extends LivingEntity {
                 if (this.teleport(g, h, j, true)) {
                         this.getWorld().emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(this));
                         SoundEvent soundEvent = SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                        this.getWorld().playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        this.getWorld().playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         this.playSound(soundEvent, 1.0F, 1.0F);
                         break;
                 }

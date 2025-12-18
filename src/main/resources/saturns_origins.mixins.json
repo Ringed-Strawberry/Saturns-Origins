@@ -5,11 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ChorusFruitMixin",
-    "NeutralEndermanMixin",
+    "NeutralEndermenMixin",
     "NeutralShulkerMixin",
     "PlayerCooldownMixin",
-    "PlayerTeleportWhenDamageMixin",
-    "PortalDetectorMixin"
+    "PlayerTeleportWhenDamageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

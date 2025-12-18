@@ -46,50 +46,46 @@ public class ServerPackets {
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SPAWN_PORTAL_PACKET_ID,
                 (minecraftServer, serverPlayerEntity,
                  serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> {
-                    minecraftServer.execute(() -> {
-                        if(CooldownUtil.isPortalCooldownOver(serverPlayerEntity)) {
-                            for (int i = 0; i < serverPlayerEntity.getInventory().size(); ++i) {
-                                ItemStack stack = serverPlayerEntity.getInventory().getStack(i);
-                                if (stack.getItem() == Items.ENDER_EYE) {
-                                    serverPlayerEntity.setPortalCooldown(10);
-                                    stack.decrement(1);
-                                    BlockState defaultState = BlockGen.CHORUSFRUITBORN_PORTAL.getDefaultState();
-                                    BlockPos pos = serverPlayerEntity.getBlockPos().add(0, 1, 0);
-                                    serverPlayerEntity.getWorld().setBlockState(pos, defaultState);
-                                    serverPlayerEntity.getWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(pos, defaultState));
-                                    if (serverPlayerEntity.getWorld().getBlockEntity(pos) instanceof PortalBlockEntity blockEntity) {
-                                        blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
-                                        blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(serverPlayerEntity));
-                                    }
-                                    BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(serverPlayerEntity)).add(0, 1, 0);
-                                    World TPWorld = PortalPositionUtil.getPortalWorld(serverPlayerEntity);
-                                    TPWorld.setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
-                                    TPWorld.addBlockEntity(ModBlockEntities.PORTAL.instantiate(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true)));
-                                    if (TPWorld.getBlockEntity(returnPortalPos) instanceof PortalBlockEntity blockEntity) {
-                                        int[] returnPos = new int[3];
-                                        returnPos[0] = serverPlayerEntity.getBlockPos().getX();
-                                        returnPos[1] = serverPlayerEntity.getBlockPos().getY();
-                                        returnPos[2] = serverPlayerEntity.getBlockPos().getZ();
-                                        blockEntity.setPos(returnPos);
-                                        blockEntity.setDim(serverPlayerEntity.getWorld().getRegistryKey().getValue().toString());
-                                        blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
-                                    }
-                                    CooldownUtil.resetPortalCooldown(serverPlayerEntity);
-                                }
-                            }
-                        }
-                    });
-                });
+                 packetSender) -> minecraftServer.execute(() -> {
+                     if(CooldownUtil.isPortalCooldownOver(serverPlayerEntity)) {
+                         for (int i = 0; i < serverPlayerEntity.getInventory().size(); ++i) {
+                             ItemStack stack = serverPlayerEntity.getInventory().getStack(i);
+                             if (stack.getItem() == Items.ENDER_EYE) {
+                                 serverPlayerEntity.setPortalCooldown(10);
+                                 stack.decrement(1);
+                                 BlockState defaultState = BlockGen.CHORUSFRUITBORN_PORTAL.getDefaultState();
+                                 BlockPos pos = serverPlayerEntity.getBlockPos().add(0, 1, 0);
+                                 serverPlayerEntity.getWorld().setBlockState(pos, defaultState);
+                                 serverPlayerEntity.getWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(pos, defaultState));
+                                 if (serverPlayerEntity.getWorld().getBlockEntity(pos) instanceof PortalBlockEntity blockEntity) {
+                                     blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
+                                     blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(serverPlayerEntity));
+                                 }
+                                 BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(serverPlayerEntity)).add(0, 1, 0);
+                                 World TPWorld = PortalPositionUtil.getPortalWorld(serverPlayerEntity);
+                                 TPWorld.setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
+                                 TPWorld.addBlockEntity(ModBlockEntities.PORTAL.instantiate(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true)));
+                                 if (TPWorld.getBlockEntity(returnPortalPos) instanceof PortalBlockEntity blockEntity) {
+                                     int[] returnPos = new int[3];
+                                     returnPos[0] = serverPlayerEntity.getBlockPos().getX();
+                                     returnPos[1] = serverPlayerEntity.getBlockPos().getY();
+                                     returnPos[2] = serverPlayerEntity.getBlockPos().getZ();
+                                     blockEntity.setPos(returnPos);
+                                     blockEntity.setDim(serverPlayerEntity.getWorld().getRegistryKey().getValue().toString());
+                                     blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
+                                 }
+                                 CooldownUtil.resetPortalCooldown(serverPlayerEntity);
+                             }
+                         }
+                     }
+                 }));
 
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SET_PORTAL_PACKET_ID,
                 (minecraftServer, serverPlayerEntity,
                  serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> {
-                    minecraftServer.execute(() -> {
-                        PortalPositionUtil.setPortalWorld(serverPlayerEntity);
-                        PortalPositionUtil.setPortalPos(serverPlayerEntity, serverPlayerEntity.getPos());
-                    });
-                });
+                 packetSender) -> minecraftServer.execute(() -> {
+                     PortalPositionUtil.setPortalWorld(serverPlayerEntity);
+                     PortalPositionUtil.setPortalPos(serverPlayerEntity);
+                 }));
     }
 }

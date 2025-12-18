@@ -23,6 +23,7 @@ public class MagicPlatformEntity extends BlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, MagicPlatformEntity entity) {
         if (entity.timer <= 0){
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            world.removeBlockEntity(pos);
             return;
         }
 

@@ -18,12 +18,11 @@ public class PortalPositionUtil {
     }
 
     public static void setPortalPos(PlayerEntity player){
-            ModComponents.PORTAL_POSITION.get(player).setValue(player.getPos());
+        setPortalPos(player, player.getPos());
     }
 
     public static ServerWorld getPortalWorld(PlayerEntity player){
-        ServerWorld TPWorld = player.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(ModComponents.PORTAL_WORLD.get(player).getValue())));
-        return TPWorld;
+        return player.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(ModComponents.PORTAL_WORLD.get(player).getValue())));
     }
 
     public static String getPortalWorldAsString(PlayerEntity player){
@@ -35,6 +34,6 @@ public class PortalPositionUtil {
     }
 
     public static void setPortalWorld(PlayerEntity player){
-        ModComponents.PORTAL_WORLD.get(player).setValue(player.getWorld().getRegistryKey().getValue().toString());
+        setPortalWorld(player, player.getWorld().getRegistryKey().getValue().toString());
     }
 }

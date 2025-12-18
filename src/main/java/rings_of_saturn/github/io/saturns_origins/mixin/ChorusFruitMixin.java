@@ -36,7 +36,7 @@ public class ChorusFruitMixin {
 
             for (int i = 0; i < 16; ++i) {
                 double g = user.getX() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) 16.0F;
-                double h = MathHelper.clamp(user.getY() + (double) (user.getRandom().nextInt(16) - 8), (double) world.getBottomY(), (double) (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1));
+                double h = MathHelper.clamp(user.getY() + (double) (user.getRandom().nextInt(16) - 8), world.getBottomY(), world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1);
                 double j = user.getZ() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) 16.0F;
                 if (user.hasVehicle()) {
                     user.stopRiding();
@@ -47,7 +47,7 @@ public class ChorusFruitMixin {
                     if (user.teleport(g, h, j, true)) {
                         world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
                         SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                        world.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         user.playSound(soundEvent, 1.0F, 1.0F);
                         break;
                     }
@@ -60,7 +60,7 @@ public class ChorusFruitMixin {
                     if (user.teleport(g, h, j, true)) {
                         world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
                         SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                        world.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         user.playSound(soundEvent, 1.0F, 1.0F);
                         break;
                     }

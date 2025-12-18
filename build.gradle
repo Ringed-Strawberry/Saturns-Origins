@@ -12,7 +12,6 @@ base {
 
 loom {
     splitEnvironmentSourceSets()
-    accessWidenerPath = file("src/main/resources/saturns_origins.classtweaker")
     mods {
         "saturns_origins" {
             sourceSet sourceSets.main
