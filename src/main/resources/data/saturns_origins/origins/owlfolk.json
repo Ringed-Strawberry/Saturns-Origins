@@ -1,0 +1,11 @@
+{
+  "powers": [
+    "origins:carnivore",
+    "origins:fall_immunity",
+    "origins:no_shield"
+  ],
+  "icon": "minecraft:golden_helmet",
+  "order": 8,
+  "impact": 2,
+  "name": "Owlfolk"
+}
