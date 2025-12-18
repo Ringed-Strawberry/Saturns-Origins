@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -75,6 +76,8 @@ public class ServerPackets {
                                      blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
                                  }
                                  CooldownUtil.resetPortalCooldown(serverPlayerEntity);
+                             } else {
+                                 serverPlayerEntity.sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
                              }
                          }
                      }
@@ -84,8 +87,9 @@ public class ServerPackets {
                 (minecraftServer, serverPlayerEntity,
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> minecraftServer.execute(() -> {
-                     PortalPositionUtil.setPortalWorld(serverPlayerEntity);
-                     PortalPositionUtil.setPortalPos(serverPlayerEntity);
+                    serverPlayerEntity.sendMessage(Text.of("Set portal position to " + serverPlayerEntity.getBlockPos().toShortString()), true);
+                    PortalPositionUtil.setPortalWorld(serverPlayerEntity);
+                    PortalPositionUtil.setPortalPos(serverPlayerEntity);
                  }));
     }
 }

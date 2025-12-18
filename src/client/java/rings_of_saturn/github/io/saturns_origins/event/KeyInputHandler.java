@@ -34,9 +34,11 @@ public class KeyInputHandler {
                             buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                             buf.writeFloat(entity.getYaw());
                             ClientPlayNetworking.send(PacketConstants.BACKSTAB_PACKET_ID, buf);
+                        } else {
+                            player.sendMessage(Text.of("This ability Requires you to Look at an entity"), true);
                         }
                     }
-                    //Portal Work
+                    //Portal
                     if (OriginsClient.useSecondaryActivePowerKeybind.isPressed()) {
                         if(player.isSneaking()){
                             PacketByteBuf buf = PacketByteBufs.create();
