@@ -11,7 +11,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
@@ -26,17 +25,15 @@ public class KeyInputHandler {
                         player.sendMessage(Text.of("key pressed"));
                         HitResult hit = client.crosshairTarget;
                         if (hit != null && hit.getType() == HitResult.Type.ENTITY) {
-                            if(CooldownUtil.isBackstabCooldownOver(player)) {
-                                player.sendMessage(Text.of("looking at entity"));
-                                EntityHitResult entityHit = (EntityHitResult) hit;
-                                Entity entity = entityHit.getEntity();
-                                Vec3d vec = Vec3d.fromPolar(0,entity.getYaw()).normalize();
-                                Vec3d pos = entity.getPos().subtract(vec.multiply(1.0));
-                                PacketByteBuf buf = PacketByteBufs.create();
-                                buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
-                                buf.writeFloat(entity.getYaw());
-                                ClientPlayNetworking.send(PacketConstants.BACKSTAB_PACKET_ID, buf);
-                            }
+                            player.sendMessage(Text.of("looking at entity"));
+                            EntityHitResult entityHit = (EntityHitResult) hit;
+                            Entity entity = entityHit.getEntity();
+                            Vec3d vec = Vec3d.fromPolar(0,entity.getYaw()).normalize();
+                            Vec3d pos = entity.getPos().subtract(vec.multiply(1.0));
+                            PacketByteBuf buf = PacketByteBufs.create();
+                            buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
+                            buf.writeFloat(entity.getYaw());
+                            ClientPlayNetworking.send(PacketConstants.BACKSTAB_PACKET_ID, buf);
                         }
                     }
                     //Portal Work

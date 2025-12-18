@@ -9,7 +9,7 @@ public class CooldownUtil {
     }
 
     public static void resetPortalCooldown(PlayerEntity player){
-        ModComponents.PORTAL_COOLDOWN.get(player).setValue(80*20);
+        ModComponents.PORTAL_COOLDOWN.get(player).setValue(1600);
     }
 
     public static void decrementBackstabCooldown(PlayerEntity player){
@@ -17,7 +17,7 @@ public class CooldownUtil {
     }
 
     public static void resetBackstabCooldown(PlayerEntity player){
-        ModComponents.BACKSTAB_COOLDOWN.get(player).setValue(15*20);
+        ModComponents.BACKSTAB_COOLDOWN.get(player).setValue(300);
     }
 
     public static boolean isPortalCooldownOver(PlayerEntity player){
