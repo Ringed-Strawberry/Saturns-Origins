@@ -22,10 +22,8 @@ public class KeyInputHandler {
                     //Backstab
                     PlayerEntity player = client.player;
                     if (OriginsClient.usePrimaryActivePowerKeybind.isPressed()) {
-                        player.sendMessage(Text.of("key pressed"));
                         HitResult hit = client.crosshairTarget;
                         if (hit != null && hit.getType() == HitResult.Type.ENTITY) {
-                            player.sendMessage(Text.of("looking at entity"));
                             EntityHitResult entityHit = (EntityHitResult) hit;
                             Entity entity = entityHit.getEntity();
                             Vec3d vec = Vec3d.fromPolar(0,entity.getYaw()).normalize();

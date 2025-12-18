@@ -1,6 +1,5 @@
 package rings_of_saturn.github.io.saturns_origins.networking;
 
-import io.github.apace100.origins.Origins;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
@@ -31,8 +30,6 @@ public class ServerPackets {
                     float yaw = packetByteBuf.readFloat();
                     minecraftServer.execute(() -> {
                         if(CooldownUtil.isBackstabCooldownOver(serverPlayerEntity)) {
-                            Origins.LOGGER.info(pos);
-                            Origins.LOGGER.info(yaw);
                             serverPlayerEntity.setPosition(pos);
                             serverPlayerEntity.setYaw(yaw);
                             PacketByteBuf buf = PacketByteBufs.create();
