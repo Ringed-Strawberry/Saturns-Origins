@@ -14,8 +14,8 @@ import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
-import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
-import rings_of_saturn.github.io.saturns_origins.components.util.PortalPositionUtil;
+import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
+import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 import rings_of_saturn.github.io.saturns_origins.util.PosUtil;
 

@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
+import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 

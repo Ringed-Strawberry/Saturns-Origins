@@ -1,4 +1,4 @@
-package rings_of_saturn.github.io.saturns_origins.components.util;
+package rings_of_saturn.github.io.saturns_origins.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import rings_of_saturn.github.io.saturns_origins.components.ModComponents;
@@ -26,5 +26,17 @@ public class CooldownUtil {
 
     public static boolean isBackstabCooldownOver(PlayerEntity player){
         return ModComponents.BACKSTAB_COOLDOWN.get(player).isOver();
+    }
+
+    public static void decrementInvisibilityCooldown(PlayerEntity player){
+        ModComponents.INVIS_COOLDOWN.get(player).decrement();
+    }
+
+    public static void resetInvisibilityCooldown(PlayerEntity player){
+        ModComponents.INVIS_COOLDOWN.get(player).setValue(150);
+    }
+
+    public static boolean isInvisibilityCooldownOver(PlayerEntity player){
+        return ModComponents.INVIS_COOLDOWN.get(player).isOver();
     }
 }

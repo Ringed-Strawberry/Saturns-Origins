@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
+import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 
 @Mixin(value = PlayerEntity.class)
 public class PlayerCooldownMixin {

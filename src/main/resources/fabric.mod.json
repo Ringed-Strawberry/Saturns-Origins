@@ -40,7 +40,8 @@
       "saturns_origins:portal_position",
       "saturns_origins:portal_dim",
       "saturns_origins:backstab_cooldown",
-      "saturns_origins:portal_cooldown"
+      "saturns_origins:portal_cooldown",
+      "saturns_origins:invis_cooldown"
     ]
   }
 }

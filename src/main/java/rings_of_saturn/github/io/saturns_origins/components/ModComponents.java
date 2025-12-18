@@ -6,10 +6,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.util.Identifier;
-import rings_of_saturn.github.io.saturns_origins.components.types.BackstabCooldownComponent;
-import rings_of_saturn.github.io.saturns_origins.components.types.PortalCooldownComponent;
-import rings_of_saturn.github.io.saturns_origins.components.types.PortalPositionComponent;
-import rings_of_saturn.github.io.saturns_origins.components.types.PortalWorldComponent;
+import rings_of_saturn.github.io.saturns_origins.components.types.*;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
 
@@ -22,6 +19,8 @@ public class ModComponents implements EntityComponentInitializer {
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "backstab_cooldown"), BackstabCooldownComponent.class);
     public static final ComponentKey<PortalCooldownComponent> PORTAL_COOLDOWN =
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "portal_cooldown"), PortalCooldownComponent.class);
+    public static final ComponentKey<InvisibilityCooldownComponent> INVIS_COOLDOWN =
+            ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "invis_cooldown"), InvisibilityCooldownComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry entityComponentFactoryRegistry) {
@@ -29,6 +28,6 @@ public class ModComponents implements EntityComponentInitializer {
         entityComponentFactoryRegistry.registerForPlayers(PORTAL_WORLD, PortalWorldComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(BACKSTAB_COOLDOWN, BackstabCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(PORTAL_COOLDOWN, PortalCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-
+        entityComponentFactoryRegistry.registerForPlayers(INVIS_COOLDOWN, InvisibilityCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
     }
 }

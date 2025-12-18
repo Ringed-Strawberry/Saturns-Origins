@@ -12,6 +12,12 @@ public class OriginUtil {
         return Origin.get(entity).get(layers).getName().getString().equals(name);
     }
 
+    public static boolean isOwlfolk(Entity entity){
+        OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));
+        if(Origin.get(entity).get(layers) != null)
+            return Origin.get(entity).get(layers).getName().getString().equals("Owlfolk");
+        return false;
+    }
 
     public static boolean isChorusfruitborn(Entity entity){
         OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));

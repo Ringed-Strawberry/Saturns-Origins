@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
 import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBlockEntityTicker;
-import rings_of_saturn.github.io.saturns_origins.components.util.PortalPositionUtil;
+import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
 
 public class PortalBlock extends BlockWithEntity {
     public static BooleanProperty RETURN_PORTAL = BooleanProperty.of("is_return_portal");

@@ -1,4 +1,4 @@
-package rings_of_saturn.github.io.saturns_origins.components.util;
+package rings_of_saturn.github.io.saturns_origins.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.RegistryKey;
