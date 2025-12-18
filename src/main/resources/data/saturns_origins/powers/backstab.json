@@ -9,8 +9,8 @@
   "cooldown": 300,
   "hud_render": {
     "should_render": true,
-    "sprite_location": "origins:textures/gui/resource_bar.png",
-    "bar_index": 10
+    "sprite_location": "saturns_origins:textures/gui/resource_bar.png",
+    "bar_index": 1
   },
   "key": {
     "key": "key.origins.primary_active"

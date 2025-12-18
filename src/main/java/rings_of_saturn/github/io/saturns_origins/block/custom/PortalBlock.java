@@ -56,10 +56,10 @@ public class PortalBlock extends BlockWithEntity {
                 TPPos = new Vec3d(blockEntity.getTPPos()[0], blockEntity.getTPPos()[1], blockEntity.getTPPos()[2]);
             }
 
-            Vec3d intialVelocity = entity.getVelocity();
+            Vec3d initialVelocity = entity.getVelocity();
             entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch());
 
-            entity.setVelocity(intialVelocity);
+            entity.setVelocity(initialVelocity);
 
             if (entity instanceof ServerPlayerEntity serverPlayer){
                 serverPlayer.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(serverPlayer));
