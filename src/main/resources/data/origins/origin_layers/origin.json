@@ -1,6 +1,7 @@
 {
   "replace": false,
   "origins": [
-    "saturns_origins:chorusfruitborn"
+    "saturns_origins:chorusfruitborn",
+    "saturns_origins:owlfolk"
   ]
 }

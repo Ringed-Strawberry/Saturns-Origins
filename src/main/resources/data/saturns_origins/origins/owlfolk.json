@@ -2,7 +2,12 @@
   "powers": [
     "origins:carnivore",
     "origins:fall_immunity",
-    "origins:no_shield"
+    "origins:no_shield",
+    "origins:velvet_paws",
+    "origins:cat_vision",
+    "saturns_origins:burns_marks_owl",
+    "saturns_origins:fragile_wings"
+
   ],
   "icon": "minecraft:golden_helmet",
   "order": 8,
