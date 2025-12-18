@@ -33,14 +33,13 @@ public class BackstabCooldownComponent implements IntComponent, AutoSyncedCompon
 
     @Override
     public void decrement() {
-        if(this.value-- >= 0) {
-            this.value--;
-            ModComponents.BACKSTAB_COOLDOWN.sync(this.provider);
+        if(this.getValue()-1 >= 0) {
+            this.setValue(getValue()-1);
         }
     }
 
     @Override
     public boolean isOver() {
-        return this.value <= 0;
+        return this.getValue() <= 0;
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
+import rings_of_saturn.github.io.saturns_origins.components.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
@@ -32,7 +33,7 @@ public class KeyInputHandler {
                             buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                             buf.writeFloat(entity.getYaw());
                             ClientPlayNetworking.send(PacketConstants.BACKSTAB_PACKET_ID, buf);
-                        } else {
+                        } else if (CooldownUtil.isBackstabCooldownOver(player)) {
                             player.sendMessage(Text.of("This ability Requires you to Look at an entity"), true);
                         }
                     }
