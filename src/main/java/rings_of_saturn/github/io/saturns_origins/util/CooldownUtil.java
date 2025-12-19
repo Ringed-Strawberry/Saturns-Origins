@@ -33,7 +33,7 @@ public class CooldownUtil {
     }
 
     public static void resetInvisibilityCooldown(PlayerEntity player){
-        ModComponents.INVIS_COOLDOWN.get(player).setValue(150);
+        ModComponents.INVIS_COOLDOWN.get(player).setValue(100);
     }
 
     public static boolean isInvisibilityCooldownOver(PlayerEntity player){
