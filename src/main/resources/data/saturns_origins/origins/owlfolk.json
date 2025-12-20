@@ -3,10 +3,13 @@
     "origins:carnivore",
     "origins:fall_immunity",
     "origins:no_shield",
-    "origins:velvet_paws",
     "origins:cat_vision",
     "saturns_origins:burns_marks_owl",
-    "saturns_origins:fragile_wings"
+    "saturns_origins:fragile_wings",
+    "saturns_origins:hollow_bones",
+    "saturns_origins:flammable_wings",
+    "saturns_origins,agile_claws",
+    "saturns_origins:4_hearts_remove"
 
   ],
   "icon": "minecraft:golden_helmet",

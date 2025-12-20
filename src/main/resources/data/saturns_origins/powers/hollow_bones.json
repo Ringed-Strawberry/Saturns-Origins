@@ -1,0 +1,13 @@
+{
+  "name": "Hollow bones",
+  "type": "origins:modify_damage_taken",
+  "damage_condition": {
+    "type": "origins:projectile"
+  },
+
+  "modifier": {
+    "name": "Weak to fire",
+    "operation": "multiply_base",
+    "value": 1
+  }
+}

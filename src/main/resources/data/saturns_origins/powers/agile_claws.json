@@ -1,0 +1,10 @@
+{
+  "name": "Agile Claws",
+  "type": "origins:attribute",
+  "modifier": {
+    "name": "Attack Speed increase",
+    "attribute": "minecraft:generic.attack_speed",
+    "value": 0.33,
+    "operation": "addition"
+  }
+}
