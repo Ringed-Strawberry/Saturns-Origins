@@ -8,8 +8,12 @@
     "saturns_origins:fragile_wings",
     "saturns_origins:hollow_bones",
     "saturns_origins:flammable_wings",
-    "saturns_origins,agile_claws",
-    "saturns_origins:4_hearts_remove"
+    "saturns_origins:agile_claws",
+    "saturns_origins:4_hearts_remove",
+    "saturns_origins:between_rocks",
+    "saturns_origins:night_owl",
+    "saturns_origins:natural_gliding",
+    "saturns_origins:no_footstep"
 
   ],
   "icon": "minecraft:golden_helmet",

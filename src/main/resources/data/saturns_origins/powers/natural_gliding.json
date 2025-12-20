@@ -1,0 +1,26 @@
+{
+  "name": "Natural Gliding",
+  "type": "origins:multiple",
+  "toggle": {
+    "type": "origins:toggle",
+    "active_by_default": false,
+    "retain_state": false,
+    "key": {
+      "key": "key.origins.secondary_active"
+    },
+    "condition": {
+      "type": "origins:fall_flying",
+      "inverted": true
+    }
+  },
+
+  "slow_falling": {
+    "type": "apoli:modify_falling",
+    "velocity": 0.01,
+    "take_fall_damage": false,
+    "condition": {
+      "type": "origins:power_active",
+      "power": "saturns_origins:natural_gliding_toggle"
+    }
+  }
+}

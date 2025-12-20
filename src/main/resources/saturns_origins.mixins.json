@@ -8,6 +8,7 @@
     "InvisiblePlayerMixin",
     "NeutralEndermenMixin",
     "NeutralShulkerMixin",
+    "NoFootstepMixin",
     "PlayerCooldownMixin",
     "PlayerTeleportWhenDamageMixin"
   ],

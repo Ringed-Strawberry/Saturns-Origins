@@ -1,0 +1,30 @@
+{
+  "name": "Night Owl",
+  "type": "origins:conditioned_attribute",
+  "modifiers": [
+    {
+      "name": "Mouvement Speed increase",
+      "attribute": "minecraft:generic.movement_speed",
+      "value": 0.20,
+      "operation": "multiply_base"
+    },
+    {
+      "name": "Attack damage increase",
+      "attribute": "minecraft:generic.attack_damage",
+      "value": 2,
+      "operation": "addition"
+    }
+  ],
+  "condition": {
+    "type": "origins:and",
+    "conditions": [
+      {
+        "type": "origins:daytime",
+        "inverted": true
+      },
+      {
+        "type": "origins:exposed_to_sky"
+      }
+    ]
+  }
+}
