@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "saturns_origins:item/feather_projectile"
+  }
+}

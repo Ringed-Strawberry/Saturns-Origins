@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rings_of_saturn.github.io.saturns_origins.components.ModComponents;
 import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
@@ -45,13 +44,6 @@ public class InvisiblePlayerMixin {
                 player.setInvisible(false);
                 CooldownUtil.resetInvisibilityCooldown(player);
             }
-        }
-    }
-
-    @Inject(method = "getArmorVisibility", at=@At("HEAD"), cancellable = true)
-    private void makeArmorInvisible(CallbackInfoReturnable<Float> cir){
-        if(thisAsEntity.isPlayer() && OriginUtil.isOwlfolk(thisAsEntity) && thisAsEntity.isInvisible()) {
-            cir.setReturnValue(0f);
         }
     }
 }

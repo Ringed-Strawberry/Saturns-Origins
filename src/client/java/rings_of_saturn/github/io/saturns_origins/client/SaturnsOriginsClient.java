@@ -3,8 +3,11 @@ package rings_of_saturn.github.io.saturns_origins.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
+import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
 import rings_of_saturn.github.io.saturns_origins.particle.ModParticles;
 import rings_of_saturn.github.io.saturns_origins.particle.OneTickParticle;
 
@@ -17,6 +20,7 @@ public class SaturnsOriginsClient implements ClientModInitializer {
     public void onInitializeClient() {
         registerKeyInputs();
         registerS2CPackets();
+        EntityRendererRegistry.register(ModEntities.FEATHER_PROJECTILE, FlyingItemEntityRenderer::new);
         BlockRenderLayerMap.INSTANCE.putBlock(BlockGen.MAGICPLATFORMBLOCK, RenderLayer.getCutout());
         ParticleFactoryRegistry.getInstance().register(ModParticles.ONE_TICK_PARTICLE, OneTickParticle.Factory::new);
     }

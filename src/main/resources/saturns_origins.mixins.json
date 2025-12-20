@@ -4,13 +4,17 @@
   "package": "rings_of_saturn.github.io.saturns_origins.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AutoAimProjectileMixin",
+    "BloodlustEntityMixin",
+    "BloodlustLivingEntityMixin",
     "ChorusFruitMixin",
     "InvisiblePlayerMixin",
     "NeutralEndermenMixin",
     "NeutralShulkerMixin",
     "NoFootstepMixin",
     "PlayerCooldownMixin",
-    "PlayerTeleportWhenDamageMixin"
+    "PlayerTeleportWhenDamageMixin",
+    "SwarmPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

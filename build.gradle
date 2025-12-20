@@ -69,7 +69,7 @@ dependencies {
 
 
 
-    include "com.github.apace100:apoli:v${project.apoli_version}"
+    include(modApi("com.github.apace100:apoli:v${project.apoli_version}"))
 
     include(modApi("io.github.apace100:calio:${project.calio_version}"))
 
