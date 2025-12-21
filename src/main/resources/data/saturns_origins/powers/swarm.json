@@ -1,0 +1,26 @@
+{
+  "name": "Swarm of Feathers",
+  "type": "origins:multiple",
+  "charge": {
+    "type": "origins:resource",
+    "min": 0,
+    "max": 6,
+    "hud_render": {
+      "should_render": true,
+      "sprite_location": "saturns_origins:textures/gui/resource_bar_6.png",
+      "bar_index": 0
+    },
+    "start_value": 0
+  },
+  "increase": {
+    "type": "origins:action_on_hit",
+    "bientity_action": {
+      "type": "origins:actor_action",
+      "action": {
+        "type": "origins:change_resource",
+        "resource": "saturns_origins:swarm_charge",
+        "change": 1
+      }
+    }
+  }
+}

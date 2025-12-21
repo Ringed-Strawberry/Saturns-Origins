@@ -1,5 +1,6 @@
 package rings_of_saturn.github.io.saturns_origins.mixin;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,10 +21,4 @@ public class SwarmPlayerMixin {
     private void circleProjectiles(CallbackInfo ci){
 
     }
-
-    @Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;Z)Lnet/minecraft/entity/ItemEntity;", at=@At("HEAD"))
-    private void test(ItemStack stack, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir){
-        ResourceUtil.incrementSwarmCharge(thisAsPlayer);
-    }
-
 }

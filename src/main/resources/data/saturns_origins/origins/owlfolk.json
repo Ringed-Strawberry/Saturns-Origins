@@ -13,7 +13,8 @@
     "saturns_origins:between_rocks",
     "saturns_origins:night_owl",
     "saturns_origins:natural_gliding",
-    "saturns_origins:no_footstep"
+    "saturns_origins:no_footstep",
+    "saturns_origins:swarm"
 
   ],
   "icon": "minecraft:golden_helmet",
