@@ -1,5 +1,5 @@
 {
   "name": "Sneaky Bird",
   "type": "origins:simple",
-  "description": "After sneaking for a while, you blend in with your environment and become invisible until you get hit or are too close to another player"
+  "description": "Your sneaky nature as an animal of the woods makes it so you go invisible when far enough from players after sneaking for a short while (This effect dissapears when attacked)"
 }

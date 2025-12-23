@@ -1,5 +1,6 @@
 {
   "name": "Flammable Wings",
+  "description": "Your wings are highly flammable, making it so you cant use firework rockets with elytra",
   "type": "origins:prevent_item_use",
   "item_condition": {
     "type": "origins:ingredient",

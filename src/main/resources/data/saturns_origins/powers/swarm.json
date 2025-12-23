@@ -1,5 +1,6 @@
 {
   "name": "Swarm of Feathers",
+  "description": "You slowly start to form feathers from your wings to circle around you, the more attacks you deal the more feathers will appear(up to 6). You can release the feathers by punching",
   "type": "origins:multiple",
   "charge": {
     "type": "origins:resource",

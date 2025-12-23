@@ -1,5 +1,6 @@
 {
   "name": "Hollow bones",
+  "description": "Your bones make you weaker to projectiles and have 2 less hearts\n",
   "type": "origins:modify_damage_taken",
   "damage_condition": {
     "type": "origins:projectile"

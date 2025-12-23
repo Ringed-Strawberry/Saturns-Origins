@@ -14,11 +14,14 @@
     "saturns_origins:night_owl",
     "saturns_origins:natural_gliding",
     "saturns_origins:no_footstep",
-    "saturns_origins:swarm"
+    "saturns_origins:swarm",
+    "saturns_origins:wind_mastery",
+    "saturns_origins:bloodlust"
 
   ],
   "icon": "minecraft:golden_helmet",
   "order": 8,
   "impact": 2,
-  "name": "Owlfolk"
+  "name": "Owlfolk",
+  "description": "An elder and nocturnal species of owl-like humanoids which specialise in quick combat"
 }

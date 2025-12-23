@@ -1,5 +1,6 @@
 {
   "name": "Between a Rock and a Rock",
+  "description": "These caves are far too cramped for you to spread your wings, You gain slowness from the discomfort\n",
   "type": "origins:conditioned_attribute",
   "modifier":  {
     "name": "Movement speed decrease",
