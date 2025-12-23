@@ -27,6 +27,11 @@ public class ModEntities {
             Identifier.of(MOD_ID, "feather_projectile"),
             new Item(new Item.Settings()));
 
+    public static final Item FEATHER_UP_PROJECTILE_ITEM =  Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "feather_up_projectile"),
+            new Item(new Item.Settings()));
+
 
 
     public static void registerModEntities(){
