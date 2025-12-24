@@ -9,7 +9,13 @@
     "hud_render": {
       "should_render": true,
       "sprite_location": "saturns_origins:textures/gui/resource_bar_6.png",
-      "bar_index": 0
+      "bar_index": 0,
+      "condition": {
+        "type": "origins:resource",
+        "resource": "saturns_origins:swarm_charge",
+        "comparison": "!=",
+        "compare_to": 0
+      }
     },
     "start_value": 0
   },
@@ -22,6 +28,136 @@
         "resource": "saturns_origins:swarm_charge",
         "change": 1
       }
+    },
+    "condition": {
+      "type": "origins:resource",
+      "resource": "saturns_origins:swarm_is_active",
+      "comparison": "!=",
+      "compare_to": 0
+    }
+  },
+  "is_active": {
+    "type": "origins:resource",
+    "min": 0,
+    "max": 2,
+    "start_value": 1
+  },
+  "cooldown": {
+    "type": "origins:cooldown",
+    "cooldown": 200,
+    "hud_render": {
+      "should_render": true,
+      "sprite_location": "saturns_origins:textures/gui/resource_bar_6.png",
+      "bar_index": 0,
+      "inverted": true
+    }
+  },
+  "toggle": {
+    "type": "origins:active_self",
+    "key": {
+      "key": "key.origins.primary_active"
+    },
+    "entity_action": {
+      "type": "origins:if_else",
+      "condition": {
+        "type": "origins:resource",
+        "resource": "saturns_origins:swarm_is_active",
+        "comparison": "==",
+        "compare_to": 1
+      },
+      "if_action": {
+        "type": "origins:change_resource",
+        "resource": "saturns_origins:swarm_is_active",
+        "change": 1
+      },
+      "else_action": {
+        "type": "origins:and",
+        "actions": [
+          {
+            "type": "origins:change_resource",
+            "resource": "saturns_origins:swarm_is_active",
+            "change": -1
+          },
+          {
+            "type": "origins:trigger_cooldown",
+            "power": "saturns_origins:swarm_cooldown"
+          }
+        ]
+      }
+    },
+    "condition": {
+      "type": "origins:and",
+      "conditions": [
+        {
+          "type": "origins:resource",
+          "resource": "saturns_origins:swarm_is_active",
+          "comparison": "!=",
+          "compare_to": 0
+        },
+        {
+          "type": "origins:resource",
+          "resource": "saturns_origins:swarm_charge",
+          "comparison": "!=",
+          "compare_to": 0
+        }
+      ]
+    }
+  },
+  "exhaust": {
+    "type": "origins:action_over_time",
+    "interval": 1,
+    "condition": {
+      "type": "origins:resource",
+      "resource": "saturns_origins:swarm_is_active",
+      "comparison": "==",
+      "compare_to": 0
+    },
+    "entity_action": {
+      "type": "origins:if_else",
+      "condition": {
+        "type": "origins:resource",
+        "resource": "saturns_origins:swarm_cooldown",
+        "comparison": "==",
+        "compare_to": 0
+      },
+      "if_action": {
+        "type": "origins:change_resource",
+        "resource": "saturns_origins:swarm_is_active",
+        "change": 1
+      }
+    }
+  },
+  "counting_feathers":  {
+    "type": "origins:action_over_time",
+    "interval": 1,
+    "entity_action": {
+      "type": "origins:if_else",
+      "condition": {
+        "type": "origins:resource",
+        "resource": "saturns_origins:swarm_charge",
+        "comparison": "==",
+        "compare_to": 0
+      },
+      "if_action": {
+        "type": "origins:and",
+        "actions": [
+          {
+            "type": "origins:change_resource",
+            "resource": "saturns_origins:swarm_is_active",
+            "change": -2
+          },
+          {
+            "type": "origins:trigger_cooldown",
+            "power": "saturns_origins:swarm_cooldown"
+          }
+        ]
+      }
+    },
+    "condition": {
+      "type": "origins:resource",
+      "resource": "saturns_origins:swarm_is_active",
+      "comparison": "==",
+      "compare_to": 2
     }
   }
 }

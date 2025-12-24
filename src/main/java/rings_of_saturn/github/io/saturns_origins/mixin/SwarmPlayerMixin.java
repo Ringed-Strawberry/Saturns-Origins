@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ResourceUtil;
 
 @Mixin(value = PlayerEntity.class)

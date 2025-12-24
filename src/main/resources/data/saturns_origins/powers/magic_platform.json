@@ -1,6 +1,6 @@
 {
   "name": "Magic Platform",
-  "description": "You condense the void around you into a magical platform for you to stand on",
+  "description": "You condense the void around you into a magical platform for you to stand on (Only usable in the end)",
   "type": "origins:multiple",
   "place_block": {
     "type": "origins:active_self",
