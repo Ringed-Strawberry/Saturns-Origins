@@ -1,6 +1,6 @@
 {
   "name": "Burn Marks",
-  "description": "idk yet",
+  "description": "Your feathers are highly flammable, making you take double damage from fire\n",
   "type": "origins:modify_damage_taken",
   "damage_condition": {
     "type": "origins:in_tag",

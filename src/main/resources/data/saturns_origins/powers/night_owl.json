@@ -1,5 +1,6 @@
 {
   "name": "Night Owl",
+  "description": "Your nocturnal nature has made your body and eyes stronger with access to moonlight, giving you extra strength and speed during night time and giving you permanent night vision",
   "type": "origins:conditioned_attribute",
   "modifiers": [
     {

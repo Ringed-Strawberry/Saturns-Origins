@@ -1,4 +1,6 @@
 {
+  "name": "Magic Platform",
+  "description": "You condense the void around you into a magical platform for you to stand on (Only usable in the end)",
   "type": "origins:multiple",
   "place_block": {
     "type": "origins:active_self",
@@ -226,6 +228,11 @@
               "z": -1
             }
           }
+        },
+        {
+          "type": "origins:change_resource",
+          "resource": "saturns_origins:magic_platform_charges",
+          "change": -20
         }
       ]
     },
@@ -251,8 +258,45 @@
           "type": "origins:gamemode",
           "gamemode": "spectator",
           "inverted": true
+        },
+        {
+          "type": "origins:dimension",
+          "dimension": "minecraft:the_end"
+        },
+        {
+          "type": "origins:resource",
+          "resource": "saturns_origins:magic_platform_charges",
+          "comparison": ">=",
+          "compare_to": 20
         }
       ]
     }
+  },
+  "charges": {
+    "type": "origins:resource",
+    "min": 0,
+    "max": 60,
+    "hud_render": {
+      "should_render": true,
+      "sprite_location": "saturns_origins:textures/gui/resource_bar_3.png",
+      "bar_index": 0,
+      "condition": {
+        "type": "origins:resource",
+        "resource": "saturns_origins:magic_platform_charges",
+        "comparison": "==",
+        "compare_to": 60,
+        "inverted": true
+      }
+    },
+    "start_value": 60
+  },
+  "recharge": {
+    "type": "origins:action_over_time",
+    "entity_action": {
+      "type": "origins:change_resource",
+      "resource": "saturns_origins:magic_platform_charges",
+      "change": 1
+    },
+    "interval": 80
   }
 }

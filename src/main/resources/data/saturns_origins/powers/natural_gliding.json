@@ -1,5 +1,6 @@
 {
   "name": "Natural Gliding",
+  "description": "Your wings let you glide in the air and make it so you dont take any fall damage",
   "type": "origins:multiple",
   "toggle": {
     "type": "origins:toggle",

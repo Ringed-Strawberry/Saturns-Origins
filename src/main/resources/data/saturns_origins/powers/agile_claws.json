@@ -1,5 +1,6 @@
 {
   "name": "Agile Claws",
+  "description": "Your claws let you attack faster than other origins",
   "type": "origins:attribute",
   "modifier": {
     "name": "Attack Speed increase",
