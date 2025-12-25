@@ -32,8 +32,8 @@
     "condition": {
       "type": "origins:resource",
       "resource": "saturns_origins:swarm_is_active",
-      "comparison": "!=",
-      "compare_to": 0
+      "comparison": "==",
+      "compare_to": 1
     }
   },
   "is_active": {
