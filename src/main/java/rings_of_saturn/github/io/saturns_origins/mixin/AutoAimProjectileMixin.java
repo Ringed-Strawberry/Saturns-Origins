@@ -6,7 +6,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -32,7 +31,7 @@ public class AutoAimProjectileMixin {
     @Inject(method = "tick", at=@At("HEAD"))
     private void tickInvisibility(CallbackInfo ci){
         if(thisAsEntity.getOwner() != null /*&& !ProjectileUtil.getAutoAimTP(thisAsEntity)*/ && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
-            double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 3 : 1.5;
+            double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 8 : 4;
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
                 storedTarget = null;
@@ -40,12 +39,17 @@ public class AutoAimProjectileMixin {
 
             LivingEntity closestEntity = thisAsEntity.getWorld().getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
                     (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
-                    new Box(thisAsEntity.getBlockX()+range, thisAsEntity.getBlockY()+range, thisAsEntity.getBlockZ()+range,
-                            thisAsEntity.getBlockX()-range, thisAsEntity.getBlockY()-range, thisAsEntity.getBlockZ()-range));
-            // Commented the old code in case
-            if(closestEntity != null /*&& !closestEntity.isBlocking()*/){
-
+                    Box.of(thisAsEntity.getPos(), range,range,range));
+                    // Commented the old code in case
+            if(closestEntity != null && closestEntity != storedTarget /*&& !closestEntity.isBlocking()*/){
+                thisAsEntity.setPortalCooldown(5);
+                thisAsEntity.setNoGravity(true);
+                thisAsEntity.setVelocity(0,0,0);
                 storedTarget = closestEntity;
+                if(thisAsEntity.getOwner().isPlayer()) {
+                    PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
+                    owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1, 0);
+                }
 
                 ProjectileUtil.setAutoAimTP(thisAsEntity, true);
 
@@ -59,7 +63,12 @@ public class AutoAimProjectileMixin {
                 thisAsEntity.updatePosition(closestEntity.getEyePos().getX(), closestEntity.getEyePos().getY()+1f, closestEntity.getEyePos().getZ());
                 thisAsEntity.setVelocity(0, -1.5,0);*/
             }
-            if (storedTarget != null){
+            if (storedTarget != null && thisAsEntity.getPortalCooldown() == 0){
+                if(thisAsEntity.getOwner().isPlayer() && !thisAsEntity.isOnGround()) {
+                    PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
+                    owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_DEEPSLATE_HIT, SoundCategory.PLAYERS, 1, 0);
+                }
+                thisAsEntity.setNoGravity(false);
                 Vec3d targetPos = storedTarget.getBoundingBox().getCenter();
                 Vec3d arrowPos = thisAsEntity.getPos();
                 Vec3d direction = targetPos.subtract(arrowPos).normalize();
