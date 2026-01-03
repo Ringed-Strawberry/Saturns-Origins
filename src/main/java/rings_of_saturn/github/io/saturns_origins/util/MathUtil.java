@@ -10,4 +10,13 @@ public class MathUtil {
         }
         return array;
     }
+
+    public static Vec3d[] getOffsetPointsInCircle(Vec3d center, int points, double radius,double offset){
+        Vec3d[] array = new Vec3d[points];
+        double offsetRad = Math.toRadians(offset);
+        for (int i = 0; i < points; i++) {
+            array[i] = new Vec3d(center.getX()+(radius * Math.cos(((Math.PI *2 / points) * i)+ offsetRad)), center.getY(), center.getZ()+(radius * Math.sin(((Math.PI *2 / points) * i)+ offsetRad)));
+        }
+        return array;
+    }
 }

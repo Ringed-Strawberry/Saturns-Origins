@@ -35,7 +35,8 @@ public class SwarmPlayerMixin {
     @Inject(method = "tick", at=@At("HEAD"))
     private void circleProjectiles(CallbackInfo ci) {
             int charge = ResourceUtil.getSwarmCharge(thisAsPlayer);
-            Vec3d[] circlePos = MathUtil.getPointsInCircle(thisAsPlayer.getPos(), charge, 1);
+            double speed = 25.0;
+            Vec3d[] circlePos = MathUtil.getOffsetPointsInCircle(thisAsPlayer.getPos(), charge, 1,thisAsPlayer.age*speed);
         if (!thisAsPlayer.getWorld().isClient()){
             ServerWorld world = thisAsPlayer.getWorld().getServer().getWorld(thisAsPlayer.getWorld().getRegistryKey());
 
@@ -103,7 +104,7 @@ public class SwarmPlayerMixin {
 
 }
 
-    //Idk what that is, redoing it
+//Idk what that is, redoing it
 //        if (!thisAsPlayer.getWorld().isClient()) {
 //            ServerWorld world = thisAsPlayer.getWorld().getServer().getWorld(thisAsPlayer.getWorld().getRegistryKey());
 //            int charge = ResourceUtil.getSwarmCharge(thisAsPlayer);
