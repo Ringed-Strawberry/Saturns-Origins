@@ -7,6 +7,7 @@
   "authors": [],
   "contact": {},
   "license": "MIT",
+  "accessWidener" : "saturns_origins.accesswidener",
   "icon": "assets/saturns_origins/icon.png",
   "environment": "*",
   "entrypoints": {

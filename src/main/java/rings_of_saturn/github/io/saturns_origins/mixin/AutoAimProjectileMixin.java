@@ -3,6 +3,7 @@ package rings_of_saturn.github.io.saturns_origins.mixin;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -28,9 +29,19 @@ public class AutoAimProjectileMixin {
     @Unique
     private LivingEntity storedTarget = null;
 
+    @Unique
+    private Vec3d storedVel = null;
+
     @Inject(method = "tick", at=@At("HEAD"))
-    private void tickInvisibility(CallbackInfo ci){
-        if(thisAsEntity.getOwner() != null /*&& !ProjectileUtil.getAutoAimTP(thisAsEntity)*/ && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
+    private void autoAim(CallbackInfo ci){
+        PersistentProjectileEntity arrow = null;
+        boolean isInGround = true;
+        if(thisAsEntity instanceof PersistentProjectileEntity)
+            arrow = (PersistentProjectileEntity) thisAsEntity;
+        if(arrow != null){
+            isInGround = !arrow.inGround;
+        }
+        if(isInGround && thisAsEntity.getOwner() != null /*&& !ProjectileUtil.getAutoAimTP(thisAsEntity)*/ && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
             double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 8 : 4;
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
@@ -42,8 +53,9 @@ public class AutoAimProjectileMixin {
                     Box.of(thisAsEntity.getPos(), range,range,range));
                     // Commented the old code in case
             if(closestEntity != null && closestEntity != storedTarget /*&& !closestEntity.isBlocking()*/){
-                thisAsEntity.setPortalCooldown(5);
+                thisAsEntity.setPortalCooldown(10);
                 thisAsEntity.setNoGravity(true);
+                storedVel = thisAsEntity.getVelocity();
                 thisAsEntity.setVelocity(0,0,0);
                 storedTarget = closestEntity;
                 if(thisAsEntity.getOwner().isPlayer()) {
@@ -64,7 +76,7 @@ public class AutoAimProjectileMixin {
                 thisAsEntity.setVelocity(0, -1.5,0);*/
             }
             if (storedTarget != null && thisAsEntity.getPortalCooldown() == 0){
-                if(thisAsEntity.getOwner().isPlayer() && !thisAsEntity.isOnGround()) {
+                if(thisAsEntity.getOwner().isPlayer()) {
                     PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
                     owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_DEEPSLATE_HIT, SoundCategory.PLAYERS, 1, 0);
                 }
@@ -73,7 +85,7 @@ public class AutoAimProjectileMixin {
                 Vec3d arrowPos = thisAsEntity.getPos();
                 Vec3d direction = targetPos.subtract(arrowPos).normalize();
 
-                double speed = thisAsEntity.getVelocity().length();
+                double speed = thisAsEntity.getVelocity().equals(new Vec3d(0, 0, 0)) ? storedVel.length() : thisAsEntity.getVelocity().length();
 
                 Vec3d oldVelocity = thisAsEntity.getVelocity().normalize();
                 Vec3d newVelocity = oldVelocity.lerp(direction,0.65).normalize().multiply(speed);
