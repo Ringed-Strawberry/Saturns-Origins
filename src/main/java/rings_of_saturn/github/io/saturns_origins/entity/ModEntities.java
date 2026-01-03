@@ -18,7 +18,7 @@ public class ModEntities {
             Identifier.of(MOD_ID, "feather_projectile"),
             FabricEntityTypeBuilder.<FeatherProjectileEntity>create(SpawnGroup.MISC, FeatherProjectileEntity::new)
                     .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
-                    .trackRangeBlocks(4).trackedUpdateRate(10)
+                    .trackRangeBlocks(4).trackedUpdateRate(1)
                     .build()
     );
 

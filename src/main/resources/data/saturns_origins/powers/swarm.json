@@ -76,7 +76,8 @@
           {
             "type": "origins:change_resource",
             "resource": "saturns_origins:swarm_is_active",
-            "change": -1
+            "change": 0,
+            "operation": "set"
           },
           {
             "type": "origins:trigger_cooldown",

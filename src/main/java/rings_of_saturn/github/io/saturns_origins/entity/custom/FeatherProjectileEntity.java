@@ -54,6 +54,14 @@ public class FeatherProjectileEntity extends ThrownItemEntity {
     }
 
     @Override
+    public void tick() {
+        if (this.getOwner() == null){
+            this.kill();
+        }
+        super.tick();
+    }
+
+    @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
