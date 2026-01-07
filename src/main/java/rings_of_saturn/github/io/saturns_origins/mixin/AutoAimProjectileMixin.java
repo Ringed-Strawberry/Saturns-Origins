@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
@@ -36,12 +37,14 @@ public class AutoAimProjectileMixin {
     private void autoAim(CallbackInfo ci){
         PersistentProjectileEntity arrow = null;
         boolean isInGround = true;
+        if(thisAsEntity instanceof FeatherProjectileEntity feather && feather.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM))
+            return;
         if(thisAsEntity instanceof PersistentProjectileEntity)
             arrow = (PersistentProjectileEntity) thisAsEntity;
         if(arrow != null){
             isInGround = !arrow.inGround;
         }
-        if(isInGround && thisAsEntity.getOwner() != null /*&& !ProjectileUtil.getAutoAimTP(thisAsEntity)*/ && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
+        if(isInGround && thisAsEntity.getOwner() != null && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
             double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 8 : 4;
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
@@ -51,8 +54,7 @@ public class AutoAimProjectileMixin {
             LivingEntity closestEntity = thisAsEntity.getWorld().getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
                     (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
                     Box.of(thisAsEntity.getPos(), range,range,range));
-                    // Commented the old code in case
-            if(closestEntity != null && closestEntity != storedTarget /*&& !closestEntity.isBlocking()*/){
+            if(closestEntity != null && closestEntity != storedTarget){
                 thisAsEntity.setPortalCooldown(10);
                 thisAsEntity.setNoGravity(true);
                 storedVel = thisAsEntity.getVelocity();
@@ -64,16 +66,6 @@ public class AutoAimProjectileMixin {
                 }
 
                 ProjectileUtil.setAutoAimTP(thisAsEntity, true);
-
-                /*
-                ProjectileUtil.setAutoAimTP(thisAsEntity, true);
-                if(thisAsEntity.getOwner().isPlayer()) {
-                    PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
-                    owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1, 0);
-                }
-                thisAsEntity.teleport(closestEntity.getEyePos().getX(), closestEntity.getEyePos().getY()+1f, closestEntity.getEyePos().getZ());
-                thisAsEntity.updatePosition(closestEntity.getEyePos().getX(), closestEntity.getEyePos().getY()+1f, closestEntity.getEyePos().getZ());
-                thisAsEntity.setVelocity(0, -1.5,0);*/
             }
             if (storedTarget != null && thisAsEntity.getPortalCooldown() == 0){
                 if(thisAsEntity.getOwner().isPlayer()) {

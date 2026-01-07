@@ -4,7 +4,8 @@
   "package": "rings_of_saturn.github.io.saturns_origins.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "NoArmorMixin"
+    "NoArmorMixin",
+    "NoElytraMixin"
   ],
   "injectors": {
     "defaultRequire": 1

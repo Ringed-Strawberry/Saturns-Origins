@@ -11,8 +11,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
+import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 public class KeyInputHandler {
@@ -46,6 +46,15 @@ public class KeyInputHandler {
                             PacketByteBuf buf = PacketByteBufs.create();
                             ClientPlayNetworking.send(PacketConstants.SPAWN_PORTAL_PACKET_ID, buf);
                         }
+                    }
+                }
+                if (client.crosshairTarget != null && OriginUtil.isOwlfolk(client.player) && client.crosshairTarget.getType() == HitResult.Type.MISS) {
+                    if (client.options.attackKey.isPressed()) {
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        ClientPlayNetworking.send(PacketConstants.SWARM_ATTACK_PACKET_ID, buf);
+                    } else {
+                        PacketByteBuf buf = PacketByteBufs.create();
+                        ClientPlayNetworking.send(PacketConstants.SWARM_RESET_PACKET_ID, buf);
                     }
                 }
             }

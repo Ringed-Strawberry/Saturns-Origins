@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -14,10 +15,9 @@ import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
-import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
-import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
+import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import rings_of_saturn.github.io.saturns_origins.util.*;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
-import rings_of_saturn.github.io.saturns_origins.util.PosUtil;
 
 public class ServerPackets {
 
@@ -91,5 +91,33 @@ public class ServerPackets {
                     PortalPositionUtil.setPortalWorld(serverPlayerEntity);
                     PortalPositionUtil.setPortalPos(serverPlayerEntity);
                  }));
+
+        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_ATTACK_PACKET_ID,
+                (minecraftServer, serverPlayerEntity,
+                 serverPlayNetworkHandler, packetByteBuf,
+                 packetSender) -> minecraftServer.execute(() -> {
+                    if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && KeybindUtil.canAttack(serverPlayerEntity)){
+                        serverPlayerEntity.sendMessage(Text.of("birb atk"));
+                        KeybindUtil.setAttack(serverPlayerEntity, false);
+                        ResourceUtil.decrementSwarmCharge(serverPlayerEntity);
+                        ServerWorld world = minecraftServer.getWorld(serverPlayerEntity.getWorld().getRegistryKey());
+                        FeatherProjectileEntity entity = new FeatherProjectileEntity(world, serverPlayerEntity);
+                        entity.setVelocity(serverPlayerEntity, serverPlayerEntity.getPitch(), serverPlayerEntity.getYaw(), 0.0F, 1.5F, 1.0F);
+                        world.spawnEntity(entity);
+
+
+                        //actually like send out the feather
+                    }
+                }));
+
+        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_RESET_PACKET_ID,
+                (minecraftServer, serverPlayerEntity,
+                 serverPlayNetworkHandler, packetByteBuf,
+                 packetSender) -> minecraftServer.execute(() -> {
+                    if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && !KeybindUtil.canAttack(serverPlayerEntity)){
+                        serverPlayerEntity.sendMessage(Text.of("birb reset"));
+                        KeybindUtil.setAttack(serverPlayerEntity, true);
+                    }
+                }));
     }
 }

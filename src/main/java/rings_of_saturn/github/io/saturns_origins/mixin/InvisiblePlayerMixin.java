@@ -32,17 +32,18 @@ public class InvisiblePlayerMixin {
             boolean isPlayerInRange = PlayerUtil.isPlayerInRange(playerList, player.getX(), player.getY(), player.getZ(), 5);
             if (player.isSneaking()
                     && !isPlayerInRange) {
-                player.sendMessage(Text.of("pls help"), true);
                 if (CooldownUtil.isInvisibilityCooldownOver(player)) {
                     player.setInvisible(true);
-                    player.sendMessage(Text.of("boop"), true);
                 } else {
-                    player.sendMessage(Text.of(String.valueOf(ModComponents.INVIS_COOLDOWN.get(player).getValue())), true);
+                    player.sendMessage(Text.of(String.valueOf(Math.round((double) ModComponents.INVIS_COOLDOWN.get(player).getValue() /20*10.0)/10.0)), true);
                     CooldownUtil.decrementInvisibilityCooldown(player);
                 }
             } else {
                 player.setInvisible(false);
                 CooldownUtil.resetInvisibilityCooldown(player);
+            }
+            if(isPlayerInRange){
+                player.sendMessage(Text.of("You cant hide when nearby players!"), true);
             }
         }
     }

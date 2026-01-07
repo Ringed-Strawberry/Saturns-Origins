@@ -10,40 +10,63 @@ import net.minecraft.util.Identifier;
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
 
 public class ResourceUtil {
-    private static final PowerType<VariableIntPower> SWARM_CHARGE = PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_charge"));
-    private static final PowerType<VariableIntPower> IS_ACTIVE = PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_is_active"));
-
     public static int getSwarmCharge(PlayerEntity player){
-        if(PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE) != null)
-            return PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE).getValue();
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SWARM_CHARGE()) != null)
+            return getPowerComponent(player).getPower(SWARM_CHARGE()).getValue();
         return 0;
     }
 
+    public static PowerType<VariableIntPower> SWARM_CHARGE(){
+        if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "swarm_charge")))
+            return PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_charge"));
+        else
+            return null;
+    }
+
+    public static PowerType<VariableIntPower> IS_ACTIVE(){
+        if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "swarm_is_active")))
+            return PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_is_active"));
+        else
+            return null;
+    }
+
     public static void decrementSwarmCharge(PlayerEntity player){
-        if(PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE) != null)
-            PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE).decrement();
+        setSwarmCharge(player, getSwarmCharge(player)-1);
+    }
+
+    public static void setSwarmCharge(PlayerEntity player, int newValue){
+        if(getPowerComponent(player) != null){
+            getPowerComponent(player).getPower(SWARM_CHARGE()).setValue(newValue);
+            PowerHolderComponent.syncPower(player, SWARM_CHARGE());
+        }
+    }
+
+    public static PowerHolderComponent getPowerComponent(PlayerEntity player) {
+        if (PowerHolderComponent.KEY.maybeGet(player).isPresent())
+            return PowerHolderComponent.KEY.get(player);
+        return null;
     }
 
     public static void incrementSwarmCharge(PlayerEntity player){
-        if(canSwarmCharge(player))
-            PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE).increment();
+        if(canSwarmCharge(player) && getPowerComponent(player) != null)
+            getPowerComponent(player).getPower(SWARM_CHARGE()).increment();
     }
 
     public static void resetSwarmCharge(PlayerEntity player){
-        if(PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE) != null)
-            PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE).setValue(0);
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SWARM_CHARGE()) != null)
+            getPowerComponent(player).getPower(SWARM_CHARGE()).setValue(0);
     }
 
     public static boolean isSwarmActive(PlayerEntity player){
-        if(PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE) != null)
-            return PowerHolderComponent.KEY.get(player).getPower(IS_ACTIVE).getValue() == 2;
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SWARM_CHARGE()) != null)
+            return getPowerComponent(player).getPower(IS_ACTIVE()).getValue() == 2;
         else
             return false;
     }
 
     public static boolean canSwarmCharge(PlayerEntity player){
-        if(PowerHolderComponent.KEY.get(player).getPower(SWARM_CHARGE) != null)
-            return PowerHolderComponent.KEY.get(player).getPower(IS_ACTIVE).getValue() == 1;
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SWARM_CHARGE()) != null)
+            return getPowerComponent(player).getPower(IS_ACTIVE()).getValue() == 1;
         else
             return false;
     }

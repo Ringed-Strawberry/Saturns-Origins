@@ -27,6 +27,8 @@ public class ModComponents implements EntityComponentInitializer {
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "bloodlust_cooldown"), BloodlustCooldownComponent.class);
     public static final ComponentKey<ProjectileAutoAimComponent> PROJECTILE_HAS_TP =
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "has_tp"), ProjectileAutoAimComponent.class);
+    public static final ComponentKey<SwarmAttackComponent> SWARM_ATTACK =
+            ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "swarm_attack"), SwarmAttackComponent.class);
 
 
     @Override
@@ -36,6 +38,7 @@ public class ModComponents implements EntityComponentInitializer {
         entityComponentFactoryRegistry.registerForPlayers(BACKSTAB_COOLDOWN, BackstabCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(PORTAL_COOLDOWN, PortalCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(INVIS_COOLDOWN, InvisibilityCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        entityComponentFactoryRegistry.registerForPlayers(SWARM_ATTACK, SwarmAttackComponent::new, RespawnCopyStrategy.NEVER_COPY);
         entityComponentFactoryRegistry.registerFor(LivingEntity.class, BLOODLUST_COOLDOWN, BloodlustCooldownComponent::new);
         entityComponentFactoryRegistry.registerFor(ProjectileEntity.class, PROJECTILE_HAS_TP, ProjectileAutoAimComponent::new);
     }

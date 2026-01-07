@@ -4,7 +4,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,9 +21,8 @@ public class BloodlustLivingEntityMixin {
     @Inject(method = "damage", at=@At("HEAD"))
     private void applyGlow(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if (source.getAttacker() != null && source.getAttacker().isPlayer() && thisAsLivingEntity.isLiving()) {
-            LivingEntity thisAsLiving = (LivingEntity) thisAsLivingEntity;
+            LivingEntity thisAsLiving = thisAsLivingEntity;
             PlayerEntity attacker = (PlayerEntity) source.getAttacker();
-            attacker.sendMessage(Text.of("teeee"));
             if (!thisAsLiving.getWorld().isClient() && OriginUtil.isOwlfolk(attacker)) {
                 CooldownUtil.resetBloodlustCooldown(thisAsLiving);
             }
@@ -33,7 +31,7 @@ public class BloodlustLivingEntityMixin {
     @Inject(method = "tick", at=@At("HEAD"))
     private void applyBloodlustEffectsOnTick(CallbackInfo ci){
         if(thisAsLivingEntity.isLiving()) {
-            LivingEntity thisAsLiving = (LivingEntity) thisAsLivingEntity;
+            LivingEntity thisAsLiving = thisAsLivingEntity;
             if(thisAsLiving.getStatusEffect(StatusEffects.GLOWING) == null) {
                 if (!CooldownUtil.isBloodlustCooldownOver(thisAsLiving)) {
                     thisAsLiving.setGlowing(true);

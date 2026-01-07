@@ -41,6 +41,14 @@ public class FeatherProjectileEntity extends ThrownItemEntity {
         return itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
     }
 
+    @Override
+    public boolean isOnFire() {
+        if(this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM)){
+            return false;
+        }
+        return super.isOnFire();
+    }
+
     @Environment(EnvType.CLIENT)
     public void handleStatus(byte status) {
         if (status == 3) {
@@ -65,13 +73,14 @@ public class FeatherProjectileEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
+        if(!this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM))
+            entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
     }
 
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient) {
-            this.getWorld().sendEntityStatus(this, (byte)3);
+        if (!this.getWorld().isClient && !this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM)) {
+            this.kill();
             this.discard();
         }
     }
