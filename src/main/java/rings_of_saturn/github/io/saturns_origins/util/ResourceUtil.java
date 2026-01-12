@@ -1,6 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.util;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
+import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.apace100.apoli.power.VariableIntPower;
@@ -19,6 +20,13 @@ public class ResourceUtil {
     public static PowerType<VariableIntPower> SWARM_CHARGE(){
         if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "swarm_charge")))
             return PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_charge"));
+        else
+            return null;
+    }
+
+    public static PowerType<CooldownPower> BACKSTAB_COOLDOWN(){
+        if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "backstab")))
+            return PowerTypeRegistry.get(Identifier.of(MOD_ID, "backstab"));
         else
             return null;
     }
@@ -67,6 +75,18 @@ public class ResourceUtil {
     public static boolean canSwarmCharge(PlayerEntity player){
         if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SWARM_CHARGE()) != null)
             return getPowerComponent(player).getPower(IS_ACTIVE()).getValue() == 1;
+        else
+            return false;
+    }
+
+    public static void triggerBackstabCooldown(PlayerEntity player){
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(BACKSTAB_COOLDOWN()) != null)
+            getPowerComponent(player).getPower(BACKSTAB_COOLDOWN()).use();
+    }
+
+    public static boolean canBackstab(PlayerEntity player){
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(BACKSTAB_COOLDOWN()) != null)
+            return getPowerComponent(player).getPower(BACKSTAB_COOLDOWN()).canUse();
         else
             return false;
     }

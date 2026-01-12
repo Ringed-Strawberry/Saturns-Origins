@@ -29,14 +29,14 @@ public class ServerPackets {
                     Vec3d pos = PosUtil.getVec3dFromString(packetByteBuf.readString());
                     float yaw = packetByteBuf.readFloat();
                     minecraftServer.execute(() -> {
-                        if(CooldownUtil.isBackstabCooldownOver(serverPlayerEntity)) {
+                        if(ResourceUtil.canBackstab(serverPlayerEntity)) {
                             serverPlayerEntity.setPosition(pos);
                             serverPlayerEntity.setYaw(yaw);
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                             buf.writeFloat(yaw);
                             ServerPlayNetworking.send(serverPlayerEntity, PacketConstants.BACKSTAB_UPDATE_POS_ID, buf);
-                            CooldownUtil.resetBackstabCooldown(serverPlayerEntity);
+                            ResourceUtil.triggerBackstabCooldown(serverPlayerEntity);
                         }
                     });
         });
