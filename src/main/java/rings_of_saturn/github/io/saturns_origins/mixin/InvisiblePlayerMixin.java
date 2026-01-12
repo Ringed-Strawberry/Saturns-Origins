@@ -1,6 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.mixin;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -9,6 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rings_of_saturn.github.io.saturns_origins.components.ModComponents;
 import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
@@ -30,21 +32,38 @@ public class InvisiblePlayerMixin {
             playerList.addAll(player.getWorld().getPlayers());
             playerList.remove(player);
             boolean isPlayerInRange = PlayerUtil.isPlayerInRange(playerList, player.getX(), player.getY(), player.getZ(), 5);
-            if (player.isSneaking()
-                    && !isPlayerInRange) {
-                if (CooldownUtil.isInvisibilityCooldownOver(player)) {
-                    player.setInvisible(true);
-                } else {
-                    player.sendMessage(Text.of(String.valueOf(Math.round((double) ModComponents.INVIS_COOLDOWN.get(player).getValue() /20*10.0)/10.0)), true);
-                    CooldownUtil.decrementInvisibilityCooldown(player);
+            if (!PlayerUtil.getIsInvis(player)){
+                if (player.isSneaking()
+                        && !isPlayerInRange) {
+                    if (CooldownUtil.isInvisibilityCooldownOver(player)) {
+                        player.setInvisible(true);
+                        PlayerUtil.setIsInvis(player,true);
+                    } else {
+                        player.sendMessage(Text.of(String.valueOf(Math.round((double) ModComponents.INVIS_COOLDOWN.get(player).getValue() /20*10.0)/10.0)), true);
+                        CooldownUtil.decrementInvisibilityCooldown(player);
+                    }
+                }
+                if(player.isSneaking()
+                        &&isPlayerInRange){
+                    player.sendMessage(Text.of("You cant hide when nearby players!"), true);
                 }
             } else {
-                player.setInvisible(false);
-                CooldownUtil.resetInvisibilityCooldown(player);
+                if (isPlayerInRange) {
+                    player.setInvisible(false);
+                    PlayerUtil.setIsInvis(player,false);
+                    CooldownUtil.resetInvisibilityCooldown(player);
+                }
             }
-            if(isPlayerInRange){
-                player.sendMessage(Text.of("You cant hide when nearby players!"), true);
-            }
+        }
+    }
+
+    @Inject(method = "damage", at=@At("HEAD"))
+    private void damageUnInvisibility(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        if(thisAsEntity.isPlayer() && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity) && PlayerUtil.getIsInvis((PlayerEntity) thisAsEntity)){
+            PlayerEntity player = (PlayerEntity) thisAsEntity;
+            player.setInvisible(false);
+            PlayerUtil.setIsInvis(player,false);
+            CooldownUtil.resetInvisibilityCooldown(player);
         }
     }
 }

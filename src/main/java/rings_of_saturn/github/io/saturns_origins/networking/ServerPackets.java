@@ -97,7 +97,6 @@ public class ServerPackets {
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> minecraftServer.execute(() -> {
                     if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && KeybindUtil.canAttack(serverPlayerEntity)){
-                        serverPlayerEntity.sendMessage(Text.of("birb atk"));
                         KeybindUtil.setAttack(serverPlayerEntity, false);
                         ResourceUtil.decrementSwarmCharge(serverPlayerEntity);
                         ServerWorld world = minecraftServer.getWorld(serverPlayerEntity.getWorld().getRegistryKey());
@@ -115,7 +114,6 @@ public class ServerPackets {
                  serverPlayNetworkHandler, packetByteBuf,
                  packetSender) -> minecraftServer.execute(() -> {
                     if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && !KeybindUtil.canAttack(serverPlayerEntity)){
-                        serverPlayerEntity.sendMessage(Text.of("birb reset"));
                         KeybindUtil.setAttack(serverPlayerEntity, true);
                     }
                 }));

@@ -31,6 +31,8 @@ public class ModComponents implements EntityComponentInitializer {
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "swarm_attack"), SwarmAttackComponent.class);
     public static final ComponentKey<ProjectileIsUpComponent> PROJECTILE_IS_UP =
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "is_up"), ProjectileIsUpComponent.class);
+    public static final ComponentKey<IsInvisibleComponent> IS_INVIS =
+            ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "is_invis"), IsInvisibleComponent.class);
 
 
     @Override
