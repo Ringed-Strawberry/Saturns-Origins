@@ -1,30 +1,28 @@
 package rings_of_saturn.github.io.saturns_origins.entity.custom;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
+import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 
-public class FeatherProjectileEntity extends ThrownItemEntity {
+public class FeatherProjectileEntity extends PersistentProjectileEntity {
 
-    @Override
-    protected Item getDefaultItem() {
-        return ModEntities.FEATHER_PROJECTILE_ITEM;
+
+    public FeatherProjectileEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+        super(entityType, world);
     }
 
-    public FeatherProjectileEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
-        super(entityType, world);
+    public FeatherProjectileEntity(World world) {
+        super(ModEntities.FEATHER_PROJECTILE, world);
     }
 
     public FeatherProjectileEntity(World world, LivingEntity owner) {
@@ -35,30 +33,12 @@ public class FeatherProjectileEntity extends ThrownItemEntity {
         super(ModEntities.FEATHER_PROJECTILE, x, y, z, world);
     }
 
-    @Environment(EnvType.CLIENT)
-    private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getItem();
-        return itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
-    }
-
     @Override
     public boolean isOnFire() {
-        if(this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM)){
+        if(ProjectileUtil.getIsUp(this)){
             return false;
         }
         return super.isOnFire();
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void handleStatus(byte status) {
-        if (status == 3) {
-            ParticleEffect particleEffect = this.getParticleParameters();
-
-            for(int i = 0; i < 8; ++i) {
-                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
-            }
-        }
-
     }
 
     @Override
@@ -70,18 +50,38 @@ public class FeatherProjectileEntity extends ThrownItemEntity {
     }
 
     @Override
+    protected boolean tryPickup(PlayerEntity player) {
+        return false;
+    }
+
+    @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if(!this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM))
+        if(!ProjectileUtil.getIsUp(this))
             entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
     }
 
+    @Override
     protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        if (!this.getWorld().isClient && !this.getStack().getItem().equals(ModEntities.FEATHER_UP_PROJECTILE_ITEM)) {
-            this.kill();
-            this.discard();
-        }
+        if(!ProjectileUtil.getIsUp(this))
+            super.onCollision(hitResult);
+    }
+
+    @Override
+    protected void onBlockCollision(BlockState state) {
+        if(!ProjectileUtil.getIsUp(this))
+            super.onBlockCollision(state);
+    }
+
+    @Override
+    protected void onBlockHit(BlockHitResult blockHitResult) {
+        if(!ProjectileUtil.getIsUp(this))
+            super.onBlockHit(blockHitResult);
+    }
+
+    @Override
+    protected ItemStack asItemStack() {
+        return null;
     }
 }
