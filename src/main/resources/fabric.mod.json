@@ -46,7 +46,8 @@
       "saturns_origins:bloodlust_cooldown",
       "saturns_origins:has_tp",
       "saturns_origins:is_up",
-      "saturns_origins:swarm_attack"
+      "saturns_origins:swarm_attack",
+      "saturns_origins:is_invis"
     ]
   }
 }

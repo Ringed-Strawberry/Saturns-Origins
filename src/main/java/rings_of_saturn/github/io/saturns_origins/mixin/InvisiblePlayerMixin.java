@@ -42,6 +42,8 @@ public class InvisiblePlayerMixin {
                         player.sendMessage(Text.of(String.valueOf(Math.round((double) ModComponents.INVIS_COOLDOWN.get(player).getValue() /20*10.0)/10.0)), true);
                         CooldownUtil.decrementInvisibilityCooldown(player);
                     }
+                } else {
+                    CooldownUtil.resetInvisibilityCooldown(player);
                 }
                 if(player.isSneaking()
                         &&isPlayerInRange){
