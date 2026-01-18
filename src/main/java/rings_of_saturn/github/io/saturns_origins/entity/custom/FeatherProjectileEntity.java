@@ -12,7 +12,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
-import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 
 public class FeatherProjectileEntity extends PersistentProjectileEntity {
 
@@ -35,9 +34,6 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
 
     @Override
     public boolean isOnFire() {
-        if(ProjectileUtil.getIsUp(this)){
-            return false;
-        }
         return super.isOnFire();
     }
 

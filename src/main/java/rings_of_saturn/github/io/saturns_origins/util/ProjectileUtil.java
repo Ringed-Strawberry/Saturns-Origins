@@ -11,12 +11,4 @@ public class ProjectileUtil {
     public static void setAutoAimTP(ProjectileEntity projectile, boolean newValue){
         ModComponents.PROJECTILE_HAS_TP.get(projectile).setValue(newValue);
     }
-
-    public static boolean getIsUp(ProjectileEntity projectile){
-        return ModComponents.PROJECTILE_IS_UP.get(projectile).getValue();
-    }
-
-    public static void setIsUp(ProjectileEntity projectile, boolean newValue){
-        ModComponents.PROJECTILE_IS_UP.get(projectile).setValue(newValue);
-    }
 }

@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 import rings_of_saturn.github.io.saturns_origins.util.MathUtil;
-import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ResourceUtil;
 
 import java.util.ArrayList;
@@ -51,7 +50,6 @@ public class SwarmPlayerMixin {
                         entity.setNoGravity(true);
                         entity.setInvulnerable(true);
                         entity.setPos(circlePos[i].getX(), circlePos[i].getY(), circlePos[i].getZ());
-                        ProjectileUtil.setIsUp(entity, true);
 
                         world.spawnEntity(entity);
                         playerSwarm.add(entity);
