@@ -4,7 +4,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,7 +49,7 @@ public class InvisiblePlayerMixin {
                 }
                 if(player.isSneaking()
                         &&isPlayerInRange){
-                    player.sendMessage(Text.of("You cant hide when nearby players!"), true);
+                    player.sendMessage(Text.of("You cant hide when nearby players!").getWithStyle(Style.EMPTY.withColor(Colors.RED)).getFirst(), true);
                 }
             } else {
                 if (isPlayerInRange) {

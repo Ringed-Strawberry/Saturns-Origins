@@ -72,7 +72,6 @@ public class SwarmPlayerMixin {
 
                     if (feather.getWorld() == thisAsPlayer.getWorld()) {
                         Vec3d target = circlePos[i];
-
                         Vec3d vec = target.subtract(feather.getPos()).add(thisAsPlayer.getVelocity());
                         feather.setVelocity(vec);
                     }

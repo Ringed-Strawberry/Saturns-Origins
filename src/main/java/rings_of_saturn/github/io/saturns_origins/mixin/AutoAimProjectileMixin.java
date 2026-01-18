@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 
@@ -36,7 +37,7 @@ public class AutoAimProjectileMixin {
     private void autoAim(CallbackInfo ci){
         PersistentProjectileEntity arrow = null;
         boolean isInGround = true;
-        if(thisAsEntity instanceof FeatherProjectileEntity feather && ProjectileUtil.getIsUp(feather))
+        if(thisAsEntity instanceof FeatherUpProjectileEntity)
             return;
         if(thisAsEntity instanceof PersistentProjectileEntity)
             arrow = (PersistentProjectileEntity) thisAsEntity;
