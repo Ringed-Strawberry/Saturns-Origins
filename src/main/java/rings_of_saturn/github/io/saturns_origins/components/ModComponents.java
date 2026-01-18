@@ -31,6 +31,8 @@ public class ModComponents implements EntityComponentInitializer {
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "swarm_attack"), SwarmAttackComponent.class);
     public static final ComponentKey<IsInvisibleComponent> IS_INVIS =
             ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "is_invis"), IsInvisibleComponent.class);
+    public static final ComponentKey<InvulnerableFramesComponent> INVULNERABLE_FRAMES =
+            ComponentRegistry.getOrCreate(Identifier.of(MOD_ID, "invulnerable_frames"), InvulnerableFramesComponent.class);
 
 
     @Override
@@ -41,6 +43,7 @@ public class ModComponents implements EntityComponentInitializer {
         entityComponentFactoryRegistry.registerForPlayers(PORTAL_COOLDOWN, PortalCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(INVIS_COOLDOWN, InvisibilityCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         entityComponentFactoryRegistry.registerForPlayers(SWARM_ATTACK, SwarmAttackComponent::new, RespawnCopyStrategy.NEVER_COPY);
+        entityComponentFactoryRegistry.registerForPlayers(INVULNERABLE_FRAMES, InvulnerableFramesComponent::new, RespawnCopyStrategy.NEVER_COPY);
         entityComponentFactoryRegistry.registerFor(LivingEntity.class, BLOODLUST_COOLDOWN, BloodlustCooldownComponent::new);
         entityComponentFactoryRegistry.registerFor(ProjectileEntity.class, PROJECTILE_HAS_TP, ProjectileAutoAimComponent::new);
         entityComponentFactoryRegistry.registerForPlayers(IS_INVIS, IsInvisibleComponent::new,RespawnCopyStrategy.ALWAYS_COPY);

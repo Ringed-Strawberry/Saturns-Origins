@@ -18,6 +18,12 @@ public class PlayerCooldownMixin {
         if(!thisAsPlayer.getWorld().isClient()) {
             CooldownUtil.decrementBackstabCooldown(thisAsPlayer);
             CooldownUtil.decrementPortalCooldown(thisAsPlayer);
+            CooldownUtil.decrementInvulnerableFrames(thisAsPlayer);
         }
+    }
+
+    @Inject(method = "tick", at=@At("HEAD"))
+    private void invulnerability(CallbackInfo ci){
+        thisAsPlayer.setInvulnerable(!CooldownUtil.isInvulnerableFramesOver(thisAsPlayer));
     }
 }

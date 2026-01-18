@@ -52,4 +52,16 @@ public class CooldownUtil {
     public static boolean isBloodlustCooldownOver(LivingEntity entity){
         return ModComponents.BLOODLUST_COOLDOWN.get(entity).isOver();
     }
+
+    public static boolean isInvulnerableFramesOver(LivingEntity entity){
+        return ModComponents.INVULNERABLE_FRAMES.get(entity).isOver();
+    }
+
+    public static void decrementInvulnerableFrames(LivingEntity entity){
+        ModComponents.INVULNERABLE_FRAMES.get(entity).decrement();
+    }
+
+    public static void resetInvulnerableFrames(LivingEntity entity){
+        ModComponents.INVULNERABLE_FRAMES.get(entity).setValue(15);
+    }
 }

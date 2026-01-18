@@ -30,6 +30,8 @@ public class ServerPackets {
                     float yaw = packetByteBuf.readFloat();
                     minecraftServer.execute(() -> {
                         if(ResourceUtil.canBackstab(serverPlayerEntity)) {
+                            serverPlayerEntity.setInvulnerable(true);
+                            CooldownUtil.resetInvulnerableFrames(serverPlayerEntity);
                             serverPlayerEntity.setPosition(pos);
                             serverPlayerEntity.setYaw(yaw);
                             PacketByteBuf buf = PacketByteBufs.create();
