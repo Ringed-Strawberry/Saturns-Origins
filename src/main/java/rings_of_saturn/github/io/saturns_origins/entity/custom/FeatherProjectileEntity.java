@@ -58,26 +58,22 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        if(!ProjectileUtil.getIsUp(this))
-            entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
+        entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
     }
 
     @Override
     protected void onCollision(HitResult hitResult) {
-        if(!ProjectileUtil.getIsUp(this))
-            super.onCollision(hitResult);
+        super.onCollision(hitResult);
     }
 
     @Override
     protected void onBlockCollision(BlockState state) {
-        if(!ProjectileUtil.getIsUp(this))
-            super.onBlockCollision(state);
+        super.onBlockCollision(state);
     }
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
-        if(!ProjectileUtil.getIsUp(this))
-            super.onBlockHit(blockHitResult);
+        super.onBlockHit(blockHitResult);
     }
 
     @Override

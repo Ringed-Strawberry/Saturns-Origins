@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
 
@@ -22,10 +23,14 @@ public class ModEntities {
                     .build()
     );
 
-    public static final Item FEATHER_PROJECTILE_ITEM =  Registry.register(
-            Registries.ITEM,
-            Identifier.of(MOD_ID, "feather_projectile"),
-            new Item(new Item.Settings()));
+    public static final EntityType<FeatherUpProjectileEntity> FEATHER_UP_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(MOD_ID, "feather_up_projectile"),
+            FabricEntityTypeBuilder.<FeatherUpProjectileEntity>create(SpawnGroup.MISC, FeatherUpProjectileEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
+                    .trackRangeBlocks(4).trackedUpdateRate(1)
+                    .build()
+    );
 
     public static final Item FEATHER_UP_PROJECTILE_ITEM =  Registry.register(
             Registries.ITEM,

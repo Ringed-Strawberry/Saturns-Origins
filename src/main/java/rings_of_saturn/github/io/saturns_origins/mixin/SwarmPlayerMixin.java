@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
-import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 import rings_of_saturn.github.io.saturns_origins.util.MathUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ResourceUtil;
@@ -30,7 +30,7 @@ public class SwarmPlayerMixin {
     ItemStack featherUpStack = new ItemStack(ModEntities.FEATHER_UP_PROJECTILE_ITEM);
 
     @Unique
-    List<FeatherProjectileEntity> playerSwarm = new ArrayList<>();
+    List<FeatherUpProjectileEntity> playerSwarm = new ArrayList<>();
 
 
     @Inject(method = "tick", at=@At("HEAD"))
@@ -47,7 +47,7 @@ public class SwarmPlayerMixin {
                 if (playerSwarm.size() < charge) {
                     int featherNeeded = charge - playerSwarm.size();
                     for (int i = 0; i < featherNeeded; i++) {
-                        FeatherProjectileEntity entity = new FeatherProjectileEntity(world, thisAsPlayer);
+                        FeatherUpProjectileEntity entity = new FeatherUpProjectileEntity(world, thisAsPlayer);
                         entity.setNoGravity(true);
                         entity.setInvulnerable(true);
                         entity.setPos(circlePos[i].getX(), circlePos[i].getY(), circlePos[i].getZ());
@@ -58,7 +58,7 @@ public class SwarmPlayerMixin {
                     }
                 } else if (playerSwarm.size() > charge) {
                     while (playerSwarm.size() > charge) {
-                        FeatherProjectileEntity toRemove = playerSwarm.remove(0);
+                        FeatherUpProjectileEntity toRemove = playerSwarm.remove(0);
                         toRemove.kill();
                     }
                 }
@@ -68,7 +68,7 @@ public class SwarmPlayerMixin {
                         return;
                     }
 
-                    FeatherProjectileEntity feather = playerSwarm.get(i);
+                    FeatherUpProjectileEntity feather = playerSwarm.get(i);
 
                     if (feather.getWorld() == thisAsPlayer.getWorld()) {
                         Vec3d target = circlePos[i];
@@ -86,7 +86,7 @@ public class SwarmPlayerMixin {
                         return;
                     }
 
-                    FeatherProjectileEntity feather = playerSwarm.get(i);
+                    FeatherUpProjectileEntity feather = playerSwarm.get(i);
 
                     if (feather.getWorld() == thisAsPlayer.getWorld()) {
                         Vec3d target = circlePos[i];
@@ -98,7 +98,7 @@ public class SwarmPlayerMixin {
                 }
             }
         } else {
-            for (FeatherProjectileEntity feather : playerSwarm) {
+            for (FeatherUpProjectileEntity feather : playerSwarm) {
                 feather.kill();
             }
         }

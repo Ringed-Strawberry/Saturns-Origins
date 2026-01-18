@@ -39,7 +39,7 @@ public class InvisiblePlayerMixin {
                         player.setInvisible(true);
                         PlayerUtil.setIsInvis(player,true);
                     } else {
-                        player.sendMessage(Text.of(String.valueOf(Math.round((double) ModComponents.INVIS_COOLDOWN.get(player).getValue() /20*10.0)/10.0)), true);
+                        player.sendMessage(Text.of(String.valueOf((Math.round((double) (ModComponents.INVIS_COOLDOWN.get(player).getValue()-1) /20*10.0)/10.0))), true);
                         CooldownUtil.decrementInvisibilityCooldown(player);
                     }
                 } else {
