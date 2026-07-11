@@ -1,11 +1,12 @@
 package rings_of_saturn.github.io.saturns_origins.mixin.client;
 
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,10 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 @Mixin(value = ArmorFeatureRenderer.class)
-public class NoArmorMixin<T extends LivingEntity, M extends BipedEntityModel<T>, A extends BipedEntityModel<T>> {
+public class NoArmorMixin<S extends BipedEntityRenderState, M extends BipedEntityModel<S>, A extends BipedEntityModel<S>> {
     @Inject(method = "renderArmor", at = @At(value = "HEAD"), cancellable = true)
-    void hideArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model, CallbackInfo ci){
-        if(OriginUtil.isOwlfolk(entity) && entity.isInvisible()){
+    void hideArmor(MatrixStack matrices, OrderedRenderCommandQueue queue, ItemStack stack, EquipmentSlot slot, int light, S state, CallbackInfo ci){
+        if(OriginUtil.isOwlfolk(null) && state.invisible){
             ci.cancel();
         }
     }

@@ -1,18 +1,17 @@
 package rings_of_saturn.github.io.saturns_origins.rendering.models;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import net.minecraft.client.render.entity.state.ProjectileEntityRenderState;
 
 // Made with Blockbench 5.0.7
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
-public class FeatherProjectileModel extends EntityModel<FeatherProjectileEntity> {
+public class FeatherProjectileModel extends EntityModel<ProjectileEntityRenderState> {
 	private final ModelPart bb_main;
 	public FeatherProjectileModel(ModelPart root) {
-		this.bb_main = root.getChild("bb_main");
+        super(root);
+        this.bb_main = root.getChild("bb_main");
 	}
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
@@ -27,14 +26,7 @@ public class FeatherProjectileModel extends EntityModel<FeatherProjectileEntity>
 		.uv(23, 0).cuboid(-4.0F, -1.0F, -4.0F, 1.0F, 1.0F, 6.0F, new Dilation(0.0F))
 		.uv(17, 10).cuboid(-5.0F, -1.0F, -4.0F, 1.0F, 1.0F, 7.0F, new Dilation(0.0F))
 		.uv(10, 57).cuboid(-6.0F, -1.0F, -3.0F, 1.0F, 1.0F, 5.0F, new Dilation(0.0F))
-		.uv(56, 59).cuboid(-7.0F, -1.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+		.uv(56, 59).cuboid(-7.0F, -1.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 24.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
-	}
-	@Override
-	public void setAngles(FeatherProjectileEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-	}
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 	}
 }
