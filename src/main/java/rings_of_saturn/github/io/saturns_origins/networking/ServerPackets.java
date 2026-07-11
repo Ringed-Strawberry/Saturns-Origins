@@ -16,16 +16,16 @@ import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
+import rings_of_saturn.github.io.saturns_origins.networking.packet.*;
 import rings_of_saturn.github.io.saturns_origins.util.*;
-import rings_of_saturn.github.io.saturns_origins.networking.packet.PacketConstants;
 
 public class ServerPackets {
 
     public static void registerC2SPackets(){
-        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.BACKSTAB_PACKET_ID,
+        ServerPlayNetworking.registerGlobalReceiver(BackstabPayloadC2S.ID,
                 (payload, context) -> {
-                    Vec3d pos = PosUtil.getVec3dFromString(packetByteBuf.readString());
-                    float yaw = packetByteBuf.readFloat();
+                    Vec3d pos = payload.pos();
+                    float yaw = payload.yaw();
                     context.server().execute(() -> {
                         if(ResourceUtil.canBackstab(context.player())) {
                             context.player().setInvulnerable(true);
@@ -35,13 +35,13 @@ public class ServerPackets {
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                             buf.writeFloat(yaw);
-                            ServerPlayNetworking.send(context.player(), PacketConstants.BACKSTAB_UPDATE_POS_ID, buf);
+                            ServerPlayNetworking.send(context.player(), new BackstabUpdatePosPayloadS2C(pos, yaw));
                             ResourceUtil.triggerBackstabCooldown(context.player());
                         }
                     });
         });
 
-        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SPAWN_PORTAL_PACKET_ID,
+        ServerPlayNetworking.registerGlobalReceiver(SpawnPortalPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
                      if(CooldownUtil.isPortalCooldownOver(context.player())) {
                          boolean hasEyes = false;
@@ -81,14 +81,14 @@ public class ServerPackets {
                      }
                  }));
 
-        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SET_PORTAL_PACKET_ID,
+        ServerPlayNetworking.registerGlobalReceiver(SetPortalPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
                     context.player().sendMessage(Text.of("Set portal position to " + context.player().getBlockPos().toShortString()), true);
                     PortalPositionUtil.setPortalWorld(context.player());
                     PortalPositionUtil.setPortalPos(context.player());
                  }));
 
-        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_ATTACK_PACKET_ID,
+        ServerPlayNetworking.registerGlobalReceiver(SwarmAttackPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
                     if(OriginUtil.isOwlfolk(context.player()) && ResourceUtil.isSwarmActive(context.player()) && KeybindUtil.canAttack(context.player())){
                         KeybindUtil.setAttack(context.player(), false);
@@ -103,7 +103,7 @@ public class ServerPackets {
                     }
                 }));
 
-        ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_RESET_PACKET_ID,
+        ServerPlayNetworking.registerGlobalReceiver(SwarmResetPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
                     if(OriginUtil.isOwlfolk(context.player()) && ResourceUtil.isSwarmActive(context.player()) && !KeybindUtil.canAttack(context.player())){
                         KeybindUtil.setAttack(context.player(), true);
