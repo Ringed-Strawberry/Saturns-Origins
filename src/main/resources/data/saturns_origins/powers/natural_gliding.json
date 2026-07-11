@@ -17,7 +17,7 @@
 
   "slow_falling": {
     "type": "apoli:modify_falling",
-    "velocity": 0.01,
+    "velocity": 0.03,
     "take_fall_damage": false,
     "condition": {
       "type": "origins:power_active",
