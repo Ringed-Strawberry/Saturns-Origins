@@ -11,13 +11,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 @Mixin(value = ArmorFeatureRenderer.class)
 public class NoArmorMixin<S extends BipedEntityRenderState, M extends BipedEntityModel<S>, A extends BipedEntityModel<S>> {
     @Inject(method = "renderArmor", at = @At(value = "HEAD"), cancellable = true)
     void hideArmor(MatrixStack matrices, OrderedRenderCommandQueue queue, ItemStack stack, EquipmentSlot slot, int light, S state, CallbackInfo ci){
-        if(OriginUtil.isOwlfolk(null) && state.invisible){
+        if(state.invisible){
             ci.cancel();
         }
     }
