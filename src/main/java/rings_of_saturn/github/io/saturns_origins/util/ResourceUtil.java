@@ -1,10 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.util;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
-import io.github.apace100.apoli.power.CooldownPower;
-import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.PowerTypeRegistry;
-import io.github.apace100.apoli.power.VariableIntPower;
+import io.github.apace100.apoli.power.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -20,6 +17,13 @@ public class ResourceUtil {
     public static PowerType<VariableIntPower> SWARM_CHARGE(){
         if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "swarm_charge")))
             return PowerTypeRegistry.get(Identifier.of(MOD_ID, "swarm_charge"));
+        else
+            return null;
+    }
+
+    public static PowerType<TogglePower> SLOWFALLING(){
+        if(PowerTypeRegistry.contains(Identifier.of(MOD_ID, "natural_gliding_toggle")))
+            return PowerTypeRegistry.get(Identifier.of(MOD_ID, "natural_gliding_toggle"));
         else
             return null;
     }
@@ -89,5 +93,12 @@ public class ResourceUtil {
             return getPowerComponent(player).getPower(BACKSTAB_COOLDOWN()).canUse();
         else
             return false;
+    }
+
+    public static boolean isSlowfalling(PlayerEntity player) {
+        if(getPowerComponent(player) != null && getPowerComponent(player).getPower(SLOWFALLING()) != null){
+            return getPowerComponent(player).getPower(SLOWFALLING()).getType().isActive(player);
+        }
+        return false;
     }
 }

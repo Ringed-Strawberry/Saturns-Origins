@@ -57,11 +57,15 @@ public class CooldownUtil {
         return ModComponents.INVULNERABLE_FRAMES.get(entity).isOver();
     }
 
+    public static int getInvulnerableFrames(LivingEntity entity){
+        return ModComponents.INVULNERABLE_FRAMES.get(entity).getValue();
+    }
+
     public static void decrementInvulnerableFrames(LivingEntity entity){
         ModComponents.INVULNERABLE_FRAMES.get(entity).decrement();
     }
 
     public static void resetInvulnerableFrames(LivingEntity entity){
-        ModComponents.INVULNERABLE_FRAMES.get(entity).setValue(15);
+        ModComponents.INVULNERABLE_FRAMES.get(entity).setValue(10);
     }
 }
