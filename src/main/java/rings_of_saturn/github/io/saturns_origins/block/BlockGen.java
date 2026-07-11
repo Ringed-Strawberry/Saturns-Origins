@@ -13,9 +13,9 @@ import net.minecraft.util.Identifier;
 import rings_of_saturn.github.io.saturns_origins.block.custom.MagicPlatformBlock;
 import rings_of_saturn.github.io.saturns_origins.block.custom.PortalBlock;
 
-import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
-
 import java.util.function.Function;
+
+import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
 
 public class BlockGen {
     public static RegistryKey<Block> keyOf(Identifier id) {
@@ -26,17 +26,15 @@ public class BlockGen {
         return RegistryKey.of(RegistryKeys.ITEM, id);
     }
 
-
     public static Block createBlock(Function<AbstractBlock.Settings, Block> factory, Identifier id, AbstractBlock.Settings settings) {
         return register(keyOf(id), itemKeyOf(id), factory, settings);
     }
 
     public static Block register(RegistryKey<Block> blockKey, RegistryKey<Item> itemKey, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
-        Block block = factory.apply(settings);
-        Registry.register(Registries.ITEM, itemKey, new BlockItem(block, new Item.Settings()));
+        Block block = factory.apply(settings.registryKey(blockKey));
+        Registry.register(Registries.ITEM, itemKey, new BlockItem(block, new Item.Settings().registryKey(itemKey)));
         return Registry.register(Registries.BLOCK, blockKey, block);
     }
-
     public static final Block CHORUSFRUITBORN_PORTAL = createBlock(PortalBlock::new, Identifier.of(MOD_ID, "chorusfruitborn_portal"), AbstractBlock.Settings.copy(Blocks.NETHER_PORTAL));
 
     public static final Block MAGICPLATFORMBLOCK = createBlock(MagicPlatformBlock::new, Identifier.of(MOD_ID, "magicplatformblock"),AbstractBlock.Settings.create().strength(-1f).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
