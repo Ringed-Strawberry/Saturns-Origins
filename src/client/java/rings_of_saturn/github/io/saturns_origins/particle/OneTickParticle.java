@@ -2,14 +2,15 @@ package rings_of_saturn.github.io.saturns_origins.particle;
 
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
 
-public class OneTickParticle extends SpriteBillboardParticle {
+public class OneTickParticle extends BillboardParticle {
     public OneTickParticle(ClientWorld clientWorld, double x, double y, double z,
                            SpriteProvider spriteProvider, double xSpeed, double ySpeed, double zSpeed) {
-        super(clientWorld, x, y, z, xSpeed, ySpeed, zSpeed);
+        super(clientWorld, x, y, z, xSpeed, ySpeed, zSpeed, spriteProvider.getSprite(clientWorld.random));
         this.velocityMultiplier = 0.96F;
         this.velocityX = xSpeed;
         this.velocityY = ySpeed;
@@ -20,15 +21,15 @@ public class OneTickParticle extends SpriteBillboardParticle {
         this.scale *= 0.75F;
         this.collidesWithWorld = false;
         this.maxAge = 1;
-        this.setSpriteForAge(spriteProvider);
+        this.setSprite(spriteProvider.getSprite(this.random));
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+    public RenderType getRenderType() {
+        return RenderType.PARTICLE_ATLAS_TRANSLUCENT;
     }
 
-    public static class Factory implements ParticleFactory<DefaultParticleType>{
+    public static class Factory implements ParticleFactory<SimpleParticleType>{
         private final SpriteProvider spriteProvider;
 
         public Factory(SpriteProvider spriteProvider){
@@ -37,7 +38,7 @@ public class OneTickParticle extends SpriteBillboardParticle {
 
 
         @Override
-        public @Nullable Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public @Nullable Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ,Random random) {
             return new OneTickParticle(world, x,y,z,this.spriteProvider,velocityX,velocityY,velocityZ);
 
         }
