@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,11 +20,11 @@ public class BloodlustLivingEntityMixin {
     @Unique
     LivingEntity thisAsLivingEntity = (LivingEntity) (Object)this;
     @Inject(method = "damage", at=@At("HEAD"))
-    private void applyGlow(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void applyGlow(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if (source.getAttacker() != null && source.getAttacker().isPlayer() && thisAsLivingEntity.isLiving()) {
             LivingEntity thisAsLiving = thisAsLivingEntity;
             PlayerEntity attacker = (PlayerEntity) source.getAttacker();
-            if (!thisAsLiving.getWorld().isClient() && OriginUtil.isOwlfolk(attacker)) {
+            if (!thisAsLiving.getEntityWorld().isClient() && OriginUtil.isOwlfolk(attacker)) {
                 CooldownUtil.resetBloodlustCooldown(thisAsLiving);
             }
         }

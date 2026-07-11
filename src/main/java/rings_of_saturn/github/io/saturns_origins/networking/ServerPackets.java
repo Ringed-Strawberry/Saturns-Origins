@@ -23,87 +23,79 @@ public class ServerPackets {
 
     public static void registerC2SPackets(){
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.BACKSTAB_PACKET_ID,
-                (minecraftServer, serverPlayerEntity,
-                 serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> {
+                (payload, context) -> {
                     Vec3d pos = PosUtil.getVec3dFromString(packetByteBuf.readString());
                     float yaw = packetByteBuf.readFloat();
-                    minecraftServer.execute(() -> {
-                        if(ResourceUtil.canBackstab(serverPlayerEntity)) {
-                            serverPlayerEntity.setInvulnerable(true);
-                            CooldownUtil.resetInvulnerableFrames(serverPlayerEntity);
-                            serverPlayerEntity.setPosition(pos);
-                            serverPlayerEntity.setYaw(yaw);
+                    context.server().execute(() -> {
+                        if(ResourceUtil.canBackstab(context.player())) {
+                            context.player().setInvulnerable(true);
+                            CooldownUtil.resetInvulnerableFrames(context.player());
+                            context.player().setPosition(pos);
+                            context.player().setYaw(yaw);
                             PacketByteBuf buf = PacketByteBufs.create();
                             buf.writeString(pos.getX() + "," + pos.getY() + "," + pos.getZ());
                             buf.writeFloat(yaw);
-                            ServerPlayNetworking.send(serverPlayerEntity, PacketConstants.BACKSTAB_UPDATE_POS_ID, buf);
-                            ResourceUtil.triggerBackstabCooldown(serverPlayerEntity);
+                            ServerPlayNetworking.send(context.player(), PacketConstants.BACKSTAB_UPDATE_POS_ID, buf);
+                            ResourceUtil.triggerBackstabCooldown(context.player());
                         }
                     });
         });
 
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SPAWN_PORTAL_PACKET_ID,
-                (minecraftServer, serverPlayerEntity,
-                 serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> minecraftServer.execute(() -> {
-                     if(CooldownUtil.isPortalCooldownOver(serverPlayerEntity)) {
+                (payload, context) -> context.server().execute(() -> {
+                     if(CooldownUtil.isPortalCooldownOver(context.player())) {
                          boolean hasEyes = false;
-                         for (int i = 0; i < serverPlayerEntity.getInventory().size(); ++i) {
-                             ItemStack stack = serverPlayerEntity.getInventory().getStack(i);
+                         for (int i = 0; i < context.player().getInventory().size(); ++i) {
+                             ItemStack stack = context.player().getInventory().getStack(i);
                              if (stack.getItem() == Items.ENDER_EYE) {
                                  hasEyes = true;
-                                 serverPlayerEntity.setPortalCooldown(10);
+                                 context.player().setPortalCooldown(10);
                                  stack.decrement(1);
                                  BlockState defaultState = BlockGen.CHORUSFRUITBORN_PORTAL.getDefaultState();
-                                 BlockPos pos = serverPlayerEntity.getBlockPos().add(0, 1, 0);
-                                 serverPlayerEntity.getWorld().setBlockState(pos, defaultState);
-                                 serverPlayerEntity.getWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(pos, defaultState));
-                                 if (serverPlayerEntity.getWorld().getBlockEntity(pos) instanceof PortalBlockEntity blockEntity) {
-                                     blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
-                                     blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(serverPlayerEntity));
+                                 BlockPos pos = context.player().getBlockPos().add(0, 1, 0);
+                                 context.player().getEntityWorld().setBlockState(pos, defaultState);
+                                 context.player().getEntityWorld().addBlockEntity(ModBlockEntities.PORTAL.instantiate(pos, defaultState));
+                                 if (context.player().getEntityWorld().getBlockEntity(pos) instanceof PortalBlockEntity blockEntity) {
+                                     blockEntity.setPlayerName(context.player().getName().getString());
+                                     blockEntity.setDim(PortalPositionUtil.getPortalWorldAsString(context.player()));
                                  }
-                                 BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(serverPlayerEntity)).add(0, 1, 0);
-                                 World TPWorld = PortalPositionUtil.getPortalWorld(serverPlayerEntity);
+                                 BlockPos returnPortalPos = BlockPos.ofFloored(PortalPositionUtil.getPortalPos(context.player())).add(0, 1, 0);
+                                 World TPWorld = PortalPositionUtil.getPortalWorld(context.player());
                                  TPWorld.setBlockState(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true));
                                  TPWorld.addBlockEntity(ModBlockEntities.PORTAL.instantiate(returnPortalPos, defaultState.with(PortalBlock.RETURN_PORTAL, true)));
                                  if (TPWorld.getBlockEntity(returnPortalPos) instanceof PortalBlockEntity blockEntity) {
                                      int[] returnPos = new int[3];
-                                     returnPos[0] = serverPlayerEntity.getBlockPos().getX();
-                                     returnPos[1] = serverPlayerEntity.getBlockPos().getY();
-                                     returnPos[2] = serverPlayerEntity.getBlockPos().getZ();
+                                     returnPos[0] = context.player().getBlockPos().getX();
+                                     returnPos[1] = context.player().getBlockPos().getY();
+                                     returnPos[2] = context.player().getBlockPos().getZ();
                                      blockEntity.setPos(returnPos);
-                                     blockEntity.setDim(serverPlayerEntity.getWorld().getRegistryKey().getValue().toString());
-                                     blockEntity.setPlayerName(serverPlayerEntity.getName().getString());
+                                     blockEntity.setDim(context.player().getEntityWorld().getRegistryKey().getValue().toString());
+                                     blockEntity.setPlayerName(context.player().getName().getString());
                                  }
-                                 CooldownUtil.resetPortalCooldown(serverPlayerEntity);
+                                 CooldownUtil.resetPortalCooldown(context.player());
                              }
                          }
                          if(!hasEyes){
-                             serverPlayerEntity.sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
+                             context.player().sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
                          }
                      }
                  }));
 
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SET_PORTAL_PACKET_ID,
-                (minecraftServer, serverPlayerEntity,
-                 serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> minecraftServer.execute(() -> {
-                    serverPlayerEntity.sendMessage(Text.of("Set portal position to " + serverPlayerEntity.getBlockPos().toShortString()), true);
-                    PortalPositionUtil.setPortalWorld(serverPlayerEntity);
-                    PortalPositionUtil.setPortalPos(serverPlayerEntity);
+                (payload, context) -> context.server().execute(() -> {
+                    context.player().sendMessage(Text.of("Set portal position to " + context.player().getBlockPos().toShortString()), true);
+                    PortalPositionUtil.setPortalWorld(context.player());
+                    PortalPositionUtil.setPortalPos(context.player());
                  }));
 
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_ATTACK_PACKET_ID,
-                (minecraftServer, serverPlayerEntity,
-                 serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> minecraftServer.execute(() -> {
-                    if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && KeybindUtil.canAttack(serverPlayerEntity)){
-                        KeybindUtil.setAttack(serverPlayerEntity, false);
-                        ResourceUtil.decrementSwarmCharge(serverPlayerEntity);
-                        ServerWorld world = minecraftServer.getWorld(serverPlayerEntity.getWorld().getRegistryKey());
-                        FeatherProjectileEntity entity = new FeatherProjectileEntity(world, serverPlayerEntity);
-                        entity.setVelocity(serverPlayerEntity, serverPlayerEntity.getPitch(), serverPlayerEntity.getYaw(), 0.0F, 1.5F, 1.0F);
+                (payload, context) -> context.server().execute(() -> {
+                    if(OriginUtil.isOwlfolk(context.player()) && ResourceUtil.isSwarmActive(context.player()) && KeybindUtil.canAttack(context.player())){
+                        KeybindUtil.setAttack(context.player(), false);
+                        ResourceUtil.decrementSwarmCharge(context.player());
+                        ServerWorld world = context.server().getWorld(context.player().getEntityWorld().getRegistryKey());
+                        FeatherProjectileEntity entity = new FeatherProjectileEntity(world, context.player());
+                        entity.setVelocity(context.player(), context.player().getPitch(), context.player().getYaw(), 0.0F, 1.5F, 1.0F);
                         world.spawnEntity(entity);
 
 
@@ -112,11 +104,9 @@ public class ServerPackets {
                 }));
 
         ServerPlayNetworking.registerGlobalReceiver(PacketConstants.SWARM_RESET_PACKET_ID,
-                (minecraftServer, serverPlayerEntity,
-                 serverPlayNetworkHandler, packetByteBuf,
-                 packetSender) -> minecraftServer.execute(() -> {
-                    if(OriginUtil.isOwlfolk(serverPlayerEntity) && ResourceUtil.isSwarmActive(serverPlayerEntity) && !KeybindUtil.canAttack(serverPlayerEntity)){
-                        KeybindUtil.setAttack(serverPlayerEntity, true);
+                (payload, context) -> context.server().execute(() -> {
+                    if(OriginUtil.isOwlfolk(context.player()) && ResourceUtil.isSwarmActive(context.player()) && !KeybindUtil.canAttack(context.player())){
+                        KeybindUtil.setAttack(context.player(), true);
                     }
                 }));
     }

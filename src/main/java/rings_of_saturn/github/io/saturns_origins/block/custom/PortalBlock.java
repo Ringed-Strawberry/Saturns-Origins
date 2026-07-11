@@ -1,5 +1,6 @@
 package rings_of_saturn.github.io.saturns_origins.block.custom;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -8,6 +9,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
@@ -27,6 +29,7 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBloc
 import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
 
 public class PortalBlock extends BlockWithEntity {
+    public static final MapCodec<PortalBlock> CODEC = PortalBlock.createCodec(PortalBlock::new);
     public static BooleanProperty RETURN_PORTAL = BooleanProperty.of("is_return_portal");
 
     public PortalBlock(Settings settings) {
@@ -37,13 +40,18 @@ public class PortalBlock extends BlockWithEntity {
     }
 
     @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
+    }
+
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(RETURN_PORTAL);
         super.appendProperties(builder);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         if(!world.isClient() && world.getBlockEntity(pos) instanceof PortalBlockEntity blockEntity && entity.getPortalCooldown() == 0) {
             entity.setPortalCooldown(40);
             Vec3d TPPos;
@@ -57,7 +65,7 @@ public class PortalBlock extends BlockWithEntity {
             }
 
             Vec3d initialVelocity = entity.getVelocity();
-            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch());
+            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch(), false);
 
             entity.setVelocity(initialVelocity);
 
@@ -65,7 +73,7 @@ public class PortalBlock extends BlockWithEntity {
                 serverPlayer.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(serverPlayer));
             }
         }
-        super.onEntityCollision(state, world, pos, entity);
+        super.onEntityCollision(state, world, pos, entity, handler, bl);
     }
 
     @Override

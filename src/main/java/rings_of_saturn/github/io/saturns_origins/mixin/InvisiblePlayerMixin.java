@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,10 +27,10 @@ public class InvisiblePlayerMixin {
     LivingEntity thisAsEntity = (LivingEntity) (Object)this;
     @Inject(method = "tick", at=@At("HEAD"))
     private void tickInvisibility(CallbackInfo ci){
-        if(thisAsEntity.isPlayer() && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity) && thisAsEntity.getActiveStatusEffects().get(StatusEffects.INVISIBILITY) == null) {
+        if(thisAsEntity.isPlayer() && !thisAsEntity.getEntityWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity) && thisAsEntity.getActiveStatusEffects().get(StatusEffects.INVISIBILITY) == null) {
             PlayerEntity player = (PlayerEntity) thisAsEntity;
             List<PlayerEntity> playerList = new ArrayList<>(List.of());
-            playerList.addAll(player.getWorld().getPlayers());
+            playerList.addAll(player.getEntityWorld().getPlayers());
             playerList.remove(player);
             boolean isPlayerInRange = PlayerUtil.isPlayerInRange(playerList, player.getX(), player.getY(), player.getZ(), 5);
             if (!PlayerUtil.getIsInvis(player)){
@@ -60,8 +61,8 @@ public class InvisiblePlayerMixin {
     }
 
     @Inject(method = "damage", at=@At("HEAD"))
-    private void damageUnInvisibility(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(thisAsEntity.isPlayer() && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity) && PlayerUtil.getIsInvis((PlayerEntity) thisAsEntity)){
+    private void damageUnInvisibility(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        if(thisAsEntity.isPlayer() && !thisAsEntity.getEntityWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity) && PlayerUtil.getIsInvis((PlayerEntity) thisAsEntity)){
             PlayerEntity player = (PlayerEntity) thisAsEntity;
             player.setInvisible(false);
             PlayerUtil.setIsInvis(player,false);

@@ -25,11 +25,13 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
     }
 
     public FeatherProjectileEntity(World world, LivingEntity owner) {
-        super(ModEntities.FEATHER_PROJECTILE, owner, world);
+        super(ModEntities.FEATHER_PROJECTILE, world);
+        this.setOwner(owner);
     }
 
     public FeatherProjectileEntity(World world, double x, double y, double z) {
-        super(ModEntities.FEATHER_PROJECTILE, x, y, z, world);
+        super(ModEntities.FEATHER_PROJECTILE, world);
+        this.setPos(x,y,z);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
     @Override
     public void tick() {
         if (this.getOwner() == null){
-            this.kill();
+            this.kill(this.getEntityWorld().getServer().getWorld(this.getEntityWorld().getRegistryKey()));
         }
         super.tick();
     }
@@ -54,7 +56,7 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.damage(entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
+        entity.damage(this.getEntityWorld().getServer().getWorld(this.getEntityWorld().getRegistryKey()), entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
     }
 
     @Override
@@ -74,6 +76,11 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
 
     @Override
     protected ItemStack asItemStack() {
+        return null;
+    }
+
+    @Override
+    protected ItemStack getDefaultItemStack() {
         return null;
     }
 }

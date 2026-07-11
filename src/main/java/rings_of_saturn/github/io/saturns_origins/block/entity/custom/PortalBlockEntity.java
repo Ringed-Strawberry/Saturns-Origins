@@ -3,7 +3,8 @@ package rings_of_saturn.github.io.saturns_origins.block.entity.custom;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 
@@ -59,22 +60,23 @@ public class PortalBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        nbt.putString("playerName", this.playerName);
-        nbt.putString("dim", this.dim);
-        nbt.putIntArray("pos", this.pos);
-        nbt.putInt("timer", this.timer);
+    protected void writeData(WriteView view) {
+        view.putString("playerName", this.playerName);
+        view.putString("dim", this.dim);
+        view.putIntArray("pos", this.pos);
+        view.putInt("timer", this.timer);
 
-        super.writeNbt(nbt);
+        super.writeData(view);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        this.playerName = nbt.getString("playerName");
-        this.dim = nbt.getString("dim");
-        this.timer = nbt.getInt("timer");
-        this.pos = nbt.getIntArray("pos");
+    protected void readData(ReadView view) {
+        this.playerName = view.getString("playerName", "Saturns_Rings_");
+        this.dim = view.getString("dim", "minecraft:overworld");
+        this.timer = view.getInt("timer", 0);
+        if(view.getOptionalIntArray("pos").isPresent())
+            this.pos = view.getOptionalIntArray("pos").get();
 
-        super.readNbt(nbt);
+        super.readData(view);
     }
 }

@@ -1,13 +1,12 @@
 package rings_of_saturn.github.io.saturns_origins.components;
-
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.Identifier;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
+import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 import rings_of_saturn.github.io.saturns_origins.components.types.*;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
@@ -36,16 +35,16 @@ public class ModComponents implements EntityComponentInitializer {
 
 
     @Override
-    public void registerEntityComponentFactories(EntityComponentFactoryRegistry entityComponentFactoryRegistry) {
-        entityComponentFactoryRegistry.registerForPlayers(PORTAL_POSITION, PortalPositionComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(PORTAL_WORLD, PortalWorldComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(BACKSTAB_COOLDOWN, BackstabCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(PORTAL_COOLDOWN, PortalCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(INVIS_COOLDOWN, InvisibilityCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(SWARM_ATTACK, SwarmAttackComponent::new, RespawnCopyStrategy.NEVER_COPY);
-        entityComponentFactoryRegistry.registerForPlayers(INVULNERABLE_FRAMES, InvulnerableFramesComponent::new, RespawnCopyStrategy.NEVER_COPY);
-        entityComponentFactoryRegistry.registerFor(LivingEntity.class, BLOODLUST_COOLDOWN, BloodlustCooldownComponent::new);
-        entityComponentFactoryRegistry.registerFor(ProjectileEntity.class, PROJECTILE_HAS_TP, ProjectileAutoAimComponent::new);
-        entityComponentFactoryRegistry.registerForPlayers(IS_INVIS, IsInvisibleComponent::new,RespawnCopyStrategy.ALWAYS_COPY);
+    public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
+        registry.registerForPlayers(PORTAL_POSITION, PortalPositionComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(PORTAL_WORLD, PortalWorldComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(BACKSTAB_COOLDOWN, BackstabCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(PORTAL_COOLDOWN, PortalCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(INVIS_COOLDOWN, InvisibilityCooldownComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(SWARM_ATTACK, SwarmAttackComponent::new, RespawnCopyStrategy.NEVER_COPY);
+        registry.registerForPlayers(INVULNERABLE_FRAMES, InvulnerableFramesComponent::new, RespawnCopyStrategy.NEVER_COPY);
+        registry.registerFor(LivingEntity.class, BLOODLUST_COOLDOWN, BloodlustCooldownComponent::new);
+        registry.registerFor(ProjectileEntity.class, PROJECTILE_HAS_TP, ProjectileAutoAimComponent::new);
+        registry.registerForPlayers(IS_INVIS, IsInvisibleComponent::new,RespawnCopyStrategy.ALWAYS_COPY);
     }
 }

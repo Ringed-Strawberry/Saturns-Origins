@@ -37,9 +37,9 @@ public class SwarmPlayerMixin {
         if (thisAsPlayer != null && ResourceUtil.isSwarmActive(thisAsPlayer)) {
             int charge = ResourceUtil.getSwarmCharge(thisAsPlayer);
             double speed = 1.5;
-            Vec3d[] circlePos = MathUtil.getOffsetPointsInCircle(thisAsPlayer.getPos().add(0, 1 + (sin(thisAsPlayer.age / 4d) / 6), 0), charge, 1, thisAsPlayer.age * speed);
-            if (!thisAsPlayer.getWorld().isClient()) {
-                ServerWorld world = thisAsPlayer.getWorld().getServer().getWorld(thisAsPlayer.getWorld().getRegistryKey());
+            Vec3d[] circlePos = MathUtil.getOffsetPointsInCircle(thisAsPlayer.getEntityPos().add(0, 1 + (sin(thisAsPlayer.age / 4d) / 6), 0), charge, 1, thisAsPlayer.age * speed);
+            if (!thisAsPlayer.getEntityWorld().isClient()) {
+                ServerWorld world = thisAsPlayer.getEntityWorld().getServer().getWorld(thisAsPlayer.getEntityWorld().getRegistryKey());
 
                 playerSwarm.removeIf(Entity::isRemoved);
 
@@ -57,7 +57,7 @@ public class SwarmPlayerMixin {
                 } else if (playerSwarm.size() > charge) {
                     while (playerSwarm.size() > charge) {
                         FeatherUpProjectileEntity toRemove = playerSwarm.remove(0);
-                        toRemove.kill();
+                        toRemove.kill(toRemove.getEntityWorld().getServer().getWorld(toRemove.getEntityWorld().getRegistryKey()));
                     }
                 }
 
@@ -68,9 +68,9 @@ public class SwarmPlayerMixin {
 
                     FeatherUpProjectileEntity feather = playerSwarm.get(i);
 
-                    if (feather.getWorld() == thisAsPlayer.getWorld()) {
+                    if (feather.getEntityWorld() == thisAsPlayer.getEntityWorld()) {
                         Vec3d target = circlePos[i];
-                        Vec3d vec = target.subtract(feather.getPos()).add(thisAsPlayer.getVelocity());
+                        Vec3d vec = target.subtract(feather.getEntityPos()).add(thisAsPlayer.getVelocity());
                         feather.setVelocity(vec);
                     }
 
@@ -85,10 +85,10 @@ public class SwarmPlayerMixin {
 
                     FeatherUpProjectileEntity feather = playerSwarm.get(i);
 
-                    if (feather.getWorld() == thisAsPlayer.getWorld()) {
+                    if (feather.getEntityWorld() == thisAsPlayer.getEntityWorld()) {
                         Vec3d target = circlePos[i];
 
-                        Vec3d vec = target.subtract(feather.getPos()).add(thisAsPlayer.getVelocity());
+                        Vec3d vec = target.subtract(feather.getEntityPos()).add(thisAsPlayer.getVelocity());
                         feather.setVelocity(vec);
                     }
 
@@ -96,7 +96,7 @@ public class SwarmPlayerMixin {
             }
         } else {
             for (FeatherUpProjectileEntity feather : playerSwarm) {
-                feather.kill();
+                feather.kill(feather.getEntityWorld().getServer().getWorld(feather.getEntityWorld().getRegistryKey()));
             }
         }
     }

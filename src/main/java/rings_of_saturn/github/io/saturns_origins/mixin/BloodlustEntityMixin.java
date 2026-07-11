@@ -20,7 +20,7 @@ public class BloodlustEntityMixin {
         if(thisAsEntity.isLiving()) {
             LivingEntity thisAsLiving = (LivingEntity) thisAsEntity;
             if (!CooldownUtil.isBloodlustCooldownOver(thisAsLiving)) {
-                cir.setReturnValue(ColorHelper.Argb.getArgb(255, 255, 0, 0));
+                cir.setReturnValue(ColorHelper.getArgb(255, 255, 0, 0));
             }
         }
     }

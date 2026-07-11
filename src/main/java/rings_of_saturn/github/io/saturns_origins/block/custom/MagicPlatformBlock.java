@@ -1,5 +1,6 @@
 package rings_of_saturn.github.io.saturns_origins.block.custom;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -18,14 +19,21 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.MagicPlatformEntity;
 
 public class MagicPlatformBlock extends BlockWithEntity {
+    public static final MapCodec<MagicPlatformBlock> CODEC = MagicPlatformBlock.createCodec(MagicPlatformBlock::new);
+
     public MagicPlatformBlock(Settings settings) {
         super(settings);
 
     }
 
     @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
+    }
+
+    @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        if (!world.isClient){
+        if (!world.isClient()){
             return checkType(type,ModBlockEntities.PLATFORM,MagicPlatformEntity::tick);
         }
         return null;

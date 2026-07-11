@@ -42,18 +42,18 @@ public class AutoAimProjectileMixin {
         if(thisAsEntity instanceof PersistentProjectileEntity)
             arrow = (PersistentProjectileEntity) thisAsEntity;
         if(arrow != null){
-            isInGround = !arrow.inGround;
+            isInGround = !arrow.isInGround();
         }
-        if(isInGround && thisAsEntity.getOwner() != null && !thisAsEntity.getWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
+        if(isInGround && thisAsEntity.getOwner() != null && !thisAsEntity.getEntityWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
             double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 8 : 4;
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
                 storedTarget = null;
             }
 
-            LivingEntity closestEntity = thisAsEntity.getWorld().getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
+            LivingEntity closestEntity = thisAsEntity.getEntityWorld().getServer().getWorld(thisAsEntity.getEntityWorld().getRegistryKey()).getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
                     (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
-                    Box.of(thisAsEntity.getPos(), range,range,range));
+                    Box.of(thisAsEntity.getEntityPos(), range,range,range));
             if(closestEntity != null && closestEntity != storedTarget){
                 thisAsEntity.setPortalCooldown(10);
                 thisAsEntity.setNoGravity(true);
@@ -62,7 +62,7 @@ public class AutoAimProjectileMixin {
                 storedTarget = closestEntity;
                 if(thisAsEntity.getOwner().isPlayer()) {
                     PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
-                    owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1, 0);
+                    owner.getEntityWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1, 0);
                 }
 
                 ProjectileUtil.setAutoAimTP(thisAsEntity, true);
@@ -70,11 +70,11 @@ public class AutoAimProjectileMixin {
             if (storedTarget != null && thisAsEntity.getPortalCooldown() == 0){
                 if(thisAsEntity.getOwner().isPlayer()) {
                     PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
-                    owner.getWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_DEEPSLATE_HIT, SoundCategory.PLAYERS, 1, 0);
+                    owner.getEntityWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_DEEPSLATE_HIT, SoundCategory.PLAYERS, 1, 0);
                 }
                 thisAsEntity.setNoGravity(false);
                 Vec3d targetPos = storedTarget.getBoundingBox().getCenter();
-                Vec3d arrowPos = thisAsEntity.getPos();
+                Vec3d arrowPos = thisAsEntity.getEntityPos();
                 Vec3d direction = targetPos.subtract(arrowPos).normalize();
 
                 double speed = thisAsEntity.getVelocity().equals(new Vec3d(0, 0, 0)) ? storedVel.length() : thisAsEntity.getVelocity().length();

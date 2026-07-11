@@ -23,11 +23,13 @@ public class FeatherUpProjectileEntity extends ThrownItemEntity {
     }
 
     public FeatherUpProjectileEntity(World world, LivingEntity owner) {
-        super(ModEntities.FEATHER_UP_PROJECTILE, owner, world);
+        super(ModEntities.FEATHER_UP_PROJECTILE, world);
+        this.setOwner(owner);
     }
 
     public FeatherUpProjectileEntity(World world, double x, double y, double z) {
-        super(ModEntities.FEATHER_UP_PROJECTILE, x, y, z, world);
+        super(ModEntities.FEATHER_UP_PROJECTILE, world);
+        this.setPos(x,y,z);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class FeatherUpProjectileEntity extends ThrownItemEntity {
     @Override
     public void tick() {
         if (this.getOwner() == null){
-            this.kill();
+            this.kill(this.getEntityWorld().getServer().getWorld(this.getEntityWorld().getRegistryKey()));
         }
         super.tick();
     }

@@ -1,8 +1,9 @@
 package rings_of_saturn.github.io.saturns_origins.components.types;
 
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Vec3d;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import rings_of_saturn.github.io.saturns_origins.components.ModComponents;
 
 public class PortalPositionComponent implements Vec3dComponent, AutoSyncedComponent {
@@ -11,16 +12,17 @@ public class PortalPositionComponent implements Vec3dComponent, AutoSyncedCompon
     public PortalPositionComponent(Object provider) {
         this.provider = provider;
     }
+
     @Override
-    public void readFromNbt(NbtCompound nbtCompound) {
-        this.value = new Vec3d(nbtCompound.getDouble("value1"),nbtCompound.getDouble("value2"),nbtCompound.getDouble("value3"));
+    public void readData(ReadView readView) {
+        this.value = new Vec3d(readView.getDouble("value1", 0), readView.getDouble("value2", 0), readView.getDouble("value3", 0));
     }
 
     @Override
-    public void writeToNbt(NbtCompound nbtCompound) {
-        nbtCompound.putDouble("value1", this.value.getX());
-        nbtCompound.putDouble("value2", this.value.getY());
-        nbtCompound.putDouble("value3", this.value.getZ());
+    public void writeData(WriteView writeView) {
+        writeView.putDouble("value1", this.value.getX());
+        writeView.putDouble("value2", this.value.getY());
+        writeView.putDouble("value3", this.value.getZ());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.components.types;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.util.math.Vec3d;
+import org.ladysnake.cca.api.v3.component.Component;
 
 public interface Vec3dComponent extends Component {
     Vec3d getValue();

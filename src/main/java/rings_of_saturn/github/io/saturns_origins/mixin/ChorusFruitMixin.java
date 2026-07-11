@@ -3,8 +3,8 @@ package rings_of_saturn.github.io.saturns_origins.mixin;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ChorusFruitItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.consume.TeleportRandomlyConsumeEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -18,59 +18,49 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
-@Mixin(value = ChorusFruitItem.class)
+@Mixin(value = TeleportRandomlyConsumeEffect.class)
 public class ChorusFruitMixin {
 
     @Unique
-    ChorusFruitItem thisAsItem = (ChorusFruitItem)(Object)this;
+    TeleportRandomlyConsumeEffect thisAsEffect = (TeleportRandomlyConsumeEffect)(Object)this;
 
-    @Inject(method = "finishUsing", at=@At("HEAD"),  cancellable = true)
-    void eat(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
-        ItemStack itemStack = thisAsItem.isFood() ? user.eatFood(world, stack) : stack;
-        if (!world.isClient) {
-            double d = user.getX();
-            double e = user.getY();
-            double f = user.getZ();
-
+    @Inject(method = "onConsume", at=@At("HEAD"),  cancellable = true)
+    void eat(World world, ItemStack stack, LivingEntity user, CallbackInfoReturnable<Boolean> cir) {
+        boolean bl = false;
+        if (user.isSneaking()) {
             for (int i = 0; i < 16; ++i) {
-                double g = user.getX() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) 16.0F;
-                double h = MathHelper.clamp(user.getY() + (double) (user.getRandom().nextInt(16) - 8), world.getBottomY(), world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1);
-                double j = user.getZ() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) 16.0F;
+                double d = user.getX() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) thisAsEffect.diameter();
+                double e = MathHelper.clamp(user.getY() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) thisAsEffect.diameter(), (double) world.getBottomY(), (double) (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1));
+                double f = user.getZ() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) thisAsEffect.diameter();
                 if (user.hasVehicle()) {
                     user.stopRiding();
                 }
 
-                Vec3d vec3d = user.getPos();
-                if (OriginUtil.isChorusfruitborn(user) && user.isSneaking()) {
-                    if (user.teleport(g, h, j, true)) {
-                        world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
-                        SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                        world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                        user.playSound(soundEvent, 1.0F, 1.0F);
-                        break;
+                Vec3d vec3d = user.getEntityPos();
+                if (user.teleport(d, e, f, true)) {
+                    world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
+                    SoundCategory soundCategory;
+                    SoundEvent soundEvent;
+                    if (user instanceof FoxEntity) {
+                        soundEvent = SoundEvents.ENTITY_FOX_TELEPORT;
+                        soundCategory = SoundCategory.NEUTRAL;
+                    } else {
+                        soundEvent = SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
+                        soundCategory = SoundCategory.PLAYERS;
                     }
 
-                    if (user instanceof PlayerEntity) {
-                        ((PlayerEntity) user).getItemCooldownManager().set(thisAsItem, 20);
-                    }
-                }
-                if(!OriginUtil.isChorusfruitborn(user)){
-                    if (user.teleport(g, h, j, true)) {
-                        world.emitGameEvent(GameEvent.TELEPORT, vec3d, GameEvent.Emitter.of(user));
-                        SoundEvent soundEvent = user instanceof FoxEntity ? SoundEvents.ENTITY_FOX_TELEPORT : SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT;
-                        world.playSound(null, d, e, f, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                        user.playSound(soundEvent, 1.0F, 1.0F);
-                        break;
-                    }
-
-                    if (user instanceof PlayerEntity) {
-                        ((PlayerEntity) user).getItemCooldownManager().set(thisAsItem, 20);
-                    }
+                    world.playSound(null, user.getX(), user.getY(), user.getZ(), soundEvent, soundCategory);
+                    user.onLanding();
+                    bl = true;
+                    break;
                 }
             }
+
+            if (bl && user instanceof PlayerEntity playerEntity) {
+                playerEntity.clearCurrentExplosion();
+            }
         }
-        cir.setReturnValue(itemStack);
+        cir.setReturnValue(bl);
     }
 }
