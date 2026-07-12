@@ -3,23 +3,19 @@
   "description": "Your species livelihood revolved around endstone has made you very familiar with it, letting you make it out of cobblestone",
   "type": "origins:recipe",
   "recipe": {
-    "id": "saturns_origins:familiar_rocks",
+    "id": "saturns_origins:endstone_familiar_rocks",
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "###",
-      "#O#",
-      "###"
+      " # ",
+      "#C#",
+      " # "
     ],
     "key": {
-      "#": {
-        "item": "minecraft:chorus_fruit"
-      },
-      "O": {
-        "item": "minecraft:cobblestone"
-      }
+      "#": "minecraft:chorus_fruit",
+      "C": "minecraft:cobblestone"
     },
     "result": {
-      "item": "minecraft:end_stone"
+      "id": "minecraft:end_stone"
     }
   }
 }

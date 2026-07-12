@@ -14,7 +14,10 @@
     "interval": 1,
     "entity_action": {
       "type": "origins:spawn_particles",
-      "particle": "dragon_breath",
+      "particle": {
+        "type": "minecraft:dragon_breath",
+        "params": ""
+      },
       "count": 20
     },
     "condition": {
@@ -66,7 +69,10 @@
         },
         {
           "type": "origins:spawn_particles",
-          "particle": "cherry_leaves",
+          "particle":{
+            "type": "minecraft:cherry_leaves",
+            "params": {}
+          },
           "count": 20,
           "spread": {
             "x": 2,
@@ -76,7 +82,10 @@
         },
         {
           "type": "origins:spawn_particles",
-          "particle": "witch",
+          "particle":{
+            "type": "minecraft:witch",
+            "params":  {}
+          },
           "count": 20,
           "spread": {
             "x": 2,
@@ -86,7 +95,10 @@
         },
         {
           "type": "origins:spawn_particles",
-          "particle": "end_rod",
+          "particle":{
+            "type": "minecraft:end_rod",
+            "params":  {}
+          },
           "count": 20,
           "spread": {
             "x": 2,
@@ -96,7 +108,10 @@
         },
         {
           "type": "origins:spawn_particles",
-          "particle": "dragon_breath",
+          "particle": {
+            "type": "minecraft:dragon_breath",
+            "params": ""
+          },
           "count": 20,
           "spread": {
             "x": 2,

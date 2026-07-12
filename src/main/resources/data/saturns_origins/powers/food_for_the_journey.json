@@ -4,10 +4,12 @@
   "type": "origins:starting_equipment",
   "stacks": [
     {
-      "item": "minecraft:chorus_flower"
+      "item": "minecraft:chorus_flower",
+      "tag": "{}"
     },
     {
-      "item": "minecraft:end_stone"
+      "item": "minecraft:end_stone",
+      "tag": "{}"
     }
   ]
 }
