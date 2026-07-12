@@ -35,17 +35,17 @@ public class KeyInputHandler {
                     //Portal
                     if (OriginsClient.useSecondaryActivePowerKeybind.isPressed()) {
                         if(player.isSneaking()){
-                            ClientPlayNetworking.send(new SetPortalPayloadC2S());
+                            ClientPlayNetworking.send(new SetPortalPayloadC2S((short) 1));
                         } else {
-                            ClientPlayNetworking.send(new SpawnPortalPayloadC2S());
+                            ClientPlayNetworking.send(new SpawnPortalPayloadC2S((short) 1));
                         }
                     }
                 }
                 if (client.crosshairTarget != null && OriginUtil.isOwlfolk(client.player) && client.crosshairTarget.getType() == HitResult.Type.MISS) {
                     if (client.options.attackKey.isPressed()) {
-                        ClientPlayNetworking.send(new SwarmAttackPayloadC2S());
+                        ClientPlayNetworking.send(new SwarmAttackPayloadC2S((short) 1));
                     } else {
-                        ClientPlayNetworking.send(new SwarmResetPayloadC2S());
+                        ClientPlayNetworking.send(new SwarmResetPayloadC2S((short) 1));
                     }
                 }
             }

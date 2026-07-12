@@ -2,15 +2,16 @@ package rings_of_saturn.github.io.saturns_origins.networking.packet;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 
 import static rings_of_saturn.github.io.saturns_origins.SaturnsOrigins.MOD_ID;
 
-public record SetPortalPayloadC2S() implements CustomPayload {
+public record SetPortalPayloadC2S(Short stupid) implements CustomPayload {
     public static final Identifier SPAWN_PORTAL_PAYLOAD_ID = Identifier.of(MOD_ID, "chorusfruitborn_set_portal");
-    public static final PacketCodec<PacketByteBuf, SetPortalPayloadC2S> CODEC = PacketCodec.of(
-            null,null);
+    public static final PacketCodec<PacketByteBuf, SetPortalPayloadC2S> CODEC = PacketCodec.tuple(
+            PacketCodecs.SHORT, SetPortalPayloadC2S::stupid, SetPortalPayloadC2S::new);
     public static final Id<SetPortalPayloadC2S> ID = new Id<>(SPAWN_PORTAL_PAYLOAD_ID);
 
     @Override
