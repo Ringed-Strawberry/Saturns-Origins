@@ -1,5 +1,5 @@
 {
-  "name": "Magic Affinty",
+  "name": "Magic Affinity",
   "description": "Your species' closeness to magic has caused you to be much more attuned to it, gaining a resistance to it aswell as giving you more experience than other species",
   "type": "origins:multiple",
   "xp_boost": {

@@ -1,15 +1,24 @@
 {
   "name": "Food for the journey",
   "description": "You spawn in with an endstone and a chorus flower from home",
-  "type": "origins:starting_equipment",
-  "stacks": [
-    {
-      "item": "minecraft:chorus_flower",
-      "tag": "{}"
-    },
-    {
-      "item": "minecraft:end_stone",
-      "tag": "{}"
-    }
-  ]
+  "type": "origins:action_on_callback",
+  "entity_action_chosen": {
+    "type": "origins:and",
+    "actions": [
+      {
+        "type": "origins:give",
+        "stack": {
+          "item": "minecraft:chorus_flower",
+          "amount": 1
+        }
+      },
+      {
+        "type": "origins:give",
+        "stack": {
+          "item": "minecraft:end_stone",
+          "amount": 1
+        }
+      }
+    ]
+  }
 }
