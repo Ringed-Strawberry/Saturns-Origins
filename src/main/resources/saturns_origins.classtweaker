@@ -1,0 +1,4 @@
+classTweaker  v1  named
+
+accessible method net/minecraft/entity/projectile/PersistentProjectileEntity isInGround ()Z
+inject-interface net/minecraft/client/render/entity/state/BipedEntityRenderState rings_of_saturn/github/io/saturns_origins/utils/OwlFolk

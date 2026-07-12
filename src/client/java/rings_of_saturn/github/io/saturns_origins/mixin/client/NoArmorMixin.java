@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class NoArmorMixin<S extends BipedEntityRenderState, M extends BipedEntityModel<S>, A extends BipedEntityModel<S>> {
     @Inject(method = "renderArmor", at = @At(value = "HEAD"), cancellable = true)
     void hideArmor(MatrixStack matrices, OrderedRenderCommandQueue queue, ItemStack stack, EquipmentSlot slot, int light, S state, CallbackInfo ci){
-        if(state.invisible && state.baby){
+        if(state.invisible && state.saturns_origins$isOwlFolk()){
             ci.cancel();
         }
     }
