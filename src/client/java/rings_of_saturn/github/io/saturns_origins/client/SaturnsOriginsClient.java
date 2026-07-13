@@ -3,10 +3,10 @@ package rings_of_saturn.github.io.saturns_origins.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BlockRenderLayer;
+import net.minecraft.client.render.entity.EntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
@@ -20,17 +20,16 @@ import static rings_of_saturn.github.io.saturns_origins.event.KeyInputHandler.re
 import static rings_of_saturn.github.io.saturns_origins.networking.ClientPackets.registerS2CPackets;
 
 public class SaturnsOriginsClient implements ClientModInitializer {
-
     public static final MinecraftClient client = MinecraftClient.getInstance();
-
     @Override
     public void onInitializeClient() {
+
         registerKeyInputs();
         registerS2CPackets();
         HudRenderCallback.EVENT.register(new SlowFallingHUD());
         HudRenderCallback.EVENT.register(new BackstabUltrakillReferenceHUD());
-        EntityRendererRegistry.register(ModEntities.FEATHER_UP_PROJECTILE, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.register(ModEntities.FEATHER_PROJECTILE, FeatherProjectileEntityRenderer::new);
+        EntityRendererFactories.register(ModEntities.FEATHER_UP_PROJECTILE, FlyingItemEntityRenderer::new);
+        EntityRendererFactories.register(ModEntities.FEATHER_PROJECTILE, FeatherProjectileEntityRenderer::new);
         BlockRenderLayerMap.putBlock(BlockGen.MAGICPLATFORMBLOCK, BlockRenderLayer.CUTOUT);
         ParticleFactoryRegistry.getInstance().register(ModParticles.ONE_TICK_PARTICLE, OneTickParticle.Factory::new);
     }
