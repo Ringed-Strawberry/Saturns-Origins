@@ -1,6 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.networking;
 
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,10 @@ import rings_of_saturn.github.io.saturns_origins.util.*;
 public class ServerPackets {
 
     public static void registerC2SPackets(){
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+            SwarmUtil.onDisconnect(handler.player);
+        });
+
         ServerPlayNetworking.registerGlobalReceiver(BackstabPayloadC2S.ID,
                 (payload, context) -> {
                     Vec3d pos = payload.pos();

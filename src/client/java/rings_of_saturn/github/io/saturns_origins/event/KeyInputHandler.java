@@ -14,7 +14,11 @@ import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 public class KeyInputHandler {
+
+    private static boolean wasAttackPressed = false;
+
     public static void registerKeyInputs(){
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if(client.player != null) {
                 if (OriginUtil.isChorusfruitborn(client.player)) {
@@ -48,7 +52,26 @@ public class KeyInputHandler {
                         ClientPlayNetworking.send(new SwarmResetPayloadC2S((short) 1));
                     }
                 }
+
+                // Swarm
+                if (client.crosshairTarget != null
+                        && OriginUtil.isOwlfolk(client.player)
+                        && client.crosshairTarget.getType() == HitResult.Type.MISS) {
+
+                    boolean isPressed = client.options.attackKey.isPressed();
+
+                    if (isPressed && !wasAttackPressed) {
+                        ClientPlayNetworking.send(new SwarmAttackPayloadC2S((short) 1));
+                    } else if (!isPressed && wasAttackPressed) {
+                        ClientPlayNetworking.send(new SwarmResetPayloadC2S((short) 1));
+                    }
+
+                    wasAttackPressed = isPressed;
+                } else {
+                    wasAttackPressed = false;
+                }
             }
+
 		});
 	}
 }
