@@ -2,21 +2,15 @@ package rings_of_saturn.github.io.saturns_origins.mixin.client;
 
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import rings_of_saturn.github.io.saturns_origins.utils.OwlFolk;
+import rings_of_saturn.github.io.saturns_origins.client.SaturnsOriginsClient;
+import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
+import rings_of_saturn.github.io.saturns_origins.utils.OwlFolkMixinUtil;
 
 @Mixin(BipedEntityRenderState.class)
-public class BipedEntityRenderStateMixin implements OwlFolk {
-    @Unique
-    private boolean isOwlFolk;
+public class BipedEntityRenderStateMixin implements OwlFolkMixinUtil {
 
     @Override
     public boolean saturns_origins$isOwlFolk() {
-        return this.isOwlFolk;
-    }
-
-    @Override
-    public void saturns_origins$setOwlFolk(boolean value) {
-        isOwlFolk = value;
+        return OriginUtil.isOwlfolk(SaturnsOriginsClient.client.player);
     }
 }

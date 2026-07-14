@@ -23,7 +23,7 @@ public class SlowFallingHUD implements HudRenderCallback {
         int x;
         int y;
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client != null) {
+        if (client != null && !client.options.hudHidden) {
             int width = client.getWindow().getScaledWidth();
             int height = client.getWindow().getScaledHeight();
 

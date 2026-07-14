@@ -48,7 +48,7 @@ public class FeatherUpEntityRenderer extends FlyingItemEntityRenderer<FeatherUpP
         double py = MathHelper.lerp(tickDelta, player.lastRenderY, player.getY());
         double pz = MathHelper.lerp(tickDelta, player.lastRenderZ, player.getZ());
 
-        // Orbit center with sinusoidal bob (matches server formula)
+        // Orbit center with a sin wave bob (matches server formula)
         double age = player.age + tickDelta;
         double centerY = py + 1 + Math.sin(age / 4.0) / 6.0;
 
