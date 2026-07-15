@@ -81,14 +81,14 @@ public class ServerPackets {
                              }
                          }
                          if(!hasEyes){
-                             context.player().sendMessage(Text.of("This ability Requires: 1 Eye Of Ender"), true);
+                             context.player().sendMessage(Text.translatable("chorusfruitborn.portal.eyes"), true);
                          }
                      }
                  }));
 
         ServerPlayNetworking.registerGlobalReceiver(SetPortalPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
-                    context.player().sendMessage(Text.of("Set portal position to " + context.player().getBlockPos().toShortString()), true);
+                    context.player().sendMessage(Text.translatable("chorusfruitborn.portal.set").append(Text.of(" " + context.player().getBlockPos().toShortString())), true);
                     PortalPositionUtil.setPortalWorld(context.player());
                     PortalPositionUtil.setPortalPos(context.player());
                  }));

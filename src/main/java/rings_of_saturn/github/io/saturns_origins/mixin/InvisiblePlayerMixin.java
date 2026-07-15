@@ -48,7 +48,7 @@ public class InvisiblePlayerMixin {
                 }
                 if(player.isSneaking()
                         &&isPlayerInRange){
-                    player.sendMessage(Text.of("You cant hide when nearby players!"), true);
+                    player.sendMessage(Text.translatable("owlfolk.invisibility.player"), true);
                 }
             } else {
                 if (isPlayerInRange) {
