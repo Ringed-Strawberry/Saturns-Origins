@@ -20,6 +20,8 @@ import rings_of_saturn.github.io.saturns_origins.util.PlayerUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.INVIS_DETECT_RANGE;
+
 @Mixin(value = LivingEntity.class)
 public class InvisiblePlayerMixin {
 
@@ -32,7 +34,7 @@ public class InvisiblePlayerMixin {
             List<PlayerEntity> playerList = new ArrayList<>(List.of());
             playerList.addAll(player.getEntityWorld().getPlayers());
             playerList.remove(player);
-            boolean isPlayerInRange = PlayerUtil.isPlayerInRange(playerList, player.getX(), player.getY(), player.getZ(), 5);
+            boolean isPlayerInRange = PlayerUtil.isPlayerInRange(playerList, player.getX(), player.getY(), player.getZ(), INVIS_DETECT_RANGE);
             if (!PlayerUtil.getIsInvis(player)){
                 if (player.isSneaking()
                         && !isPlayerInRange) {

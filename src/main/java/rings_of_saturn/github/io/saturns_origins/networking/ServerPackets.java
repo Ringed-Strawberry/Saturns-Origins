@@ -4,12 +4,15 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import rings_of_saturn.github.io.saturns_origins.block.BlockGen;
@@ -19,6 +22,12 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlock
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectileEntity;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.*;
 import rings_of_saturn.github.io.saturns_origins.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.*;
 
 public class ServerPackets {
 
@@ -112,6 +121,30 @@ public class ServerPackets {
                 (payload, context) -> context.server().execute(() -> {
                     if(OriginUtil.isOwlfolk(context.player()) && ResourceUtil.isSwarmActive(context.player()) && !KeybindUtil.canAttack(context.player())){
                         KeybindUtil.setAttack(context.player(), true);
+                    }
+                }));
+
+
+        ServerPlayNetworking.registerGlobalReceiver(BloodlustInstinctPayloadC2S.ID,
+                (payload, context) -> context.server().execute(() -> {
+                    if (OriginUtil.isOwlfolk(context.player())) {
+                        context.player().addExhaustion(BLOODLUST_INSTINCT_EXHAUSTION_PER_TICK);
+
+                        Box box = context.player().getBoundingBox()
+                                .expand(BLOODLUST_INSTINCT_HORIZONTAL_RANGE,
+                                        BLOODLUST_INSTINCT_VERTICAL_RANGE,
+                                        BLOODLUST_INSTINCT_HORIZONTAL_RANGE);
+
+                        List<UUID> mobs = new ArrayList<>();
+                        for (Entity e : context.player().getEntityWorld()
+                                .getOtherEntities(context.player(), box)) {
+                            if (e instanceof LivingEntity) {
+                                mobs.add(e.getUuid());
+                            }
+                        }
+
+                        ServerPlayNetworking.send(context.player(),
+                                new BloodlustInstinctResultPayloadS2C(mobs));
                     }
                 }));
     }

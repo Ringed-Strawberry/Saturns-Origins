@@ -28,6 +28,8 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlock
 import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBlockEntityTicker;
 import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.PORTAL_TELEPORT_COOLDOWN;
+
 public class PortalBlock extends BlockWithEntity {
     public static final MapCodec<PortalBlock> CODEC = PortalBlock.createCodec(PortalBlock::new);
     public static BooleanProperty RETURN_PORTAL = BooleanProperty.of("is_return_portal");
@@ -53,7 +55,7 @@ public class PortalBlock extends BlockWithEntity {
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         if(!world.isClient() && world.getBlockEntity(pos) instanceof PortalBlockEntity blockEntity && entity.getPortalCooldown() == 0) {
-            entity.setPortalCooldown(40);
+            entity.setPortalCooldown(PORTAL_TELEPORT_COOLDOWN);
             Vec3d TPPos;
 
             ServerWorld TPWorld = world.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, Identifier.tryParse(blockEntity.getDim())));

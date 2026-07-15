@@ -8,6 +8,8 @@ import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import rings_of_saturn.github.io.saturns_origins.block.entity.ModBlockEntities;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.PORTAL_ENTITY_LIFETIME_TICKS;
+
 public class PortalBlockEntity extends BlockEntity {
     public PortalBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -21,7 +23,7 @@ public class PortalBlockEntity extends BlockEntity {
     private String playerName = "";
     private String dim = "minecraft:overworld";
     private int[] pos = new int[3];
-    private int timer = 40*20;
+    private int timer = PORTAL_ENTITY_LIFETIME_TICKS;
 
     public String getPlayerName() {
         return this.playerName;

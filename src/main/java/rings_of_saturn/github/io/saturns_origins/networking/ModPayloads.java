@@ -13,6 +13,10 @@ public class ModPayloads {
 
         PayloadTypeRegistry.playC2S().register(SwarmAttackPayloadC2S.ID, SwarmAttackPayloadC2S.CODEC);
         PayloadTypeRegistry.playC2S().register(SwarmResetPayloadC2S.ID, SwarmResetPayloadC2S.CODEC);
+        PayloadTypeRegistry.playS2C().register(BloodlustTargetPayloadS2C.ID, BloodlustTargetPayloadS2C.CODEC);
+
+        PayloadTypeRegistry.playC2S().register(BloodlustInstinctPayloadC2S.ID, BloodlustInstinctPayloadC2S.CODEC);
+        PayloadTypeRegistry.playS2C().register(BloodlustInstinctResultPayloadS2C.ID, BloodlustInstinctResultPayloadS2C.CODEC);
     }
 
 }
