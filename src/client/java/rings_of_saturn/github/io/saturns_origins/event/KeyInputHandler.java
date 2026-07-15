@@ -2,25 +2,37 @@ package rings_of_saturn.github.io.saturns_origins.event;
 
 import io.github.apace100.origins.OriginsClient;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
+import org.lwjgl.glfw.GLFW;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.*;
 import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 public class KeyInputHandler {
 
+    public static final String TERNARY = "key.saturns_origins.ternary_active";
+
+    public static KeyBinding ternaryPowerKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            TERNARY,
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_V,
+            OriginsClient.ORIGINS_CATEGORY
+    ));;
+
     private static boolean wasAttackPressed = false;
 
     public static void registerKeyInputs(){
-
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if(client.player != null) {
+            if(client.player != null) {
                 if (OriginUtil.isChorusfruitborn(client.player)) {
                     //Backstab
                     PlayerEntity player = client.player;
@@ -72,6 +84,10 @@ public class KeyInputHandler {
                 }
             }
 
+            //Bloodlust Instinct
+            if (ternaryPowerKey.isPressed()) {
+
+            }
 		});
 	}
 }
