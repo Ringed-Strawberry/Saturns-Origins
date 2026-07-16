@@ -45,7 +45,7 @@ public class KeyInputHandler {
                             Vec3d pos = entity.getEntityPos().subtract(vec.multiply(1.0));
                             ClientPlayNetworking.send(new BackstabPayloadC2S(pos, entity.getYaw()));
                         } else if (CooldownUtil.isBackstabCooldownOver(player)) {
-                            player.sendMessage(Text.of("chorusfruitborn.backstab.look_at_entity"), true);
+                            player.sendMessage(Text.translatable("chorusfruitborn.backstab.look_at_entity"), true);
                         }
                     }
                     //Portal
