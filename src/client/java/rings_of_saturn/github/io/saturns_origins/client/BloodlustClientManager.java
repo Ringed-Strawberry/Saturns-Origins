@@ -1,7 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.client;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.ColorHelper;
+import rings_of_saturn.github.io.saturns_origins.util.ValuesUtil;
 
 import java.util.Map;
 import java.util.UUID;
@@ -48,8 +48,8 @@ public class BloodlustClientManager {
             return 0;
         }
         return switch (entry.type) {
-            case BLOODLUST -> ColorHelper.getArgb(255, 255, 0, 0);    // red
-            case SCAN      -> ColorHelper.getArgb(255, 223,70 , 97);  // lighter red
+            case BLOODLUST -> ValuesUtil.BLOODLUST_COLOR;
+            case SCAN      -> ValuesUtil.BLOODLUST_SCAN_COLOR;
         };
     }
 

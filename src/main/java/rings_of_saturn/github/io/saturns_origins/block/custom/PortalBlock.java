@@ -67,7 +67,7 @@ public class PortalBlock extends BlockWithEntity {
             }
 
             Vec3d initialVelocity = entity.getVelocity();
-            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch(), false);
+            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY()+.5f, TPPos.getZ(), PositionFlag.ofRot(false, false), entity.getYaw(), entity.getPitch(), false);
 
             entity.setVelocity(initialVelocity);
 

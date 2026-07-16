@@ -1,5 +1,7 @@
 package rings_of_saturn.github.io.saturns_origins.util;
 
+import net.minecraft.util.math.ColorHelper;
+
 public class ValuesUtil {
 
     //VOID GATEWAY
@@ -29,9 +31,12 @@ public class ValuesUtil {
 
     public static double BLOODLUST_INSTINCT_HORIZONTAL_RANGE = 32.0;        // X/Z radius
     public static double BLOODLUST_INSTINCT_VERTICAL_RANGE = 8.0;           // Y radius
-    public static float BLOODLUST_INSTINCT_EXHAUSTION_PER_TICK = 0.1F;
+    public static float BLOODLUST_INSTINCT_EXHAUSTION_PER_TICK = 0.075F;
 
     public static int BLOODLUST_INSTINCT_TIMEOUT_TICKS = 5;
+
+    public static final int BLOODLUST_COLOR = ColorHelper.getArgb(255, 255, 0, 0);
+    public static final int BLOODLUST_SCAN_COLOR = ColorHelper.getArgb(255, 255, 127, 127);
 
 
     //SWARM
