@@ -13,6 +13,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.FEATHER_DAMAGE;
+
 public class FeatherProjectileEntity extends PersistentProjectileEntity {
 
 
@@ -59,7 +61,7 @@ public class FeatherProjectileEntity extends PersistentProjectileEntity {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
         if(!this.getEntityWorld().isClient())
-            entity.damage(this.getEntityWorld().getServer().getWorld(this.getEntityWorld().getRegistryKey()), entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 2);
+            entity.damage(this.getEntityWorld().getServer().getWorld(this.getEntityWorld().getRegistryKey()), entity.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), FEATHER_DAMAGE);
     }
 
     @Override

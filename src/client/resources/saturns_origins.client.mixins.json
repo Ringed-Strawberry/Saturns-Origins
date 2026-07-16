@@ -8,7 +8,9 @@
     "HeartTypeMixin",
     "InGameHudMixin",
     "NoArmorMixin",
-    "NoElytraMixin"
+    "NoElytraMixin",
+    "BloodlustEntityMixin",
+    "BloodlustOutlineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

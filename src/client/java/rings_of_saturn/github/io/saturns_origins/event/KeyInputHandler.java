@@ -13,6 +13,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
+import rings_of_saturn.github.io.saturns_origins.client.BloodlustClientManager;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.*;
 import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
@@ -20,7 +21,7 @@ import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 public class KeyInputHandler {
 
     public static final String TERNARY = "key.saturns_origins.ternary_active";
-
+    private static boolean ternaryWasPressed = false;
     public static KeyBinding ternaryPowerKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             TERNARY,
             InputUtil.Type.KEYSYM,
@@ -82,12 +83,21 @@ public class KeyInputHandler {
                 } else {
                     wasAttackPressed = false;
                 }
+
+
+
+                //Bloodlust Instinct
+                if (OriginUtil.isOwlfolk(client.player)){
+                    boolean ternaryPressed = ternaryPowerKey.isPressed();
+                    if (ternaryPressed) {
+                        ClientPlayNetworking.send(new BloodlustInstinctPayloadC2S());
+                    } else if (ternaryWasPressed) {
+                        BloodlustClientManager.clearByType(BloodlustClientManager.MarkType.SCAN);
+                    }
+                    ternaryWasPressed = ternaryPressed;
+                }
             }
 
-            //Bloodlust Instinct
-            if (ternaryPowerKey.isPressed()) {
-
-            }
 		});
 	}
 }

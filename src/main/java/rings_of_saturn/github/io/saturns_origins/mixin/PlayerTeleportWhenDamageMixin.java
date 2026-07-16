@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.DAMAGE_TELEPORT_HEALTH_THRESHOLD;
+
 @Mixin(value = PlayerEntity.class)
 public abstract class PlayerTeleportWhenDamageMixin extends LivingEntity {
     protected PlayerTeleportWhenDamageMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -26,7 +28,7 @@ public abstract class PlayerTeleportWhenDamageMixin extends LivingEntity {
 
     @Inject(method = "damage", at = @At("TAIL"))
     private void randomTeleport(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (OriginUtil.isChorusfruitborn(this) && this.getHealth() < 6.0 && !this.isDead()) {
+        if (OriginUtil.isChorusfruitborn(this) && this.getHealth() < DAMAGE_TELEPORT_HEALTH_THRESHOLD && !this.isDead()) {
             double d = this.getX();
             double e = this.getY();
             double f = this.getZ();

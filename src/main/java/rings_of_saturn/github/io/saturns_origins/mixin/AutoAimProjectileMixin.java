@@ -20,6 +20,9 @@ import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherProjectile
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 import rings_of_saturn.github.io.saturns_origins.util.ProjectileUtil;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.FEATHER_AUTO_AIM_RANGE;
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.PROJECTILE_AUTO_AIM_RANGE;
+
 @Mixin(value = ProjectileEntity.class)
 public class AutoAimProjectileMixin {
 
@@ -42,7 +45,7 @@ public class AutoAimProjectileMixin {
             isInGround = !arrow.isInGround();
         }
         if(isInGround && thisAsEntity.getOwner() != null && !thisAsEntity.getEntityWorld().isClient() && OriginUtil.isOwlfolk(thisAsEntity.getOwner())) {
-            double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? 8 : 4;
+            double range = thisAsEntity.getClass().equals(FeatherProjectileEntity.class) ? FEATHER_AUTO_AIM_RANGE : PROJECTILE_AUTO_AIM_RANGE;
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
                 storedTarget = null;

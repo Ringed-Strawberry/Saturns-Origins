@@ -16,10 +16,11 @@ import org.joml.Quaternionf;
 import rings_of_saturn.github.io.saturns_origins.client.SaturnsOriginsClient;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.SWARM_RADIUS;
+import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.SWARM_SPEED;
+
 @Environment(EnvType.CLIENT)
 public class FeatherUpEntityRenderer extends FlyingItemEntityRenderer<FeatherUpProjectileEntity> {
-    private static final double SWARM_SPEED = 1.5;
-    private static final double SWARM_RADIUS = 1.0;
 
     public FeatherUpEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, 1.0f, false);
