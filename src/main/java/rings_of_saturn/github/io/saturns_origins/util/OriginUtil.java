@@ -7,22 +7,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class OriginUtil {
-    public static boolean hasOrigin(Entity entity, String name){
-        OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));
-        return Origin.get(entity).get(layers).getName().getString().equals(name);
+    public static final Identifier OWLFOLK_ID = Identifier.of("saturns_origins", "owlfolk");
+    public static final Identifier CHORUSFRUITBORN_ID = Identifier.of("saturns_origins", "chorusfruitborn");
+
+    public static boolean hasOrigin(Entity entity, Identifier originId){
+        OriginLayer layer = OriginLayers.getLayer(Identifier.of("origins", "origin"));
+        Origin origin = Origin.get(entity).get(layer);
+        return origin != null && origin.getIdentifier().equals(originId);
     }
 
     public static boolean isOwlfolk(Entity entity){
-        OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));
-        if(Origin.get(entity).get(layers) != null)
-            return Origin.get(entity).get(layers).getName().getString().equals("Owlfolk");
-        return false;
+        return hasOrigin(entity, OWLFOLK_ID);
     }
 
     public static boolean isChorusfruitborn(Entity entity){
-        OriginLayer layers = OriginLayers.getLayer(Identifier.of("origins", "origin"));
-        if(Origin.get(entity).get(layers) != null)
-            return Origin.get(entity).get(layers).getName().getString().equals("Chorusfruitborn");
-        return false;
+        return hasOrigin(entity, CHORUSFRUITBORN_ID);
     }
 }

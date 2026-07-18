@@ -57,8 +57,8 @@ public class ServerPackets {
 
         ServerPlayNetworking.registerGlobalReceiver(SpawnPortalPayloadC2S.ID,
                 (payload, context) -> context.server().execute(() -> {
-                     if(CooldownUtil.isPortalCooldownOver(context.player())) {
-                         boolean hasEyes = false;
+                    if(CooldownUtil.isPortalCooldownOver(context.player())) {
+                        boolean hasEyes = false;
                          for (int i = 0; i < context.player().getInventory().size(); ++i) {
                              ItemStack stack = context.player().getInventory().getStack(i);
                              if (stack.getItem() == Items.ENDER_EYE) {

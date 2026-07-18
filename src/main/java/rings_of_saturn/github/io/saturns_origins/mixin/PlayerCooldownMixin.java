@@ -16,7 +16,6 @@ public class PlayerCooldownMixin {
     @Inject(method = "tick", at=@At("HEAD"))
     private void tickCooldowns(CallbackInfo ci){
         if(!thisAsPlayer.getEntityWorld().isClient()) {
-            CooldownUtil.decrementBackstabCooldown(thisAsPlayer);
             CooldownUtil.decrementPortalCooldown(thisAsPlayer);
             CooldownUtil.decrementInvulnerableFrames(thisAsPlayer);
         }

@@ -28,6 +28,8 @@ import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlock
 import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBlockEntityTicker;
 import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
 
+import java.util.Set;
+
 import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.PORTAL_TELEPORT_COOLDOWN;
 
 public class PortalBlock extends BlockWithEntity {
@@ -67,7 +69,7 @@ public class PortalBlock extends BlockWithEntity {
             }
 
             Vec3d initialVelocity = entity.getVelocity();
-            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), PositionFlag.ROT, entity.getYaw(), entity.getPitch(), false);
+            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), Set.of(), entity.getYaw(), entity.getPitch(), false);
 
             entity.setVelocity(initialVelocity);
 
