@@ -7,6 +7,9 @@ import rings_of_saturn.github.io.saturns_origins.components.ModComponents;
 import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.*;
 
 public class CooldownUtil {
+
+
+
     public static void decrementPortalCooldown(PlayerEntity player){
         ModComponents.PORTAL_COOLDOWN.get(player).decrement();
     }
@@ -15,20 +18,8 @@ public class CooldownUtil {
         ModComponents.PORTAL_COOLDOWN.get(player).setValue(PORTAL_COOLDOWN_TICKS);
     }
 
-    public static void decrementBackstabCooldown(PlayerEntity player){
-        ModComponents.BACKSTAB_COOLDOWN.get(player).decrement();
-    }
-
-    public static void resetBackstabCooldown(PlayerEntity player){
-        ModComponents.BACKSTAB_COOLDOWN.get(player).setValue(BACKSTAB_COOLDOWN_TICKS);
-    }
-
     public static boolean isPortalCooldownOver(PlayerEntity player){
         return ModComponents.PORTAL_COOLDOWN.get(player).isOver();
-    }
-
-    public static boolean isBackstabCooldownOver(PlayerEntity player){
-        return ModComponents.BACKSTAB_COOLDOWN.get(player).isOver();
     }
 
     public static void decrementInvisibilityCooldown(PlayerEntity player){

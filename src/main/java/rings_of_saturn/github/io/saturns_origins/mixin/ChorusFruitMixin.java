@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
 
 @Mixin(value = TeleportRandomlyConsumeEffect.class)
 public class ChorusFruitMixin {
@@ -28,7 +29,7 @@ public class ChorusFruitMixin {
     @Inject(method = "onConsume", at=@At("HEAD"),  cancellable = true)
     void eat(World world, ItemStack stack, LivingEntity user, CallbackInfoReturnable<Boolean> cir) {
         boolean bl = false;
-        if (user.isSneaking()) {
+        if (user.isSneaking() &&  OriginUtil.isChorusfruitborn(user)) {
             for (int i = 0; i < 16; ++i) {
                 double d = user.getX() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) thisAsEffect.diameter();
                 double e = MathHelper.clamp(user.getY() + (user.getRandom().nextDouble() - (double) 0.5F) * (double) thisAsEffect.diameter(), (double) world.getBottomY(), (double) (world.getBottomY() + ((ServerWorld) world).getLogicalHeight() - 1));

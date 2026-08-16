@@ -12,7 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -27,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 import rings_of_saturn.github.io.saturns_origins.block.entity.custom.PortalBlockEntity;
 import rings_of_saturn.github.io.saturns_origins.block.entity.tickers.PortalBlockEntityTicker;
 import rings_of_saturn.github.io.saturns_origins.util.PortalPositionUtil;
+
+import java.util.Set;
 
 import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.PORTAL_TELEPORT_COOLDOWN;
 
@@ -67,7 +68,7 @@ public class PortalBlock extends BlockWithEntity {
             }
 
             Vec3d initialVelocity = entity.getVelocity();
-            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY()+.5f, TPPos.getZ(), PositionFlag.ofRot(false, false), entity.getYaw(), entity.getPitch(), false);
+            entity.teleport(TPWorld, TPPos.getX(), TPPos.getY(), TPPos.getZ(), Set.of(), entity.getYaw(), entity.getPitch(), false);
 
             entity.setVelocity(initialVelocity);
 

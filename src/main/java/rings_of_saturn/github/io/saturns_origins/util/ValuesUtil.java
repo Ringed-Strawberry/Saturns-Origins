@@ -10,7 +10,6 @@ public class ValuesUtil {
     public static int PORTAL_TELEPORT_COOLDOWN = 40;// 2s
 
     //BACKSTAB
-    public static int BACKSTAB_COOLDOWN_TICKS = 300; // 15s
     public static int INVULNERABLE_FRAMES_TICKS = 10; // 0.5s (The "parry" timer)
 
 

@@ -17,6 +17,7 @@ import rings_of_saturn.github.io.saturns_origins.client.BloodlustClientManager;
 import rings_of_saturn.github.io.saturns_origins.networking.packet.*;
 import rings_of_saturn.github.io.saturns_origins.util.CooldownUtil;
 import rings_of_saturn.github.io.saturns_origins.util.OriginUtil;
+import rings_of_saturn.github.io.saturns_origins.util.ResourceUtil;
 
 public class KeyInputHandler {
 
@@ -45,7 +46,7 @@ public class KeyInputHandler {
                             Vec3d vec = Vec3d.fromPolar(0,entity.getYaw()).normalize();
                             Vec3d pos = entity.getEntityPos().subtract(vec.multiply(1.0));
                             ClientPlayNetworking.send(new BackstabPayloadC2S(pos, entity.getYaw()));
-                        } else if (CooldownUtil.isBackstabCooldownOver(player)) {
+                        } else if (ResourceUtil.canBackstab(player)) {
                             player.sendMessage(Text.translatable("chorusfruitborn.backstab.look_at_entity"), true);
                         }
                     }
@@ -56,13 +57,6 @@ public class KeyInputHandler {
                         } else {
                             ClientPlayNetworking.send(new SpawnPortalPayloadC2S((short) 1));
                         }
-                    }
-                }
-                if (client.crosshairTarget != null && OriginUtil.isOwlfolk(client.player) && client.crosshairTarget.getType() == HitResult.Type.MISS) {
-                    if (client.options.attackKey.isPressed()) {
-                        ClientPlayNetworking.send(new SwarmAttackPayloadC2S((short) 1));
-                    } else {
-                        ClientPlayNetworking.send(new SwarmResetPayloadC2S((short) 1));
                     }
                 }
 
