@@ -10,7 +10,9 @@
     "NoArmorMixin",
     "NoElytraMixin",
     "BloodlustEntityMixin",
-    "BloodlustOutlineMixin"
+    "BloodlustOutlineMixin",
+    "PlayerEntityRendererMixin"
+
   ],
   "injectors": {
     "defaultRequire": 1
