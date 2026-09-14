@@ -15,7 +15,11 @@ public class PortalPositionComponent implements Vec3dComponent, AutoSyncedCompon
 
     @Override
     public void readData(ReadView readView) {
-        this.value = new Vec3d(readView.getDouble("value1", 0), readView.getDouble("value2", 0), readView.getDouble("value3", 0));
+        this.value = new Vec3d(
+                readView.getDouble("value1", 0),
+                readView.getDouble("value2", 0),
+                readView.getDouble("value3", 0)
+        );
     }
 
     @Override
@@ -27,7 +31,7 @@ public class PortalPositionComponent implements Vec3dComponent, AutoSyncedCompon
 
     @Override
     public Vec3d getValue() {
-        return value;
+        return this.value;
     }
 
     @Override
