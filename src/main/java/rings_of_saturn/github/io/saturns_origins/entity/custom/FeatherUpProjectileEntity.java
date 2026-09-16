@@ -1,8 +1,6 @@
 package rings_of_saturn.github.io.saturns_origins.entity.custom;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingItemEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -12,12 +10,14 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.world.World;
+import org.jspecify.annotations.Nullable;
 import rings_of_saturn.github.io.saturns_origins.entity.ModEntities;
 
 
-public class FeatherUpProjectileEntity extends Entity implements FlyingItemEntity {
+public class FeatherUpProjectileEntity extends Entity implements FlyingItemEntity, Ownable {
 
     private final ItemStack stack;
+    protected @Nullable LazyEntityReference<Entity> owner;
 
     private static final TrackedData<Integer> SWARM_INDEX =
             DataTracker.registerData(FeatherUpProjectileEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -91,16 +91,33 @@ public class FeatherUpProjectileEntity extends Entity implements FlyingItemEntit
 
     @Override
     protected void readCustomData(ReadView view) {
-
+        this.setOwner(LazyEntityReference.fromData(view, "Owner"));
     }
 
     @Override
     protected void writeCustomData(WriteView view) {
-
+        LazyEntityReference.writeData(this.owner, view, "Owner");
     }
 
     @Override
     public ItemStack getStack() {
         return stack;
     }
+
+    protected boolean isOwner(Entity entity) {
+        return this.owner != null && this.owner.uuidEquals(entity);
+    }
+
+    protected void setOwner(@Nullable LazyEntityReference<Entity> owner) {
+        this.owner = owner;
+    }
+
+    public void setOwner(@Nullable Entity owner) {
+        this.setOwner(LazyEntityReference.of(owner));
+    }
+    @Override
+    public @Nullable Entity getOwner() {
+        return LazyEntityReference.getEntity(this.owner, this.getEntityWorld());
+    }
+
 }

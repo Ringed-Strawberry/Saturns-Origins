@@ -29,6 +29,7 @@ public class SwarmUtil {
                 feather.setPosition(player.getEntityPos());
                 feather.setSwarmIndex(feathers.size());
                 feather.setSwarmCharge(charge);
+                feather.setOwner(player);
                 player.getEntityWorld().spawnEntity(feather);
                 feathers.add(feather);
             }
