@@ -1,21 +1,67 @@
 {
-  "name": "Familiar Rocks",
-  "description": "Your species livelihood revolved around endstone has made you very familiar with it, letting you make it out of cobblestone",
-  "type": "origins:recipe",
-  "recipe": {
-    "id": "saturns_origins:endstone_familiar_rocks",
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-      " # ",
-      "#C#",
-      " # "
-    ],
-    "key": {
-      "#": "minecraft:chorus_fruit",
-      "C": "minecraft:cobblestone"
-    },
-    "result": {
-      "id": "minecraft:end_stone"
+  "name": "Familiar Elements",
+  "description": "Your species livelihood revolved around endstone and chorus has made you very familiar with them, letting you make them out yourself",
+  "type": "origins:multiple",
+  "endstone": {
+    "type": "origins:recipe",
+    "recipe": {
+      "id": "saturns_origins:endstone_familiar_rocks",
+      "type": "minecraft:crafting_shaped",
+      "pattern": [
+        " # ",
+        "#C#",
+        " # "
+      ],
+      "key": {
+        "#": "minecraft:chorus_fruit",
+        "C": "minecraft:cobblestone"
+      },
+      "result": {
+        "id": "minecraft:end_stone"
+      }
+    }
+  },
+  "chorus_plants": {
+    "type": "origins:recipe",
+    "recipe": {
+      "id": "saturns_origins:chorus_familiar_rocks",
+      "type": "minecraft:crafting_shaped",
+      "pattern": [
+        "#C#",
+        "OAP",
+        "#D#"
+      ],
+      "key": {
+        "#": "minecraft:ender_pearl",
+        "D": "minecraft:dandelion",
+        "O": "minecraft:oxeye_daisy",
+        "A": "minecraft:apple",
+        "C": "minecraft:cornflower",
+        "P": "minecraft:poppy"
+      },
+      "result": {
+        "id": "minecraft:chorus_flower"
+      }
+    }
+  },
+  "emergency_endstone": {
+    "type": "origins:recipe",
+    "recipe": {
+      "id": "saturns_origins:endstone_familiar_rocks_emergency",
+      "type": "minecraft:crafting_shaped",
+      "pattern": [
+        "C#C",
+        "#D#",
+        "C#C"
+      ],
+      "key": {
+        "C": "minecraft:cobblestone",
+        "#": "minecraft:ender_pearl",
+        "D": "minecraft:diorite"
+      },
+      "result": {
+        "id": "minecraft:end_stone"
+      }
     }
   }
 }
