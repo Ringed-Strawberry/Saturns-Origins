@@ -1,6 +1,6 @@
 {
   "name": "Backstab",
-  "description": "You use the power of the void to teleport yourself behind your enemy",
+  "description": "You use the power of the void to teleport yourself behind your enemy, Press your main ",
   "type": "origins:cooldown",
   "cooldown": 300,
   "hud_render": {

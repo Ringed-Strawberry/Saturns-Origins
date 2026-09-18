@@ -28,7 +28,7 @@ public abstract class PlayerTeleportWhenDamageMixin extends LivingEntity {
 
     @Inject(method = "damage", at = @At("TAIL"))
     private void randomTeleport(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (OriginUtil.isChorusfruitborn(this) && this.getHealth() < DAMAGE_TELEPORT_HEALTH_THRESHOLD && !this.isDead()) {
+        if (OriginUtil.isChorusfruitborn(this) && this.getHealth() < DAMAGE_TELEPORT_HEALTH_THRESHOLD && !this.isDead() && !this.isInvulnerable()) {
             double d = this.getX();
             double e = this.getY();
             double f = this.getZ();

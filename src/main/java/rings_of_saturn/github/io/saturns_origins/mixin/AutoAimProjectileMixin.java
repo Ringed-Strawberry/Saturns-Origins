@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
@@ -37,6 +38,7 @@ public class AutoAimProjectileMixin {
 
     @Inject(method = "tick", at=@At("HEAD"))
     private void autoAim(CallbackInfo ci){
+        if(thisAsEntity instanceof EnderPearlEntity) return;
         PersistentProjectileEntity arrow = null;
         boolean isInGround = true;
         if(thisAsEntity instanceof PersistentProjectileEntity)
@@ -54,7 +56,7 @@ public class AutoAimProjectileMixin {
             LivingEntity closestEntity = thisAsEntity.getEntityWorld().getServer().getWorld(thisAsEntity.getEntityWorld().getRegistryKey()).getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
                     (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
                     Box.of(thisAsEntity.getEntityPos(), range,range,range));
-            if(closestEntity != null && closestEntity != storedTarget){
+            if(closestEntity != null && closestEntity != storedTarget && closestEntity.canBeHitByProjectile()){
                 thisAsEntity.setPortalCooldown(10);
                 thisAsEntity.setNoGravity(true);
                 storedVel = thisAsEntity.getVelocity();

@@ -13,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
-import rings_of_saturn.github.io.saturns_origins.client.SaturnsOriginsClient;
 import rings_of_saturn.github.io.saturns_origins.entity.custom.FeatherUpProjectileEntity;
 
 import static rings_of_saturn.github.io.saturns_origins.util.ValuesUtil.SWARM_RADIUS;
@@ -41,31 +40,34 @@ public class FeatherUpEntityRenderer extends FlyingItemEntityRenderer<FeatherUpP
     public void updateRenderState(FeatherUpProjectileEntity entity, FlyingItemEntityRenderState state, float tickDelta) {
         super.updateRenderState(entity, state, tickDelta);
 
-        PlayerEntity player = SaturnsOriginsClient.client.player;
-        if (player == null || entity.isRemoved()) return;
+        if (entity.getOwner() != null && entity.getOwner().isPlayer()) {
+            PlayerEntity player = (PlayerEntity) entity.getOwner();
 
-        // Interpolate player position to this frame
-        double px = MathHelper.lerp(tickDelta, player.lastRenderX, player.getX());
-        double py = MathHelper.lerp(tickDelta, player.lastRenderY, player.getY());
-        double pz = MathHelper.lerp(tickDelta, player.lastRenderZ, player.getZ());
+            if (player == null || entity.isRemoved()) return;
 
-        // Orbit center with a sin wave bob (matches server formula)
-        double age = player.age + tickDelta;
-        double centerY = py + 1 + Math.sin(age / 4.0) / 6.0;
+            // Interpolate player position to this frame
+            double px = MathHelper.lerp(tickDelta, player.lastRenderX, player.getX());
+            double py = MathHelper.lerp(tickDelta, player.lastRenderY, player.getY());
+            double pz = MathHelper.lerp(tickDelta, player.lastRenderZ, player.getZ());
 
-        // Compute the feather's position on the circular orbit
-        int charge = entity.getSwarmCharge();
-        int index = entity.getSwarmIndex();
-        if (charge <= 0) return;
+            // Orbit center with a sin wave bob (matches server formula)
+            double age = player.age + tickDelta;
+            double centerY = py + 1 + Math.sin(age / 4.0) / 6.0;
 
-        double angularStep = 2 * Math.PI / charge;
-        double offsetRad = Math.toRadians(age * SWARM_SPEED);
-        double angle = offsetRad + index * angularStep;
+            // Compute the feather's position on the circular orbit
+            int charge = entity.getSwarmCharge();
+            int index = entity.getSwarmIndex();
+            if (charge <= 0) return;
 
-        // Override interpolated position with computed orbit position
-        state.x = px + SWARM_RADIUS * Math.cos(angle);
-        state.y = centerY;
-        state.z = pz + SWARM_RADIUS * Math.sin(angle);
+            double angularStep = 2 * Math.PI / charge;
+            double offsetRad = Math.toRadians(age * SWARM_SPEED);
+            double angle = offsetRad + index * angularStep;
+
+            // Override interpolated position with computed orbit position
+            state.x = px + SWARM_RADIUS * Math.cos(angle);
+            state.y = centerY;
+            state.z = pz + SWARM_RADIUS * Math.sin(angle);
+        }
     }
 
     @Override

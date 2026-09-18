@@ -3,7 +3,6 @@ package rings_of_saturn.github.io.saturns_origins.block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -32,7 +31,7 @@ public class BlockGen {
 
     public static Block register(RegistryKey<Block> blockKey, RegistryKey<Item> itemKey, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
         Block block = factory.apply(settings.registryKey(blockKey));
-        Registry.register(Registries.ITEM, itemKey, new BlockItem(block, new Item.Settings().registryKey(itemKey)));
+//        Registry.register(Registries.ITEM, itemKey, new BlockItem(block, new Item.Settings().registryKey(itemKey)));
         return Registry.register(Registries.BLOCK, blockKey, block);
     }
     public static final Block CHORUSFRUITBORN_PORTAL = createBlock(PortalBlock::new, Identifier.of(MOD_ID, "chorusfruitborn_portal"), AbstractBlock.Settings.copy(Blocks.NETHER_PORTAL));

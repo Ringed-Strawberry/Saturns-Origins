@@ -1,6 +1,7 @@
 {
   "type": "origins:restrict_armor",
-  "description": "Your wings are fragile, wearing any armor above the chainmail tier would make them break\n",
+  "name": "Fragile Wings",
+  "description": "Your wings are fragile, wearing any chestplate above the chainmail tier would make them break\n",
   "chest": {
     "type": "origins:armor_value",
     "comparison": ">",
