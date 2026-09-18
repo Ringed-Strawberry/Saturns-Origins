@@ -1,6 +1,5 @@
 {
   "type": "origins:multiple",
-
   "particles": {
     "type": "origins:resource",
     "min": 0,
@@ -39,6 +38,10 @@
   },
   "walljump": {
     "type": "origins:active_self",
+    "cooldown": 10,
+    "hud_render": {
+      "should_render": false
+    },
     "entity_action": {
       "type": "origins:and",
       "actions": [

@@ -51,23 +51,30 @@ public class AutoAimProjectileMixin {
 
             if (storedTarget != null && (!storedTarget.isAlive() || storedTarget.isRemoved())) {
                 storedTarget = null;
+                thisAsEntity.setNoGravity(false);
+                if (storedVel != null && thisAsEntity.getVelocity().equals(new Vec3d(0, 0, 0))) {
+                    thisAsEntity.setVelocity(storedVel);
+                }
+                storedVel = null;
             }
 
-            LivingEntity closestEntity = thisAsEntity.getEntityWorld().getServer().getWorld(thisAsEntity.getEntityWorld().getRegistryKey()).getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
-                    (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
-                    Box.of(thisAsEntity.getEntityPos(), range,range,range));
-            if(closestEntity != null && closestEntity != storedTarget && closestEntity.canBeHitByProjectile()){
-                thisAsEntity.setPortalCooldown(10);
-                thisAsEntity.setNoGravity(true);
-                storedVel = thisAsEntity.getVelocity();
-                thisAsEntity.setVelocity(0,0,0);
-                storedTarget = closestEntity;
-                if(thisAsEntity.getOwner().isPlayer()) {
-                    PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
-                    owner.getEntityWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1, 0);
-                }
 
-                ProjectileUtil.setAutoAimTP(thisAsEntity, true);
+            if (storedTarget == null) {
+                LivingEntity closestEntity = thisAsEntity.getEntityWorld().getServer().getWorld(thisAsEntity.getEntityWorld().getRegistryKey()).getClosestEntity(LivingEntity.class, TargetPredicate.DEFAULT,
+                        (LivingEntity) thisAsEntity.getOwner(), thisAsEntity.getX(), thisAsEntity.getY(), thisAsEntity.getZ(),
+                        Box.of(thisAsEntity.getEntityPos(), range,range,range));
+                if(closestEntity != null && closestEntity.canBeHitByProjectile()){
+                    thisAsEntity.setPortalCooldown(10);
+                    thisAsEntity.setNoGravity(true);
+                    storedVel = thisAsEntity.getVelocity();
+                    thisAsEntity.setVelocity(0,0,0);
+                    storedTarget = closestEntity;
+                    if(thisAsEntity.getOwner().isPlayer()) {
+                        PlayerEntity owner = (PlayerEntity) thisAsEntity.getOwner();
+                        owner.getEntityWorld().playSound(null, owner.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.PLAYERS, 1, 0);
+                    }
+                    ProjectileUtil.setAutoAimTP(thisAsEntity, true);
+                }
             }
             if (storedTarget != null && thisAsEntity.getPortalCooldown() == 0){
                 if(thisAsEntity.getOwner().isPlayer()) {
